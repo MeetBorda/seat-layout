@@ -1,25 +1,24 @@
 import newProject from "../constants/newProject.json";
+import p3 from "../constants/p3.json";
 export const transform = () => {
-  const { shapes } = newProject;
-  let seats = {};
-  shapes.forEach((e) => {
+  const { shapes } = p3;
+  let seats = [];
+  shapes.forEach((e, i) => {
     const { centerPoint, makeData } = e;
     const transformedSeats = makeSeats(makeData);
-    seats = { seats: transformedSeats, centerPoint };
+    seats.push({ seats: transformedSeats, centerPoint: centerPoint, row: i });
   });
 
   return seats;
 };
 
 export const makeSeats = (makeData) => {
-  const extract = [];
-  for (let i = 0; i < makeData.rows.length; i++) {
-    extract.push(makeData.rows[i][0]);
-  }
+  const extract = makeData.rows[0];
+
   const madeSeat = extract.map((e) => {
     const { number, prefix, x, y } = e;
     return {
-      key: `${prefix}-${number}`,
+      name: `${prefix}-${number}`,
       coordinates: { x, y },
       number,
       prefix,

@@ -44,7 +44,12 @@
       },
       "centerPoint": { "x": 633, "y": 302.5, "lock": false },
       "makeData": {
-        "rows": [[{ "x": 633, "y": 302.5, "prefix": "A", "number": 1 }]],
+        "rows": [
+          [
+            { "x": 633, "y": 302.5, "prefix": "A", "number": 1 },
+            { "x": 660, "y": 302.5, "prefix": "A", "number": 2 }
+          ]
+        ],
         "seatsCount": 1
       },
       "rowsCount": 1,
@@ -112,7 +117,7 @@
       "centerPoint": { "x": 633, "y": 302.5, "lock": false },
       "makeData": {
         "rows": [[{ "x": 633, "y": 302.5, "prefix": "A", "number": 1 }]],
-        "seatsCount": 1
+        "seatsCount": 2
       },
       "rowsCount": 1,
       "rotationRadians": 0,

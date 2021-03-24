@@ -19,7 +19,7 @@ const SeatsCanvasRenderer = () => {
   const draw = (seat) => {
     const canvas = document.getElementById("canvasDom");
     const ctx = canvas.getContext("2d");
-    const { coordinates, key, prefix, number } = seat;
+    const { coordinates, name, prefix, number } = seat;
     const x = coordinates.x - center.x + 20;
     const y = coordinates.y - center.y + 20;
     ctx.beginPath();
@@ -48,7 +48,7 @@ const SeatsCanvasRenderer = () => {
         {seats.map((e) => {
           return (
             <>
-              <div>{e.key}</div>
+              <div>{e.name}</div>
             </>
           );
         })}
