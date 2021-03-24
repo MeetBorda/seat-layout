@@ -1,0 +1,417 @@
+{
+  "projectName": "",
+  "VERSION": "3.1.0",
+  "stageCenter": "",
+  "previousTouchLocation": { "x": 690, "y": 225, "lock": false },
+  "previousRotation": 0,
+  "mouseDown": false,
+  "mouseSelectedBounds": {
+    "handleSize": 8,
+    "resizeHandlePosRB": false,
+    "resizeHandlePosRM": false,
+    "resizeHandlePosBM": false,
+    "boundsSpacing": 0,
+    "left": 10000,
+    "top": 10000,
+    "right": -10000,
+    "bottom": -10000,
+    "width": -20000,
+    "height": -20000
+  },
+  "shapes": [
+    
+    {
+      "TAG": "seat/1616577749796/0",
+      "isLocked": false,
+      "selectedSeatList": [13],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 329.5,
+        "top": 86.5,
+        "right": 349.5,
+        "bottom": 410.5,
+        "width": 20,
+        "height": 324
+      },
+      "centerPoint": { "x": 339.5, "y": 248.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 339.5, "y": 398, "prefix": "A", "number": 1 },
+            { "x": 339.5, "y": 375, "prefix": "A", "number": 2 },
+            { "x": 339.5, "y": 352, "prefix": "A", "number": 3 },
+            { "x": 339.5, "y": 329.00000000000006, "prefix": "A", "number": 4 },
+            { "x": 339.5, "y": 306, "prefix": "A", "number": 5 },
+            { "x": 339.5, "y": 283, "prefix": "A", "number": 6 },
+            { "x": 339.5, "y": 260, "prefix": "A", "number": 7 },
+            { "x": 339.5, "y": 237, "prefix": "A", "number": 8 },
+            { "x": 339.5, "y": 214, "prefix": "A", "number": 9 },
+            { "x": 339.5, "y": 191, "prefix": "A", "number": 10 },
+            {
+              "x": 339.5,
+              "y": 167.99999999999994,
+              "prefix": "A",
+              "number": 11
+            },
+            { "x": 339.5, "y": 145, "prefix": "A", "number": 12 },
+            {
+              "x": 339.5,
+              "y": 121.99999999999997,
+              "prefix": "A",
+              "number": 13
+            },
+            { "x": 339.5, "y": 99, "prefix": "A", "number": 14 }
+          ]
+        ],
+        "seatsCount": 14
+      },
+      "rowsCount": 1,
+      "rotationRadians": 1.5707963267948966,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1616577777350/0",
+      "isLocked": false,
+      "selectedSeatList": [0],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 376,
+        "top": 140,
+        "right": 396,
+        "bottom": 165,
+        "width": 20,
+        "height": 25
+      },
+      "centerPoint": { "x": 386, "y": 152.5, "lock": false },
+      "makeData": {
+        "rows": [[{ "x": 386, "y": 152.5, "prefix": "B", "number": 1 }]],
+        "seatsCount": 1
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1616577780018/0",
+      "isLocked": false,
+      "selectedSeatList": [0],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 376,
+        "top": 201,
+        "right": 534,
+        "bottom": 226,
+        "width": 158,
+        "height": 25
+      },
+      "centerPoint": { "x": 455, "y": 213.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 386, "y": 213.5, "prefix": "D", "number": 1 },
+            { "x": 409, "y": 213.5, "prefix": "D", "number": 2 },
+            { "x": 432, "y": 213.5, "prefix": "D", "number": 3 },
+            { "x": 455, "y": 213.5, "prefix": "D", "number": 4 },
+            { "x": 478, "y": 213.5, "prefix": "D", "number": 5 },
+            { "x": 501, "y": 213.5, "prefix": "D", "number": 6 },
+            { "x": 524, "y": 213.5, "prefix": "D", "number": 7 }
+          ]
+        ],
+        "seatsCount": 7
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1616577782787/0",
+      "isLocked": false,
+      "selectedSeatList": [0],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 387,
+        "top": 241.74999999999994,
+        "right": 591,
+        "bottom": 296,
+        "width": 204,
+        "height": 54.25000000000006
+      },
+      "centerPoint": { "x": 489, "y": 283.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 397, "y": 283.5, "prefix": "E", "number": 1 },
+            {
+              "x": 413.5764780652316,
+              "y": 265.8529875524151,
+              "prefix": "E",
+              "number": 2
+            },
+            {
+              "x": 438.08306024466236,
+              "y": 258.6650107734745,
+              "prefix": "E",
+              "number": 3
+            },
+            {
+              "x": 463.436355079253,
+              "y": 255.27765048167507,
+              "prefix": "E",
+              "number": 4
+            },
+            {
+              "x": 488.9999999999999,
+              "y": 254.24999999999994,
+              "prefix": "E",
+              "number": 5
+            },
+            {
+              "x": 514.5636449207469,
+              "y": 255.2776504816751,
+              "prefix": "E",
+              "number": 6
+            },
+            {
+              "x": 539.9169397553376,
+              "y": 258.6650107734745,
+              "prefix": "E",
+              "number": 7
+            },
+            {
+              "x": 564.4235219347684,
+              "y": 265.8529875524151,
+              "prefix": "E",
+              "number": 8
+            },
+            { "x": 581, "y": 283.5, "prefix": "E", "number": 9 }
+          ]
+        ],
+        "seatsCount": 9
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": true,
+        "narrowness": 0,
+        "longness": 39,
+        "startXY": { "x": 397, "y": 283.5, "lock": false },
+        "p1": { "x": 397, "y": 244.5, "lock": false },
+        "p2": { "x": 581, "y": 244.5, "lock": false },
+        "endXY": { "x": 581, "y": 283.5, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1616577789300/0",
+      "isLocked": false,
+      "selectedSeatList": [0],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 445,
+        "top": 154,
+        "right": 649,
+        "bottom": 179,
+        "width": 204,
+        "height": 25
+      },
+      "centerPoint": { "x": 547, "y": 166.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 455, "y": 166.5, "prefix": "C", "number": 1 },
+            { "x": 478, "y": 166.5, "prefix": "C", "number": 2 },
+            { "x": 501, "y": 166.5, "prefix": "C", "number": 3 },
+            { "x": 524, "y": 166.5, "prefix": "C", "number": 4 },
+            { "x": 547, "y": 166.5, "prefix": "C", "number": 5 },
+            { "x": 570, "y": 166.5, "prefix": "C", "number": 6 },
+            { "x": 593, "y": 166.5, "prefix": "C", "number": 7 },
+            { "x": 616, "y": 166.5, "prefix": "C", "number": 8 },
+            { "x": 639, "y": 166.5, "prefix": "C", "number": 9 }
+          ]
+        ],
+        "seatsCount": 9
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [3, 4, 5],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    }
+  ],
+  "selectedTool": {
+    "bounds": {
+      "handleSize": 8,
+      "resizeHandlePosRB": false,
+      "resizeHandlePosRM": false,
+      "resizeHandlePosBM": false,
+      "boundsSpacing": 0,
+      "left": 690,
+      "top": 225,
+      "right": 260,
+      "bottom": 59,
+      "width": 0,
+      "height": 0
+    },
+    "type": "SELECTION",
+    "subType": "SELECTION_MULTIPLE"
+  },
+  "selectedShapesList": [],
+  "selectionSet": {},
+  "catTagSet": {},
+  "log": {},
+  "canvas": {
+    "__zoom": { "k": 1, "x": 0, "y": 0 },
+    "__on": [
+      { "type": "wheel", "name": "zoom", "capture": false },
+      { "type": "mousedown", "name": "zoom", "capture": false },
+      { "type": "dblclick", "name": "zoom", "capture": false }
+    ]
+  },
+  "width": 1920,
+  "height": 1006,
+  "canvasWidth": 1920,
+  "canvasHeight": 1006,
+  "canvasContext": {},
+  "d3Canvas": {
+    "_groups": [
+      [
+        {
+          "__zoom": { "k": 1, "x": 0, "y": 0 },
+          "__on": [
+            { "type": "wheel", "name": "zoom", "capture": false },
+            { "type": "mousedown", "name": "zoom", "capture": false },
+            { "type": "dblclick", "name": "zoom", "capture": false }
+          ]
+        }
+      ]
+    ],
+    "_parents": [null]
+  },
+  "stylePaddingLeft": 0,
+  "stylePaddingTop": 0,
+  "styleBorderLeft": 0,
+  "styleBorderTop": 0,
+  "htmlTop": 0,
+  "htmlLeft": 0,
+  "layoutType": "auditorium",
+  "shapesMovedUnits": { "x": 0, "y": 0 }
+}

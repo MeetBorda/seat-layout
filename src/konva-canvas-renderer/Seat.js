@@ -1,42 +1,30 @@
 import React, { Fragment } from "react";
 import { Circle, Text } from "react-konva";
+const TEXT_OFFSET = -5;
 
 const Seat = (props) => {
-  // console.log(x,y,isSelected,data.name,getAbsolutePosition(),.getStage.container(),;
-  const {
-    coordinates,
-    name,
-    number,
-    prefix,
-    centerPoint,
-    select,
-    deselect,
-    isSelected,
-    curveFactor,
-    seats,
-  } = props;
+  const { coordinates, name, number, select, deselect, status } = props;
   const { x, y } = coordinates;
+  const currX = x;
+  const currY = y;
+  const [isSelected, setSelected] = React.useState(false);
 
-  const currX = x - centerPoint.x + 20 + 200;
-  const currY = y - centerPoint.y + 20 + 20;
-  return (
+  return status ? (
     <Fragment>
-      <Text x={currX - 5} y={currY - 5} text={number} />
+      <Text x={currX + TEXT_OFFSET} y={currY + TEXT_OFFSET} text={number} />
       <Circle
         x={currX}
         y={currY}
-        radius="10"
+        radius={10}
         stroke={isSelected ? "blue" : "red"}
         strokeWidth={1}
         onClick={(e) => {
-          console.log(e);
-          isSelected
-            ? deselect(name, e.target.getAbsolutePosition())
-            : select(name, e.target.getAbsolutePosition());
+          setSelected(!isSelected);
+          isSelected ? deselect(name) : select(name);
         }}
       />
     </Fragment>
-  );
+  ) : null;
 };
 
 export default Seat;
