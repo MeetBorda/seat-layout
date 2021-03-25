@@ -11,18 +11,36 @@ const Seat = (props) => {
 
   return status ? (
     <Fragment>
-      <Text x={currX + TEXT_OFFSET} y={currY + TEXT_OFFSET} text={number} />
+      {isSelected ? null : (
+        <Text
+          x={currX + TEXT_OFFSET}
+          y={currY + TEXT_OFFSET}
+          fill={isSelected ? "white" : "green"}
+          text={number}
+          listening={false}
+        />
+      )}
       <Circle
         x={currX}
         y={currY}
         radius={10}
-        stroke={isSelected ? "blue" : "red"}
+        fill={isSelected ? "green" : null}
+        stroke={isSelected ? "white" : "green"}
         strokeWidth={1}
         onClick={(e) => {
           setSelected(!isSelected);
           isSelected ? deselect(name) : select(name);
         }}
       />
+      {isSelected ? (
+        <Text
+          x={currX + TEXT_OFFSET}
+          y={currY + TEXT_OFFSET}
+          fill="white"
+          text={number}
+          listening={false}
+        />
+      ) : null}
     </Fragment>
   ) : null;
 };

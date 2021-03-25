@@ -3,10 +3,10 @@ import curved from "../constants/curved.json";
 import category from "../constants/curvedSeats+normal=category.json";
 import random from "../constants/random.json";
 import largeLayout from "../constants/largeLayout.json";
-import xxlargeLayout from "../constants/xxlargeLayout.json";
+import xlargeLayout from "../constants/xlargeLayout.json";
 
-export const transform = () => {
-  const { shapes } = random;
+export const transform = (file) => {
+  const { shapes } = category;
   let seats = [];
   shapes.forEach((e, i) => {
     const { centerPoint, makeData, dumbSeatsList } = e;

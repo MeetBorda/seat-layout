@@ -6,8 +6,8 @@ const SEAT_SIZE = 22;
 const Row = memo((props) => {
   const { row, centerPoint, seats, select, deselect } = props;
 
-  const currX = seats[0].coordinates.x; //195
-  const currY = seats[0].coordinates.y; //35 5 0
+  const currX = seats[0].coordinates.x; //
+  const currY = seats[0].coordinates.y; //
 
   return (
     <Fragment>

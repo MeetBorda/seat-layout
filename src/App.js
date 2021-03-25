@@ -1,19 +1,18 @@
 import "./App.css";
-import React, { useCallback } from "react";
-import drawingJson from "../src/constants/drawingJson.json";
-import { getIn } from "timm";
-import SeatsCanvasRenderer from "./canvas-renderer/index";
+import React, { useCallback, useState } from "react";
 import MainStage from "./konva-canvas-renderer";
-import data from "./konva-canvas-renderer/xlargeLayout.js";
 import { transform } from "./canvas-renderer/transform";
-
+import curved from "./konva-canvas-renderer/curved";
+import category from "./konva-canvas-renderer/category";
+import xlargeLayout from "./konva-canvas-renderer/xlargeLayout.js";
+import largeLayout from "./konva-canvas-renderer/largeLayout.js"
 function App() {
-  const [selectedSeats, setSelectedSeats] = React.useState([]);
-  let data = transform();
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [data, setData] = React.useState(xlargeLayout);
   const setSeats = useCallback((e) => {
     setSelectedSeats([...e]);
   }, []);
-
+  console.log(transform());
   // const handleSelect = (name) => {
   //   const seats = [...selectedSeats];
   //   seats.push(name);
@@ -25,11 +24,9 @@ function App() {
   //   setSelectedSeats(seats);
   //   //  setSelectedSeats(seats);
   // };
-  console.log(selectedSeats);
   return (
     <div className="App">
-      <div>{selectedSeats.join(",")}</div>
-
+      <div>Seats:{selectedSeats.join(",")}</div>
       <MainStage
         data={data}
         setSeats={setSeats}

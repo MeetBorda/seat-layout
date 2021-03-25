@@ -1,23 +1,33 @@
-import { select } from "d3-selection";
-import React, { Fragment, memo, useEffect, useCallback } from "react";
-import { Stage, Layer, Circle } from "react-konva";
-import { transform } from "../canvas-renderer/transform";
-import data from "./xlargeLayout";
+import React, { Fragment, memo } from "react";
+import { Stage, Layer } from "react-konva";
 import Row from "./Row";
-import Seat from "./Seat";
 const MAX_SEATS = 21;
 const SEAT_LENGTH = 22;
+const SRMC = true;
 const MainStage = memo(
   (props) => {
-    const seatData = data;
+    const seatData = props.data;
 
     let selectedSeats = [];
-    const containerRef = React.useRef(null);
     const stageRef = React.useRef(null);
 
     const size = {
-      width: seatData.length * seatData[0].seats.length,
-      height: seatData.length * 22 + 200,
+      width:
+        seatData.length <= 50
+          ? seatData.length * seatData[0].seats.length
+          : (seatData.length / 2.2) * seatData[0].seats.length,
+      height:
+        seatData.length <= 50
+          ? seatData.length * 22 + 200
+          : (seatData.length / 1.25) * 22,
+    };
+    const calculateWidth = () => {
+      if (!SRMC) {
+        const lastR = seatData[seatData.length - 1];
+        const l = lastR.seats.length;
+        const coor = lastR.seats[l - 1].coordinates.x;
+        return coor;
+      } else return 0;
     };
 
     const handleSelect = (name, pos) => {
@@ -29,42 +39,29 @@ const MainStage = memo(
       props.setSeats(selectedSeats);
       //  setSelectedSeats(seats);
     };
+    const finalWidth = size.width + calculateWidth();
+    console.log(calculateWidth());
     console.log("1");
     return (
       <div
         style={{
           display: "flex",
           position: "relative",
-          backgroundColor: "lightgrey",
+          backgroundColor: "white",
           position: "relative",
-          width: "max-content",
+          width: "900px",
           margin: "auto",
+          border: "1px solid",
         }}
-        ref={containerRef}
       >
         <Stage
           ref={stageRef}
-          width={size.width + 1000}
-          height={size.height + 1000}
+          width={size.width + calculateWidth()}
+          height={size.height}
+          scaleX={1}
+          scaleY={1}
         >
           <Layer offsetY={-20} offsetX={100}>
-            {/* 
-            Number of seats/2 * size of seat + (30 safe)
-            <Fragment>
-            {seats.map((e) => {
-              return (
-                <Seat
-                  {...e}
-                  centerPoint={seatData.centerPoint}
-                  select={handleSelect}
-                  deselect={handleDeselect}
-                  isSelected={selectedSeats.indexOf(e.name) >= 0}
-                />
-              );
-            })}
-        </Fragment>
-        SEAT RENDERING
-        */}
             <Fragment>
               {seatData.map((e, i) => {
                 return (
