@@ -1,0 +1,623 @@
+{
+  "projectName": "",
+  "VERSION": "3.1.0",
+  "stageCenter": "",
+  "previousTouchLocation": { "x": 1110, "y": 392, "lock": false },
+  "previousRotation": 0,
+  "mouseDown": false,
+  "mouseSelectedBounds": {
+    "handleSize": 8,
+    "resizeHandlePosRB": false,
+    "resizeHandlePosRM": false,
+    "resizeHandlePosBM": false,
+    "boundsSpacing": 0,
+    "left": 10000,
+    "top": 10000,
+    "right": -10000,
+    "bottom": -10000,
+    "width": -20000,
+    "height": -20000
+  },
+  "shapes": [
+    {
+      "TAG": "seat/1616656750291/0",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 394,
+        "top": 147,
+        "right": 805,
+        "bottom": 311.84424161466194,
+        "width": 411,
+        "height": 164.84424161466194
+      },
+      "centerPoint": { "x": 599.5, "y": 159.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 404, "y": 159.5, "prefix": "A", "number": 1 },
+            {
+              "x": 407.9357744382115,
+              "y": 190.6961368424079,
+              "prefix": "A",
+              "number": 2
+            },
+            {
+              "x": 420.08988870705474,
+              "y": 219.67798099307538,
+              "prefix": "A",
+              "number": 3
+            },
+            {
+              "x": 439.5157681853846,
+              "y": 244.40462063562433,
+              "prefix": "A",
+              "number": 4
+            },
+            {
+              "x": 464.1033284629693,
+              "y": 264.05115217603156,
+              "prefix": "A",
+              "number": 5
+            },
+            {
+              "x": 491.9067930590053,
+              "y": 278.8443940841202,
+              "prefix": "A",
+              "number": 6
+            },
+            {
+              "x": 521.6105727838254,
+              "y": 289.34773239071967,
+              "prefix": "A",
+              "number": 7
+            },
+            {
+              "x": 552.3978596294135,
+              "y": 296.06749215051167,
+              "prefix": "A",
+              "number": 8
+            },
+            {
+              "x": 583.7419920479897,
+              "y": 299.3442416146619,
+              "prefix": "A",
+              "number": 9
+            },
+            {
+              "x": 615.2580079520101,
+              "y": 299.34424161466194,
+              "prefix": "A",
+              "number": 10
+            },
+            {
+              "x": 646.6021403705864,
+              "y": 296.0674921505116,
+              "prefix": "A",
+              "number": 11
+            },
+            {
+              "x": 677.3894272161743,
+              "y": 289.3477323907197,
+              "prefix": "A",
+              "number": 12
+            },
+            {
+              "x": 707.0932069409946,
+              "y": 278.8443940841203,
+              "prefix": "A",
+              "number": 13
+            },
+            {
+              "x": 734.8966715370306,
+              "y": 264.0511521760317,
+              "prefix": "A",
+              "number": 14
+            },
+            {
+              "x": 759.4842318146154,
+              "y": 244.40462063562433,
+              "prefix": "A",
+              "number": 15
+            },
+            {
+              "x": 778.9101112929452,
+              "y": 219.67798099307538,
+              "prefix": "A",
+              "number": 16
+            },
+            {
+              "x": 791.0642255617884,
+              "y": 190.6961368424079,
+              "prefix": "A",
+              "number": 17
+            },
+            { "x": 795, "y": 159.5, "prefix": "A", "number": 18 }
+          ]
+        ],
+        "seatsCount": 18
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": true,
+        "narrowness": 0,
+        "longness": -187,
+        "startXY": { "x": 404, "y": 159.5, "lock": false },
+        "p1": { "x": 404, "y": 346.5, "lock": false },
+        "p2": { "x": 795, "y": 346.5, "lock": false },
+        "endXY": { "x": 795, "y": 159.5, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1616656821267/0",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 824,
+        "top": 151,
+        "right": 1235,
+        "bottom": 288.96708678523845,
+        "width": 411,
+        "height": 137.96708678523845
+      },
+      "centerPoint": { "x": 1029.5, "y": 163.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 834, "y": 163.5, "prefix": "A", "number": 1 },
+            {
+              "x": 839.1649018455882,
+              "y": 192.17464914218326,
+              "prefix": "A",
+              "number": 2
+            },
+            {
+              "x": 854.1234590884637,
+              "y": 217.19855185737643,
+              "prefix": "A",
+              "number": 3
+            },
+            {
+              "x": 875.7990734836651,
+              "y": 236.79322316239055,
+              "prefix": "A",
+              "number": 4
+            },
+            {
+              "x": 901.14270731812,
+              "y": 251.41536343366707,
+              "prefix": "A",
+              "number": 5
+            },
+            {
+              "x": 928.4206047960105,
+              "y": 262.0504207399032,
+              "prefix": "A",
+              "number": 6
+            },
+            {
+              "x": 956.7477871719332,
+              "y": 269.47110068238464,
+              "prefix": "A",
+              "number": 7
+            },
+            {
+              "x": 985.6553113472744,
+              "y": 274.17964936715805,
+              "prefix": "A",
+              "number": 8
+            },
+            {
+              "x": 1014.8551900439301,
+              "y": 276.4670867852384,
+              "prefix": "A",
+              "number": 9
+            },
+            {
+              "x": 1044.1448099560698,
+              "y": 276.46708678523845,
+              "prefix": "A",
+              "number": 10
+            },
+            {
+              "x": 1073.3446886527256,
+              "y": 274.17964936715805,
+              "prefix": "A",
+              "number": 11
+            },
+            {
+              "x": 1102.252212828067,
+              "y": 269.47110068238464,
+              "prefix": "A",
+              "number": 12
+            },
+            {
+              "x": 1130.5793952039894,
+              "y": 262.0504207399032,
+              "prefix": "A",
+              "number": 13
+            },
+            {
+              "x": 1157.8572926818797,
+              "y": 251.41536343366718,
+              "prefix": "A",
+              "number": 14
+            },
+            {
+              "x": 1183.2009265163347,
+              "y": 236.79322316239072,
+              "prefix": "A",
+              "number": 15
+            },
+            {
+              "x": 1204.8765409115363,
+              "y": 217.19855185737646,
+              "prefix": "A",
+              "number": 16
+            },
+            {
+              "x": 1219.8350981544118,
+              "y": 192.1746491421832,
+              "prefix": "A",
+              "number": 17
+            },
+            { "x": 1225, "y": 163.5, "prefix": "A", "number": 18 }
+          ]
+        ],
+        "seatsCount": 18
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": true,
+        "narrowness": 0,
+        "longness": -151,
+        "startXY": { "x": 834, "y": 163.5, "lock": false },
+        "p1": { "x": 834, "y": 314.5, "lock": false },
+        "p2": { "x": 1225, "y": 314.5, "lock": false },
+        "endXY": { "x": 1225, "y": 163.5, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1616656840395/0",
+      "isLocked": false,
+      "selectedSeatList": [10],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 428,
+        "top": 81.75,
+        "right": 770,
+        "bottom": 175,
+        "width": 342,
+        "height": 93.25
+      },
+      "centerPoint": { "x": 599, "y": 162.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 438, "y": 162.5, "prefix": "A", "number": 1 },
+            {
+              "x": 447.2039297362975,
+              "y": 137.695390968424,
+              "prefix": "A",
+              "number": 2
+            },
+            {
+              "x": 468.01030693563314,
+              "y": 120.74006012226589,
+              "prefix": "A",
+              "number": 3
+            },
+            {
+              "x": 492.6221417188607,
+              "y": 109.75064948456452,
+              "prefix": "A",
+              "number": 4
+            },
+            {
+              "x": 518.5963518266444,
+              "y": 102.46046733050164,
+              "prefix": "A",
+              "number": 5
+            },
+            {
+              "x": 545.1686660608786,
+              "y": 97.76042506859284,
+              "prefix": "A",
+              "number": 6
+            },
+            {
+              "x": 572.0255111249273,
+              "y": 95.10866770161473,
+              "prefix": "A",
+              "number": 7
+            },
+            { "x": 598.9999999999999, "y": 94.25, "prefix": "A", "number": 8 },
+            {
+              "x": 625.9744888750729,
+              "y": 95.10866770161472,
+              "prefix": "A",
+              "number": 9
+            },
+            {
+              "x": 652.8313339391214,
+              "y": 97.76042506859284,
+              "prefix": "A",
+              "number": 10
+            },
+            {
+              "x": 679.4036481733554,
+              "y": 102.46046733050161,
+              "prefix": "A",
+              "number": 11
+            },
+            {
+              "x": 705.3778582811393,
+              "y": 109.75064948456458,
+              "prefix": "A",
+              "number": 12
+            },
+            {
+              "x": 729.9896930643669,
+              "y": 120.74006012226583,
+              "prefix": "A",
+              "number": 13
+            },
+            {
+              "x": 750.7960702637024,
+              "y": 137.69539096842396,
+              "prefix": "A",
+              "number": 14
+            },
+            { "x": 760, "y": 162.5, "prefix": "A", "number": 15 }
+          ]
+        ],
+        "seatsCount": 15
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": true,
+        "narrowness": 0,
+        "longness": 91,
+        "startXY": { "x": 438, "y": 162.5, "lock": false },
+        "p1": { "x": 438, "y": 71.5, "lock": false },
+        "p2": { "x": 760, "y": 71.5, "lock": false },
+        "endXY": { "x": 760, "y": 162.5, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1616656887663/0",
+      "isLocked": false,
+      "selectedSeatList": [6],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 889,
+        "top": 147,
+        "right": 1185,
+        "bottom": 242.49999999999994,
+        "width": 296,
+        "height": 95.49999999999994
+      },
+      "centerPoint": { "x": 1037, "y": 194.74999999999997, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 899, "y": 159.5, "prefix": "A", "number": 1 },
+            {
+              "x": 907.4745835347047,
+              "y": 185.97931156451338,
+              "prefix": "A",
+              "number": 2
+            },
+            {
+              "x": 928.1805801252536,
+              "y": 204.92241408596104,
+              "prefix": "A",
+              "number": 3
+            },
+            {
+              "x": 953.647136871906,
+              "y": 217.02594722339308,
+              "prefix": "A",
+              "number": 4
+            },
+            {
+              "x": 980.8577207980219,
+              "y": 224.5353045845944,
+              "prefix": "A",
+              "number": 5
+            },
+            {
+              "x": 1008.7902730190388,
+              "y": 228.67410688858513,
+              "prefix": "A",
+              "number": 6
+            },
+            {
+              "x": 1036.9999999999998,
+              "y": 229.99999999999994,
+              "prefix": "A",
+              "number": 7
+            },
+            {
+              "x": 1065.2097269809615,
+              "y": 228.67410688858507,
+              "prefix": "A",
+              "number": 8
+            },
+            {
+              "x": 1093.1422792019782,
+              "y": 224.53530458459437,
+              "prefix": "A",
+              "number": 9
+            },
+            {
+              "x": 1120.3528631280938,
+              "y": 217.0259472233931,
+              "prefix": "A",
+              "number": 10
+            },
+            {
+              "x": 1145.8194198747465,
+              "y": 204.9224140859611,
+              "prefix": "A",
+              "number": 11
+            },
+            {
+              "x": 1166.5254164652952,
+              "y": 185.97931156451332,
+              "prefix": "A",
+              "number": 12
+            },
+            { "x": 1175, "y": 159.5, "prefix": "A", "number": 13 }
+          ]
+        ],
+        "seatsCount": 13
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": true,
+        "narrowness": 0,
+        "longness": -94,
+        "startXY": { "x": 880, "y": 168.5, "lock": false },
+        "p1": { "x": 880, "y": 262.5, "lock": false },
+        "p2": { "x": 1156, "y": 262.5, "lock": false },
+        "endXY": { "x": 1156, "y": 168.5, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    }
+  ],
+  "selectedTool": {
+    "bounds": {
+      "handleSize": 8,
+      "resizeHandlePosRB": false,
+      "resizeHandlePosRM": false,
+      "resizeHandlePosBM": false,
+      "boundsSpacing": 0,
+      "left": 1110,
+      "top": 392,
+      "right": 288,
+      "bottom": 62,
+      "width": 0,
+      "height": 0
+    },
+    "type": "SELECTION",
+    "subType": "SELECTION_MULTIPLE"
+  },
+  "selectedShapesList": [],
+  "selectionSet": {},
+  "catTagSet": {},
+  "log": {},
+  "canvas": {
+    "__zoom": { "k": 1, "x": 0, "y": 0 },
+    "__on": [
+      { "type": "wheel", "name": "zoom", "capture": false },
+      { "type": "mousedown", "name": "zoom", "capture": false },
+      { "type": "dblclick", "name": "zoom", "capture": false }
+    ]
+  },
+  "width": 1920,
+  "height": 1001,
+  "canvasWidth": 1920,
+  "canvasHeight": 1001,
+  "canvasContext": {},
+  "d3Canvas": {
+    "_groups": [
+      [
+        {
+          "__zoom": { "k": 1, "x": 0, "y": 0 },
+          "__on": [
+            { "type": "wheel", "name": "zoom", "capture": false },
+            { "type": "mousedown", "name": "zoom", "capture": false },
+            { "type": "dblclick", "name": "zoom", "capture": false }
+          ]
+        }
+      ]
+    ],
+    "_parents": [null]
+  },
+  "stylePaddingLeft": 0,
+  "stylePaddingTop": 0,
+  "styleBorderLeft": 0,
+  "styleBorderTop": 0,
+  "htmlTop": 0,
+  "htmlLeft": 0,
+  "layoutType": {},
+  "shapesMovedUnits": { "x": 0, "y": 0 }
+}

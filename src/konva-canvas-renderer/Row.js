@@ -4,11 +4,10 @@ import Seat from "./Seat";
 const SEAT_SIZE = 22;
 
 const Row = memo((props) => {
-  const { row, centerPoint, seats, select, deselect } = props;
+  const { i, row, centerPoint, seats, select, deselect } = props;
 
   const currX = seats[0].coordinates.x; //
   const currY = seats[0].coordinates.y; //
-
   return (
     <Fragment>
       <Text x={currX - SEAT_SIZE} y={currY - 5} text={`${row}`} />

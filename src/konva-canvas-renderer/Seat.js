@@ -8,7 +8,6 @@ const Seat = (props) => {
   const currX = x;
   const currY = y;
   const [isSelected, setSelected] = React.useState(false);
-
   return status ? (
     <Fragment>
       {isSelected ? null : (
