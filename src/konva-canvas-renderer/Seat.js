@@ -8,6 +8,7 @@ const Seat = (props) => {
   const currX = x;
   const currY = y;
   const [isSelected, setSelected] = React.useState(false);
+  console.log('seat')
   return status ? (
     <Fragment>
       {isSelected ? null : (
@@ -20,13 +21,14 @@ const Seat = (props) => {
         />
       )}
       <Circle
+      perfectDrawEnabled={false}
         x={currX}
         y={currY}
         radius={10}
         fill={isSelected ? "green" : null}
         stroke={isSelected ? "white" : "green"}
         strokeWidth={1}
-        onClick={(e) => {
+        onTap={(e) => {
           setSelected(!isSelected);
           isSelected ? deselect(name) : select(name);
         }}

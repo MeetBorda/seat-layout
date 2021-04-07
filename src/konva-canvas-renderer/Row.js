@@ -4,25 +4,34 @@ import Seat from "./Seat";
 const SEAT_SIZE = 22;
 
 const Row = memo((props) => {
-  const { i, row, centerPoint, seats, select, deselect } = props;
+  const { i, row, centerPoint, seats, select, deselect, useView } = props;
 
   const currX = seats[0].coordinates.x; //
   const currY = seats[0].coordinates.y; //
   return (
-    <Group>
+    <>
       <Text x={currX - SEAT_SIZE} y={currY - 5} text={`${row}`} />
-      {seats.map((seat) => (
-        <>
-          <Seat
-            {...seat}
-            startPoint={currX}
-            centerPoint={centerPoint}
-            select={select}
-            deselect={deselect}
-          />
-        </>
-      ))}
-    </Group>
+      {seats.map((seat, i) => {
+        const view = i * 60;
+        const isOut = i > (window.innerWidth + useView.x) / 25;
+        if (isOut) {
+          return;
+        } else {
+          return (
+            <>
+              <Seat
+                key={`${seat.coordinates.x}_${i}`}
+                {...seat}
+                startPoint={currX}
+                centerPoint={centerPoint}
+                select={select}
+                deselect={deselect}
+              />
+            </>
+          );
+        }
+      })}
+    </>
   );
 });
 

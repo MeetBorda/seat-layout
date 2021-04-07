@@ -1,4 +1,4 @@
-import React, { Fragment, memo } from "react";
+import React, { Fragment, memo, useState } from "react";
 import { Stage, Layer, FastLayer } from "react-konva";
 import Konva from "konva";
 
@@ -206,6 +206,7 @@ const MainStage = memo(
     let selectedSeats = [];
     const stageRef = React.useRef(null);
     const layerRef = React.useRef(null);
+    const [useView, setView] = useState({ x: 0, y: 0 });
     // if (seatData.length === 0) {
     //   return (
     //     <div>
@@ -265,25 +266,55 @@ const MainStage = memo(
     //   setVirtualWidth(clientRect.width);
     //   setScale(scaleToFit);
     // }, [size]);
+    const handleDragEnd = (e) => {
+      console.log(e.target.x(),e.target.y())
+      setView({
+        x: -e.target.x(),
+        y: -e.target.y(),
+      });
+  //    getThousand();
+    };
     const getThousand = () => {
-      for (let i = 0; i < seatData.length; i++) {
-        for (let j = 0; j < seatData[i].seats.length; j++) {
-          const data = seatData[i].seats[j];
+      return 
+      console.log("func", useView);
+      seatData.map((rowData) => {
+        const { i, row, centerPoint, seats, select, deselect } = rowData;
+        const currX = seats[0].coordinates.x; //
+        const currY = seats[0].coordinates.y; //
+        const rowText = new Konva.Text({
+          x: currX - 20,
+          y: currY - 20,
+          text: row,
+          fontSize: 15,
+        });
+        layerRef.current.add(rowText);
+        seats.map((seat, i) => {
+          const { coordinates, name, number, select, deselect, status } = seat;
+          const { x, y } = coordinates;
+          const view = i * 30;
+          const isOut =
+            view < useView.x - window.innerWidth ||
+            view > useView.x + window.innerWidth * 2;
+          const currX = x;
+          const currY = y;
+          if (isOut) {
+            return;
+          }
           const circle = new Konva.Circle({
-            x: data.coordinates.x,
-            y: data.coordinates.y,
-            radius: 5,
-            fill: "red",
-            stroke: "black",
+            x: i * 30,
+            y: currY,
+            radius: 10,
+            fill: "white",
+            stroke: "green",
             strokeWidth: 1,
-            props: { ...data },
+            props: { ...seat },
           });
           layerRef.current.add(circle);
-        }
-        layerRef.current.draw();
-        console.log("now");
-      }
+        });
+      });
 
+      console.log(layerRef.current.getChildren());
+      layerRef.current.draw();
       // let X = 0;
       // let Y = 0;
       // for (var n = 0; n < 1000; n++) {
@@ -297,9 +328,14 @@ const MainStage = memo(
     React.useEffect(() => {
       if (layerRef.current && props.data) {
         console.log(seatData);
-        getThousand();
+        
+      //  getThousand();
       }
     }, [props.data]);
+    if(layerRef.current){
+      console.log(layerRef.current.getChildren());
+
+    }
 
     return (
       <div
@@ -322,27 +358,29 @@ const MainStage = memo(
           scaleX={1}
           scaleY={1}
           draggable
+          onDragEnd={handleDragEnd}
           onClick={(e) => console.log(e.target.attrs, getThousand())}
         >
           <Layer
             ref={layerRef}
             offsetY={0}
-            offsetX={380}
-            onTap={(e) => console.log(e.target.attrs, getThousand())}
+            offsetX={0}
+          //  onTap={(e) => console.log(e.target.attrs)}
           >
             <Fragment>
-              {/*
+          
             {seatData.map((e, i) => {
                 return (
                   <Row
                     {...e}
                     i={i}
+                    useView={useView}
                     select={handleSelect}
                     deselect={handleDeselect}
                   />
                 );
               })}
-            */}
+           
             </Fragment>
           </Layer>
         </Stage>
