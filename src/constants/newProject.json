@@ -1,0 +1,182 @@
+{
+  "projectName": "",
+  "VERSION": "3.1.0",
+  "stageCenter": "",
+  "previousTouchLocation": { "x": 629, "y": 303, "lock": false },
+  "previousRotation": 0,
+  "mouseDown": false,
+  "mouseSelectedBounds": {
+    "handleSize": 8,
+    "resizeHandlePosRB": false,
+    "resizeHandlePosRM": false,
+    "resizeHandlePosBM": false,
+    "boundsSpacing": 0,
+    "left": 623,
+    "top": 290,
+    "right": 643,
+    "bottom": 315,
+    "width": 20,
+    "height": 25
+  },
+  "shapes": [
+    {
+      "TAG": "seat/1616064438020/0",
+      "isLocked": false,
+      "selectedSeatList": [0],
+      "isSelected": true,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 623,
+        "top": 290,
+        "right": 643,
+        "bottom": 315,
+        "width": 20,
+        "height": 25
+      },
+      "centerPoint": { "x": 633, "y": 302.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 633, "y": 302.5, "prefix": "A", "number": 1 },
+            { "x": 660, "y": 302.5, "prefix": "A", "number": 2 }
+          ]
+        ],
+        "seatsCount": 1
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": -14,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    }
+  ],
+  "selectedTool": {
+    "bounds": {
+      "handleSize": 8,
+      "resizeHandlePosRB": false,
+      "resizeHandlePosRM": false,
+      "resizeHandlePosBM": false,
+      "boundsSpacing": 0,
+      "left": 629,
+      "top": 303,
+      "right": 85,
+      "bottom": 111,
+      "width": 0,
+      "height": 0
+    },
+    "type": "SELECTION",
+    "subType": "SELECTION_MOVE"
+  },
+  "selectedShapesList": [
+    {
+      "TAG": "seat/1616064438020/0",
+      "isLocked": false,
+      "selectedSeatList": [0],
+      "isSelected": true,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 623,
+        "top": 290,
+        "right": 643,
+        "bottom": 315,
+        "width": 20,
+        "height": 25
+      },
+      "centerPoint": { "x": 633, "y": 302.5, "lock": false },
+      "makeData": {
+        "rows": [[{ "x": 633, "y": 302.5, "prefix": "A", "number": 1 }]],
+        "seatsCount": 2
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": -14,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    }
+  ],
+  "selectionSet": {},
+  "catTagSet": {},
+  "log": {},
+  "canvas": {
+    "__zoom": { "k": 1, "x": 0, "y": 0 },
+    "__on": [
+      { "type": "wheel", "name": "zoom", "capture": false },
+      { "type": "mousedown", "name": "zoom", "capture": false },
+      { "type": "dblclick", "name": "zoom", "capture": false }
+    ]
+  },
+  "width": 1440,
+  "height": 716,
+  "canvasWidth": 1440,
+  "canvasHeight": 716,
+  "canvasContext": {},
+  "d3Canvas": {
+    "_groups": [
+      [
+        {
+          "__zoom": { "k": 1, "x": 0, "y": 0 },
+          "__on": [
+            { "type": "wheel", "name": "zoom", "capture": false },
+            { "type": "mousedown", "name": "zoom", "capture": false },
+            { "type": "dblclick", "name": "zoom", "capture": false }
+          ]
+        }
+      ]
+    ],
+    "_parents": [null]
+  },
+  "stylePaddingLeft": 0,
+  "stylePaddingTop": 0,
+  "styleBorderLeft": 0,
+  "styleBorderTop": 0,
+  "htmlTop": 0,
+  "htmlLeft": 0,
+  "layoutType": {},
+  "shapesMovedUnits": { "x": 0, "y": 0 }
+}
