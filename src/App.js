@@ -49,17 +49,10 @@ function App() {
   //   setSelectedSeats(seats);
   //   //  setSelectedSeats(seats);
   // };
-  const totalSeats = () => {
-    let total = 0;
-    for (let i = 0; i < data.length; i++) {
-      let one = data[i].seats.length;
-      total += one;
-    }
-    return total;
-  };
+
   return (
     <div className="App">
-      <div>{totalSeats()}</div>
+      <div>1222</div>
       <div>Seats:{selectedSeats.join(",")}</div>
       <MainStage
         data={data}

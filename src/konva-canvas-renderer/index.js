@@ -1,5 +1,7 @@
 import React, { Fragment, memo } from "react";
-import { Stage, Layer } from "react-konva";
+import { Stage, Layer, FastLayer } from "react-konva";
+import Konva from "konva";
+
 import Row from "./Row";
 import logo from "./loader.gif";
 const MAX_SEATS = 21;
@@ -8,17 +10,209 @@ const SRMC = true;
 const xL = true;
 const MainStage = memo(
   (props) => {
-    const seatData = props.data;
+    const seatData = props.data || [
+      {
+        isCurved: true,
+        seats: [
+          {
+            name: "A-1",
+            coordinates: {
+              x: 404,
+              y: 159.5,
+            },
+            number: 1,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-2",
+            coordinates: {
+              x: 407.9357744382115,
+              y: 190.6961368424079,
+            },
+            number: 2,
+            prefix: "A",
+            status: 0,
+          },
+          {
+            name: "A-3",
+            coordinates: {
+              x: 420.08988870705474,
+              y: 219.67798099307538,
+            },
+            number: 3,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-4",
+            coordinates: {
+              x: 439.5157681853846,
+              y: 244.40462063562433,
+            },
+            number: 4,
+            prefix: "A",
+            status: 0,
+          },
+          {
+            name: "A-5",
+            coordinates: {
+              x: 464.1033284629693,
+              y: 264.05115217603156,
+            },
+            number: 5,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-6",
+            coordinates: {
+              x: 491.9067930590053,
+              y: 278.8443940841202,
+            },
+            number: 6,
+            prefix: "A",
+            status: 0,
+          },
+          {
+            name: "A-7",
+            coordinates: {
+              x: 521.6105727838254,
+              y: 289.34773239071967,
+            },
+            number: 7,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-8",
+            coordinates: {
+              x: 552.3978596294135,
+              y: 296.06749215051167,
+            },
+            number: 8,
+            prefix: "A",
+            status: 0,
+          },
+          {
+            name: "A-9",
+            coordinates: {
+              x: 583.7419920479897,
+              y: 299.3442416146619,
+            },
+            number: 9,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-10",
+            coordinates: {
+              x: 615.2580079520101,
+              y: 299.34424161466194,
+            },
+            number: 10,
+            prefix: "A",
+            status: 0,
+          },
+          {
+            name: "A-11",
+            coordinates: {
+              x: 646.6021403705864,
+              y: 296.0674921505116,
+            },
+            number: 11,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-12",
+            coordinates: {
+              x: 677.3894272161743,
+              y: 289.3477323907197,
+            },
+            number: 12,
+            prefix: "A",
+            status: 0,
+          },
+          {
+            name: "A-13",
+            coordinates: {
+              x: 707.0932069409946,
+              y: 278.8443940841203,
+            },
+            number: 13,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-14",
+            coordinates: {
+              x: 734.8966715370306,
+              y: 264.0511521760317,
+            },
+            number: 14,
+            prefix: "A",
+            status: 0,
+          },
+          {
+            name: "A-15",
+            coordinates: {
+              x: 759.4842318146154,
+              y: 244.40462063562433,
+            },
+            number: 15,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-16",
+            coordinates: {
+              x: 778.9101112929452,
+              y: 219.67798099307538,
+            },
+            number: 16,
+            prefix: "A",
+            status: 0,
+          },
+          {
+            name: "A-17",
+            coordinates: {
+              x: 791.0642255617884,
+              y: 190.6961368424079,
+            },
+            number: 17,
+            prefix: "A",
+            status: 1,
+          },
+          {
+            name: "A-18",
+            coordinates: {
+              x: 795,
+              y: 159.5,
+            },
+            number: 18,
+            prefix: "A",
+            status: 0,
+          },
+        ],
+        centerPoint: {
+          x: 599.5,
+          y: 159.5,
+          lock: false,
+        },
+        row: "A",
+      },
+    ];
     let selectedSeats = [];
     const stageRef = React.useRef(null);
-
-    if (seatData.length === 0) {
-      return (
-        <div>
-          <img src={logo} />
-        </div>
-      );
-    }
+    const layerRef = React.useRef(null);
+    // if (seatData.length === 0) {
+    //   return (
+    //     <div>
+    //       <img src={logo} />
+    //     </div>
+    //   );
+    // }
 
     // const size = {
     //   width:
@@ -30,10 +224,12 @@ const MainStage = memo(
     //       ? seatData.length * 22 + 400
     //       : (seatData.length / 1.25) * 22,
     // };
-    const size = {
-      width: seatData.length * seatData[0].seats.length * 22,
-      height: seatData.length * 22 + 200,
-    };
+
+    // const size = {
+    //   width: seatData ? seatData.length * seatData[0].seats.length * 22 : 0,
+    //   height: seatData ? seatData.length * 22 + 200 : 0,
+    // };
+
     const calculateWidth = () => {
       if (!SRMC) {
         const lastR = seatData[seatData.length - 1];
@@ -52,9 +248,8 @@ const MainStage = memo(
       props.setSeats(selectedSeats);
       //  setSelectedSeats(seats);
     };
-    const finalWidth = size.width + calculateWidth();
-    console.log(finalWidth);
-    console.log("once");
+    // const finalWidth = size.width + calculateWidth();
+    console.log("once", layerRef.current, seatData);
 
     // React.useEffect(() => {
     //   if (!stageRef.current) {
@@ -70,6 +265,42 @@ const MainStage = memo(
     //   setVirtualWidth(clientRect.width);
     //   setScale(scaleToFit);
     // }, [size]);
+    const getThousand = () => {
+      for (let i = 0; i < seatData.length; i++) {
+        for (let j = 0; j < seatData[i].seats.length; j++) {
+          const data = seatData[i].seats[j];
+          const circle = new Konva.Circle({
+            x: data.coordinates.x,
+            y: data.coordinates.y,
+            radius: 5,
+            fill: "red",
+            stroke: "black",
+            strokeWidth: 1,
+            props: { ...data },
+          });
+          layerRef.current.add(circle);
+        }
+        layerRef.current.draw();
+        console.log("now");
+      }
+
+      // let X = 0;
+      // let Y = 0;
+      // for (var n = 0; n < 1000; n++) {
+      //   X = X + 7;
+      //   Y = Y + 7;
+
+      //   layerRef.current.add(circle);
+      // }
+    };
+
+    React.useEffect(() => {
+      if (layerRef.current && props.data) {
+        console.log(seatData);
+        getThousand();
+      }
+    }, [props.data]);
+
     return (
       <div
         style={{
@@ -84,16 +315,24 @@ const MainStage = memo(
       >
         <Stage
           ref={stageRef}
-          width={3000}
-          height={size.height + 500}
+          width={window.innerWidth}
+          height={window.innerHeight}
           // width={xL ? 3000 : size.width}
           // height={xL ? 3000 : size.height * 2}
           scaleX={1}
           scaleY={1}
+          draggable
+          onClick={(e) => console.log(e.target.attrs, getThousand())}
         >
-          <Layer offsetY={0} offsetX={100}>
+          <Layer
+            ref={layerRef}
+            offsetY={0}
+            offsetX={380}
+            onTap={(e) => console.log(e.target.attrs, getThousand())}
+          >
             <Fragment>
-              {seatData.map((e, i) => {
+              {/*
+            {seatData.map((e, i) => {
                 return (
                   <Row
                     {...e}
@@ -103,6 +342,7 @@ const MainStage = memo(
                   />
                 );
               })}
+            */}
             </Fragment>
           </Layer>
         </Stage>

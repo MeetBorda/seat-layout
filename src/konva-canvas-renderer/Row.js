@@ -9,7 +9,7 @@ const Row = memo((props) => {
   const currX = seats[0].coordinates.x; //
   const currY = seats[0].coordinates.y; //
   return (
-    <Fragment>
+    <Group>
       <Text x={currX - SEAT_SIZE} y={currY - 5} text={`${row}`} />
       {seats.map((seat) => (
         <>
@@ -22,7 +22,7 @@ const Row = memo((props) => {
           />
         </>
       ))}
-    </Fragment>
+    </Group>
   );
 });
 
