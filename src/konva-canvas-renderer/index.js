@@ -16,6 +16,13 @@ function getDistance(p1, p2) {
   return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
 }
 
+function isTouchEnabled() {
+  return (
+    "ontouchstart" in window ||
+    navigator.maxTouchPoints > 0 ||
+    navigator.msMaxTouchPoints > 0
+  );
+}
 function getCenter(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
@@ -347,7 +354,7 @@ const MainStage = memo(
           scaleX={1}
           scaleY={1}
           draggable
-          onDragEnd={handleDragEnd}
+          //onDragEnd={handleDragEnd}
           onTouchMove={handleTouch}
           onTouchEnd={handleTouchEnd}
         >
