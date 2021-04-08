@@ -1,5 +1,5 @@
 import React, { Fragment, memo, useState } from "react"
-import { Stage, Layer, FastLayer, Text } from "react-konva"
+import { Stage, Layer, FastLayer, Text, Circle } from "react-konva"
 import Konva from "konva"
 
 import Row from "./Row"
@@ -210,29 +210,6 @@ const MainStage = memo(
     const stageRef = React.useRef(null)
     const layerRef = React.useRef(null)
     const [useView, setView] = useState({ x: 0, y: 0 })
-    // if (seatData.length === 0) {
-    //   return (
-    //     <div>
-    //       <img src={logo} />
-    //     </div>
-    //   );
-    // }
-
-    // const size = {
-    //   width:
-    //     seatData.length <= 50
-    //       ? seatData.length * seatData[0].seats.length * 10
-    //       : (seatData.length / 2.2) * seatData[0].seats.length,
-    //   height:
-    //     seatData.length <= 50
-    //       ? seatData.length * 22 + 400
-    //       : (seatData.length / 1.25) * 22,
-    // };
-
-    // const size = {
-    //   width: seatData ? seatData.length * seatData[0].seats.length * 22 : 0,
-    //   height: seatData ? seatData.length * 22 + 200 : 0,
-    // };
 
     const calculateWidth = () => {
       if (!SRMC) {
@@ -250,91 +227,31 @@ const MainStage = memo(
     const handleDeselect = (name, pos) => {
       selectedSeats.splice(selectedSeats.indexOf(name), 1)
       props.setSeats(selectedSeats)
-      //  setSelectedSeats(seats);
     }
-    // const finalWidth = size.width + calculateWidth();
-    // console.log("once", layerRef.current, seatData)
 
-    // React.useEffect(() => {
-    //   if (!stageRef.current) {
-    //     return;
-    //   }
-    //   if (seatData.length <= 50) {
-    //     return;
-    //   }
-    //   const stage = stageRef.current;
-    //   const clientRect = stage.getClientRect({ skipTransform: true });
-    //   const fact = seatData.length <= 50 ? 1 : 2;
-    //   const scaleToFit = size.width / clientRect.width / fact;
-    //   setVirtualWidth(clientRect.width);
-    //   setScale(scaleToFit);
-    // }, [size]);
     const handleDragEnd = (e) => {
       setView({
         x: -e.target.x(),
         y: -e.target.y(),
       })
-      //   getThousand()
-    }
-    const getThousand = () => {
-      return
-      console.log("func", useView)
-      seatData.map((rowData) => {
-        const { i, row, centerPoint, seats, select, deselect } = rowData
-        const currX = seats[0].coordinates.x //
-        const currY = seats[0].coordinates.y //
-        const rowText = new Konva.Text({
-          x: currX - 20,
-          y: currY - 20,
-          text: row,
-          fontSize: 15,
-        })
-        layerRef.current.add(rowText)
-        seats.map((seat, i) => {
-          const { coordinates, name, number, select, deselect, status } = seat
-          const { x, y } = coordinates
-          const view = i * 30
-          const isOut =
-            view < useView.x - window.innerWidth ||
-            view > useView.x + window.innerWidth * 2
-          const currX = x
-          const currY = y
-          if (isOut) {
-            return
-          }
-          const circle = new Konva.Circle({
-            x: i * 30,
-            y: currY,
-            radius: 10,
-            fill: "white",
-            stroke: "green",
-            strokeWidth: 1,
-            props: { ...seat },
-          })
-          layerRef.current.add(circle)
-        })
-      })
-
-      console.log(layerRef.current.getChildren())
-      layerRef.current.draw()
-      // let X = 0;
-      // let Y = 0;
-      // for (var n = 0; n < 1000; n++) {
-      //   X = X + 7;
-      //   Y = Y + 7;
-
-      //   layerRef.current.add(circle);
-      // }
     }
 
-    // React.useEffect(() => {
-    //   if (layerRef.current && props.data) {
-    //     getThousand()
-    //   }
-    // }, [props.data])
-    if (layerRef.current) {
-      console.log(layerRef.current.getChildren())
+    const handleTouch = (e) => {
+      e.evt.preventDefault()
+      const touch1 = e.evt.touches[0]
+      const touch2 = e.evt.touches[1]
+
+      console.log(touch1, touch2)
+
+      if (touch1 && touch2) {
+      }
     }
+
+    const handleTouchEnd = (e) => {}
+
+    // if (layerRef.current) {
+    //   console.log(layerRef.current.getChildren())
+    // }
 
     React.useEffect(() => {
       if (useView.x > 0 || useView.y > 0) {
@@ -366,19 +283,15 @@ const MainStage = memo(
           scaleY={1}
           draggable
           onDragEnd={handleDragEnd}
-          onClick={(e) => console.log(e.target.attrs, getThousand())}
+          onTouchMove={handleTouch}
+          onTouchEnd={handleTouchEnd}
         >
-          <Layer
-            ref={layerRef}
-            offsetY={0}
-            offsetX={0}
-            onTap={(e) => console.log(e.target.attrs)}
-          >
+          <Layer ref={layerRef} offsetY={0} offsetX={0}>
             <Fragment>
               {seatData.map((e, i) => {
-                const isOut = i > (window.innerHeight + useView.y) / 25 + 50
+                // const isOut = i > (window.innerHeight + useView.y) / 25
 
-                if (isOut) return null
+                // if (isOut) return null
 
                 return (
                   <Row
@@ -393,22 +306,6 @@ const MainStage = memo(
               })}
             </Fragment>
           </Layer>
-          {/* <Layer listening={false}>
-            {seatData.map((seat) => {
-              return seat.seats.map((s) => {
-                const { coordinates, number } = s
-                const { x, y } = coordinates
-                return (
-                  <Text
-                    x={x + TEXT_OFFSET}
-                    y={y + TEXT_OFFSET}
-                    text={number}
-                    listening={false}
-                  />
-                )
-              })
-            })}
-          </Layer> */}
         </Stage>
       </div>
     )

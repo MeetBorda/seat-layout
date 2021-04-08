@@ -9,10 +9,7 @@ const Seat = (props) => {
   const currY = y
   const [isSelected, setSelected] = React.useState(false)
   const seatRef = React.useRef(null)
-  React.useEffect(() => {
-    // console.log(seatRef.current, seatRef.current.cache)
-    // seatRef.current.cache()
-  }, [])
+
   return status ? (
     <Fragment>
       {isSelected ? null : (

@@ -10,10 +10,10 @@ const Row = memo((props) => {
   const currY = seats[0].coordinates.y //
   return (
     <>
-      {/* <Text x={currX - SEAT_SIZE} y={currY - 5} text={`${row}`} /> */}
+      <Text x={currX - SEAT_SIZE} y={currY - 5} text={`${row}`} />
       {seats.map((seat, i) => {
-        const isOut = i > (window.innerWidth + useView.x) / 25 + 50
-        if (isOut) return
+        // const isOut = i > (window.innerWidth + useView.x) / 25 + 15
+        // if (isOut) return
         return (
           <>
             <Seat
