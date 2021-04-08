@@ -1,15 +1,27 @@
-import React, { Fragment, memo, useState } from "react"
-import { Stage, Layer, FastLayer, Text, Circle } from "react-konva"
-import Konva from "konva"
+import React, { Fragment, memo, useState } from "react";
+import { Stage, Layer, FastLayer, Text, Circle } from "react-konva";
+import Konva from "konva";
 
-import Row from "./Row"
-import logo from "./loader.gif"
-const MAX_SEATS = 21
-const SEAT_LENGTH = 22
-const SRMC = true
-const xL = true
+import Row from "./Row";
+import logo from "./loader.gif";
+const MAX_SEATS = 21;
+const SEAT_LENGTH = 22;
+const SRMC = true;
+const xL = true;
 
-const TEXT_OFFSET = -5
+const TEXT_OFFSET = -5;
+let lastDist = 0;
+let lastCenter = 0;
+function getDistance(p1, p2) {
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+}
+
+function getCenter(p1, p2) {
+  return {
+    x: (p1.x + p2.x) / 2,
+    y: (p1.y + p2.y) / 2,
+  };
+}
 
 const MainStage = memo(
   (props) => {
@@ -205,49 +217,102 @@ const MainStage = memo(
         },
         row: "A",
       },
-    ]
-    let selectedSeats = []
-    const stageRef = React.useRef(null)
-    const layerRef = React.useRef(null)
-    const [useView, setView] = useState({ x: 0, y: 0 })
+    ];
+    let selectedSeats = [];
+    const stageRef = React.useRef(null);
+    const layerRef = React.useRef(null);
+    const [useView, setView] = useState({ x: 0, y: 0 });
 
     const calculateWidth = () => {
       if (!SRMC) {
-        const lastR = seatData[seatData.length - 1]
-        const l = lastR.seats.length
-        const coor = lastR.seats[l - 1].coordinates.x
-        return coor
-      } else return 0
-    }
+        const lastR = seatData[seatData.length - 1];
+        const l = lastR.seats.length;
+        const coor = lastR.seats[l - 1].coordinates.x;
+        return coor;
+      } else return 0;
+    };
 
     const handleSelect = (name, pos) => {
-      selectedSeats.push(name)
-      props.setSeats(selectedSeats)
-    }
+      selectedSeats.push(name);
+      props.setSeats(selectedSeats);
+    };
     const handleDeselect = (name, pos) => {
-      selectedSeats.splice(selectedSeats.indexOf(name), 1)
-      props.setSeats(selectedSeats)
-    }
+      selectedSeats.splice(selectedSeats.indexOf(name), 1);
+      props.setSeats(selectedSeats);
+    };
 
     const handleDragEnd = (e) => {
       setView({
         x: -e.target.x(),
         y: -e.target.y(),
-      })
-    }
+      });
+    };
 
-    const handleTouch = (e) => {
-      e.evt.preventDefault()
-      const touch1 = e.evt.touches[0]
-      const touch2 = e.evt.touches[1]
+    function handleTouch(e) {
+      e.evt.preventDefault();
+      var touch1 = e.evt.touches[0];
+      var touch2 = e.evt.touches[1];
+      const stage = stageRef.current;
+      if (stage !== null) {
+        if (touch1 && touch2) {
+          if (stage.isDragging()) {
+            stage.stopDrag();
+          }
 
-      console.log(touch1, touch2)
+          var p1 = {
+            x: touch1.clientX,
+            y: touch1.clientY,
+          };
+          var p2 = {
+            x: touch2.clientX,
+            y: touch2.clientY,
+          };
 
-      if (touch1 && touch2) {
+          if (!lastCenter) {
+            lastCenter = getCenter(p1, p2);
+            return;
+          }
+          var newCenter = getCenter(p1, p2);
+
+          var dist = getDistance(p1, p2);
+
+          if (!lastDist) {
+            lastDist = dist;
+          }
+
+          // local coordinates of center point
+          var pointTo = {
+            x: (newCenter.x - stage.x()) / stage.scaleX(),
+            y: (newCenter.y - stage.y()) / stage.scaleX(),
+          };
+
+          var scale = stage.scaleX() * (dist / lastDist);
+
+          stage.scaleX(scale);
+          stage.scaleY(scale);
+
+          // calculate new position of the stage
+          var dx = newCenter.x - lastCenter.x;
+          var dy = newCenter.y - lastCenter.y;
+
+          var newPos = {
+            x: newCenter.x - pointTo.x * scale + dx,
+            y: newCenter.y - pointTo.y * scale + dy,
+          };
+
+          stage.position(newPos);
+          stage.batchDraw();
+
+          lastDist = dist;
+          lastCenter = newCenter;
+        }
       }
     }
 
-    const handleTouchEnd = (e) => {}
+    function handleTouchEnd() {
+      lastCenter = null;
+      lastDist = 0;
+    }
 
     // if (layerRef.current) {
     //   console.log(layerRef.current.getChildren())
@@ -255,9 +320,9 @@ const MainStage = memo(
 
     React.useEffect(() => {
       if (useView.x > 0 || useView.y > 0) {
-        stageRef.current.children.cache()
+        stageRef.current.children.cache();
       }
-    }, [useView])
+    }, [useView]);
 
     return (
       <div
@@ -302,17 +367,17 @@ const MainStage = memo(
                     select={handleSelect}
                     deselect={handleDeselect}
                   />
-                )
+                );
               })}
             </Fragment>
           </Layer>
         </Stage>
       </div>
-    )
+    );
   },
   (a, b) => {
-    return a.data === b.data
+    return a.data === b.data;
   }
-)
+);
 
-export default MainStage
+export default MainStage;
