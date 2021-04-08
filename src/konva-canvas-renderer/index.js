@@ -257,6 +257,7 @@ const MainStage = memo(
 
     function handleTouch(e) {
       e.evt.preventDefault();
+      Konva.hitOnDragEnabled = true;
       var touch1 = e.evt.touches[0];
       var touch2 = e.evt.touches[1];
       const stage = stageRef.current;
@@ -353,7 +354,7 @@ const MainStage = memo(
           //   height={500}
           scaleX={1}
           scaleY={1}
-          draggable
+          draggable={true}
           //onDragEnd={handleDragEnd}
           onTouchMove={handleTouch}
           onTouchEnd={handleTouchEnd}

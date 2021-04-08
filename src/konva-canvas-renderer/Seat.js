@@ -1,14 +1,14 @@
-import React, { Fragment } from "react"
-import { Circle, Text } from "react-konva"
-const TEXT_OFFSET = -5
+import React, { Fragment } from "react";
+import { Circle, Text } from "react-konva";
+const TEXT_OFFSET = -5;
 
 const Seat = (props) => {
-  const { coordinates, name, number, select, deselect, status } = props
-  const { x, y } = coordinates
-  const currX = x
-  const currY = y
-  const [isSelected, setSelected] = React.useState(false)
-  const seatRef = React.useRef(null)
+  const { coordinates, name, number, select, deselect, status } = props;
+  const { x, y } = coordinates;
+  const currX = x;
+  const currY = y;
+  const [isSelected, setSelected] = React.useState(false);
+  const seatRef = React.useRef(null);
 
   return status ? (
     <Fragment>
@@ -30,9 +30,9 @@ const Seat = (props) => {
         stroke={isSelected ? "white" : "green"}
         strokeWidth={1}
         ref={seatRef}
-        onClick={(e) => {
-          setSelected(!isSelected)
-          isSelected ? deselect(name) : select(name)
+        onTap={(e) => {
+          setSelected(!isSelected);
+          isSelected ? deselect(name) : select(name);
         }}
       />
       {isSelected ? (
@@ -45,7 +45,7 @@ const Seat = (props) => {
         />
       ) : null}
     </Fragment>
-  ) : null
-}
+  ) : null;
+};
 
-export default Seat
+export default Seat;
