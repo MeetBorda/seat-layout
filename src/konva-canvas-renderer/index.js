@@ -17,13 +17,6 @@ function getDistance(p1, p2) {
   return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 }
 
-function isTouchEnabled() {
-  return (
-    "ontouchstart" in window ||
-    navigator.maxTouchPoints > 0 ||
-    navigator.msMaxTouchPoints > 0
-  )
-}
 function getCenter(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
@@ -235,6 +228,8 @@ const MainStage = memo(
     const layerRefStatic = React.useRef(null)
     const stageRef2 = React.useRef(null)
 
+    const selectedSeatsRef = React.useRef({})
+
     const calculateWidth = () => {
       if (!SRMC) {
         const lastR = seatData[seatData.length - 1]
@@ -254,6 +249,8 @@ const MainStage = memo(
     }
 
     const handleCanvasDraw = () => {
+      Konva.hitOnDragEnabled = true
+
       stageRef2.current = new Konva.Stage({
         container: "container",
         width: window.innerWidth,
@@ -266,7 +263,9 @@ const MainStage = memo(
 
       layerRefStatic.current.listening(false)
 
-      const layersArr = []
+      const stage = stageRef2.current
+      const layer = layerRef2.current
+      const staticLayer = layerRefStatic.current
 
       seatData.forEach((seatRow) => {
         const { seats, row } = seatRow
@@ -274,17 +273,16 @@ const MainStage = memo(
         const currX = seats[0].coordinates.x //
         const currY = seats[0].coordinates.y //
 
-        // layersArr.push()
+        const rowText = new Konva.Text({
+          x: currX - 30,
+          y: currY - 10,
+          text: row,
+          fontSize: 15,
+          listening: false,
+          perfectDrawEnabled: false,
+        })
 
-        // const rowText = new Konva.Text({
-        //   x: currX - 30,
-        //   y: currY - 10,
-        //   text: row,
-        //   fontSize: 15,
-        //  listening: false
-        // })
-
-        // layerRefStatic.current.add(rowText)
+        staticLayer.add(rowText)
 
         seats.forEach((seat, seatIndex) => {
           const { coordinates, number, name } = seat
@@ -294,7 +292,7 @@ const MainStage = memo(
             width: 25,
             height: 25,
             stroke: "green",
-            fill: "white",
+            fill: "transparent",
             strokeWidth: 0.5,
             cornerRadius: 3,
             perfectDrawEnabled: false,
@@ -303,95 +301,109 @@ const MainStage = memo(
             seatProps: seat,
           })
 
-          layerRef2.current.add(seatRect)
+          seatRect.on("click tap", (e) => {
+            const isAlreadySelected =
+              selectedSeatsRef.current[e.target.attrs.seatProps.name]
 
-          //   const seatText = new Konva.Text({
-          //     x: coordinates.x - 5,
-          //     y: coordinates.y - 5,
-          //     text: number,
-          //     fontSize: 15,
-          //  listening: false
-          //   })
+            if (!isAlreadySelected) {
+              selectedSeatsRef.current[e.target.attrs.seatProps.name] = true
+            } else {
+              delete selectedSeatsRef.current[e.target.attrs.seatProps.name]
+            }
 
-          //   layerRefStatic.current.add(seatText)
+            e.target.fill(isAlreadySelected ? "transparent" : "red")
+            e.target.draw()
+          })
+
+          layer.add(seatRect)
+
+          const seatText = new Konva.Text({
+            x: coordinates.x - 4,
+            y: coordinates.y - 4,
+            text: number,
+            fontSize: 10,
+            listening: false,
+            perfectDrawEnabled: false,
+          })
+
+          staticLayer.add(seatText)
         })
       })
 
-      //   stageRef2.current.add(layerRefStatic.current)
-      stageRef2.current.add(layerRef2.current)
+      stage.add(staticLayer)
+      stage.add(layer)
 
-      layerRef2.current.draw()
-
-      cacheChildren()
-      //   layerRefStatic.current.draw()
+      staticLayer.draw()
+      layer.draw()
 
       //   event listeners //
+      stage.on("touchmove", function (e) {
+        e.evt.preventDefault()
+        var touch1 = e.evt.touches[0]
+        var touch2 = e.evt.touches[1]
 
-      //   stage.on("touchmove", function (e) {
-      //     e.evt.preventDefault()
-      //     var touch1 = e.evt.touches[0]
-      //     var touch2 = e.evt.touches[1]
+        if (touch1 && touch2) {
+          // if the stage was under Konva's drag&drop
+          // we need to stop it, and implement our own pan logic with two pointers
+          if (stage.isDragging()) {
+            stage.stopDrag()
+          }
 
-      //     if (touch1 && touch2) {
-      //       // if the stage was under Konva's drag&drop
-      //       // we need to stop it, and implement our own pan logic with two pointers
-      //       if (stage.isDragging()) {
-      //         stage.stopDrag()
-      //       }
+          var p1 = {
+            x: touch1.clientX,
+            y: touch1.clientY,
+          }
+          var p2 = {
+            x: touch2.clientX,
+            y: touch2.clientY,
+          }
 
-      //       var p1 = {
-      //         x: touch1.clientX,
-      //         y: touch1.clientY,
-      //       }
-      //       var p2 = {
-      //         x: touch2.clientX,
-      //         y: touch2.clientY,
-      //       }
+          if (!lastCenter) {
+            lastCenter = getCenter(p1, p2)
+            return
+          }
+          var newCenter = getCenter(p1, p2)
 
-      //       if (!lastCenter) {
-      //         lastCenter = getCenter(p1, p2)
-      //         return
-      //       }
-      //       var newCenter = getCenter(p1, p2)
+          var dist = getDistance(p1, p2)
 
-      //       var dist = getDistance(p1, p2)
+          if (!lastDist) {
+            lastDist = dist
+          }
 
-      //       if (!lastDist) {
-      //         lastDist = dist
-      //       }
+          // local coordinates of center point
+          var pointTo = {
+            x: (newCenter.x - stage.x()) / stage.scaleX(),
+            y: (newCenter.y - stage.y()) / stage.scaleX(),
+          }
 
-      //       // local coordinates of center point
-      //       var pointTo = {
-      //         x: (newCenter.x - stage.x()) / stage.scaleX(),
-      //         y: (newCenter.y - stage.y()) / stage.scaleX(),
-      //       }
+          var scale = stage.scaleX() * (dist / lastDist)
 
-      //       var scale = stage.scaleX() * (dist / lastDist)
+          stage.scaleX(scale)
+          stage.scaleY(scale)
 
-      //       stage.scaleX(scale)
-      //       stage.scaleY(scale)
+          // calculate new position of the stage
+          var dx = newCenter.x - lastCenter.x
+          var dy = newCenter.y - lastCenter.y
 
-      //       // calculate new position of the stage
-      //       var dx = newCenter.x - lastCenter.x
-      //       var dy = newCenter.y - lastCenter.y
+          var newPos = {
+            x: newCenter.x - pointTo.x * scale + dx,
+            y: newCenter.y - pointTo.y * scale + dy,
+          }
 
-      //       var newPos = {
-      //         x: newCenter.x - pointTo.x * scale + dx,
-      //         y: newCenter.y - pointTo.y * scale + dy,
-      //       }
+          stage.position(newPos)
+          stage.batchDraw()
 
-      //       stage.position(newPos)
-      //       stage.batchDraw()
+          lastDist = dist
+          lastCenter = newCenter
+        }
+      })
 
-      //       lastDist = dist
-      //       lastCenter = newCenter
-      //     }
-      //   })
+      stage.on("touchend", function () {
+        lastDist = 0
+        lastCenter = null
+      })
 
-      //   stage.on("touchend", function () {
-      //     lastDist = 0
-      //     lastCenter = null
-      //   })
+      cacheChildren()
     }
 
     const cacheChildren = () => {
@@ -406,12 +418,6 @@ const MainStage = memo(
         handleCanvasDraw()
       }
     }, [props.data])
-
-    React.useEffect(() => {
-      if (useView.x > 0 || useView.y > 0) {
-        stageRef.current.children.cache()
-      }
-    }, [useView])
 
     return (
       <div
