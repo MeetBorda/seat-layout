@@ -305,6 +305,7 @@ const MainStage = memo(
             const isAlreadySelected =
               selectedSeatsRef.current[e.target.attrs.seatProps.name]
 
+            console.log(1111)
             if (!isAlreadySelected) {
               selectedSeatsRef.current[e.target.attrs.seatProps.name] = true
             } else {
