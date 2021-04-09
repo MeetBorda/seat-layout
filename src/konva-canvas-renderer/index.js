@@ -289,8 +289,8 @@ const MainStage = memo(
           const seatRect = new Konva.Circle({
             x: coordinates.x,
             y: coordinates.y,
-            width: 25,
-            height: 25,
+            width: 20,
+            height: 20,
             stroke: "green",
             fill: "transparent",
             strokeWidth: 0.5,
@@ -311,8 +311,10 @@ const MainStage = memo(
               delete selectedSeatsRef.current[e.target.attrs.seatProps.name]
             }
 
+            clearCacheExtensively()
             e.target.fill(isAlreadySelected ? "transparent" : "red")
             e.target.draw()
+            cacheChildren()
           })
 
           layer.add(seatRect)
@@ -406,10 +408,25 @@ const MainStage = memo(
       cacheChildren()
     }
 
+    const clearCacheExtensively = () => {
+      const canvasLayerElements = stageRef2.current.getLayers()
+      for (let i = 0; i < canvasLayerElements.length; i += 1) {
+        const cachedCanvases = canvasLayerElements[i]._cache.get("canvas")
+        if (cachedCanvases) {
+          cachedCanvases.scene._canvas.width = 0
+          cachedCanvases.scene._canvas.height = 0
+          cachedCanvases.hit._canvas.width = 0
+          cachedCanvases.hit._canvas.height = 0
+          cachedCanvases.filter._canvas.width = 0
+          cachedCanvases.filter._canvas.height = 0
+          canvasLayerElements[i].clearCache()
+        }
+      }
+    }
+
     const cacheChildren = () => {
       // clearTimeout(this.cacheTimer);
       stageRef2.current.children.cache()
-
       // this.cacheExists = true;
     }
 
