@@ -31,6 +31,7 @@ const Seat = (props) => {
         strokeWidth={1}
         ref={seatRef}
         onTap={(e) => {
+          console.log(e)
           setSelected(!isSelected);
           isSelected ? deselect(name) : select(name);
         }}

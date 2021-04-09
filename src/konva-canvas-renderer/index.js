@@ -2,7 +2,7 @@ import React, { Fragment, memo, useState } from "react";
 import { Stage, Layer, FastLayer, Text, Circle } from "react-konva";
 import Konva from "konva";
 
-import Row from "./Row";
+import Seat from "./Seat";
 import logo from "./loader.gif";
 const MAX_SEATS = 21;
 const SEAT_LENGTH = 22;
@@ -228,8 +228,12 @@ const MainStage = memo(
     let selectedSeats = [];
     const stageRef = React.useRef(null);
     const layerRef = React.useRef(null);
+    const staticLayerRef = React.useRef(null);
     const [useView, setView] = useState({ x: 0, y: 0 });
-
+    const [layerData, setLayerData] = useState({
+      renderStatic: [],
+      renderDynamic: [],
+    });
     const calculateWidth = () => {
       if (!SRMC) {
         const lastR = seatData[seatData.length - 1];
@@ -325,12 +329,48 @@ const MainStage = memo(
     // if (layerRef.current) {
     //   console.log(layerRef.current.getChildren())
     // }
+    const formatLayer = () => {
+      const staticFill = [];
+      const dynamicFill = [];
+
+      seatData.forEach((seatRow) => {
+        const { seats, row } = seatRow;
+
+        const currX = seats[0].coordinates.x; //
+        const currY = seats[0].coordinates.y; //
+
+        staticFill.push(<Text x={currX - 30} y={currY - 10} text={row} />);
+
+        seats.forEach((seat, seatIndex) => {
+          const { coordinates, number, name, centerPoint } = seat;
+          dynamicFill.push(
+            <Seat
+              key={`${seat.coordinates.x}_${seatIndex}`}
+              {...seat}
+              startPoint={currX}
+              centerPoint={centerPoint}
+              select={handleSelect}
+              deselect={handleDeselect}
+            />
+          );
+        });
+      });
+
+      setLayerData({
+        renderStatic: staticFill,
+        renderDynamic: dynamicFill,
+      });
+      stageRef.current.children.cache();
+    };
 
     React.useEffect(() => {
-      if (useView.x > 0 || useView.y > 0) {
-        stageRef.current.children.cache();
+      if (props.data) {
+        formatLayer();
       }
-    }, [useView]);
+      // if (useView.x > 0 || useView.y > 0) {
+      //   stageRef.current.children.cache();
+      // }
+    }, [props.data]);
 
     return (
       <div
@@ -360,12 +400,13 @@ const MainStage = memo(
           onTouchEnd={handleTouchEnd}
         >
           <Layer ref={layerRef} offsetY={0} offsetX={0}>
-            <Fragment>
-              {seatData.map((e, i) => {
-                // const isOut = i > (window.innerHeight + useView.y) / 25
-
-                // if (isOut) return null
-
+            {layerData.renderDynamic}
+          </Layer>
+          <Layer ref={staticLayerRef} listening={false}>
+            {layerData.renderStatic}
+          </Layer>
+          {/*   <Fragment>
+             {seatData.map((e, i) => {
                 return (
                   <Row
                     {...e}
@@ -377,8 +418,7 @@ const MainStage = memo(
                   />
                 );
               })}
-            </Fragment>
-          </Layer>
+            </Fragment> */}
         </Stage>
       </div>
     );
