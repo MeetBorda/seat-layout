@@ -1,27 +1,27 @@
-import React, { Fragment, memo, useState } from "react"
-import { Stage, Layer, FastLayer, Text, Circle } from "react-konva"
-import Konva from "konva"
+import React, { Fragment, memo, useState } from "react";
+import { Stage, Layer, FastLayer, Text, Circle } from "react-konva";
+import Konva from "konva";
 
-import Row from "./Row"
-import logo from "./loader.gif"
-const MAX_SEATS = 21
-const SEAT_LENGTH = 22
-const SRMC = true
-const xL = true
+import Row from "./Row";
+import logo from "./loader.gif";
+const MAX_SEATS = 21;
+const SEAT_LENGTH = 22;
+const SRMC = true;
+const xL = true;
 
-const TEXT_OFFSET = -5
-let lastDist = 0
-let lastCenter = 0
+const TEXT_OFFSET = -5;
+let lastDist = 0;
+let lastCenter = 0;
 
 function getDistance(p1, p2) {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
 }
 
 function getCenter(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
     y: (p1.y + p2.y) / 2,
-  }
+  };
 }
 
 const MainStage = memo(
@@ -218,60 +218,60 @@ const MainStage = memo(
         },
         row: "A",
       },
-    ]
-    let selectedSeats = []
-    const stageRef = React.useRef(null)
-    const layerRef = React.useRef(null)
-    const [useView, setView] = useState({ x: 0, y: 0 })
+    ];
+    let selectedSeats = [];
+    const stageRef = React.useRef(null);
+    const layerRef = React.useRef(null);
+    const [useView, setView] = useState({ x: 0, y: 0 });
 
-    const layerRef2 = React.useRef(null)
-    const layerRefStatic = React.useRef(null)
-    const stageRef2 = React.useRef(null)
+    const layerRef2 = React.useRef(null);
+    const layerRefStatic = React.useRef(null);
+    const stageRef2 = React.useRef(null);
 
-    const selectedSeatsRef = React.useRef({})
+    const selectedSeatsRef = React.useRef({});
 
     const calculateWidth = () => {
       if (!SRMC) {
-        const lastR = seatData[seatData.length - 1]
-        const l = lastR.seats.length
-        const coor = lastR.seats[l - 1].coordinates.x
-        return coor
-      } else return 0
-    }
+        const lastR = seatData[seatData.length - 1];
+        const l = lastR.seats.length;
+        const coor = lastR.seats[l - 1].coordinates.x;
+        return coor;
+      } else return 0;
+    };
 
     const handleSelect = (name, pos) => {
-      selectedSeats.push(name)
-      props.setSeats(selectedSeats)
-    }
+      selectedSeats.push(name);
+      props.setSeats(selectedSeats);
+    };
     const handleDeselect = (name, pos) => {
-      selectedSeats.splice(selectedSeats.indexOf(name), 1)
-      props.setSeats(selectedSeats)
-    }
+      selectedSeats.splice(selectedSeats.indexOf(name), 1);
+      props.setSeats(selectedSeats);
+    };
 
     const handleCanvasDraw = () => {
-      Konva.hitOnDragEnabled = true
+      Konva.hitOnDragEnabled = true;
 
       stageRef2.current = new Konva.Stage({
         container: "container",
         width: window.innerWidth,
         height: window.innerHeight,
         draggable: true,
-      })
+      });
 
-      layerRef2.current = new Konva.Layer()
-      layerRefStatic.current = new Konva.Layer()
+      layerRef2.current = new Konva.Layer();
+      layerRefStatic.current = new Konva.Layer();
 
-      layerRefStatic.current.listening(false)
+      layerRefStatic.current.listening(false);
 
-      const stage = stageRef2.current
-      const layer = layerRef2.current
-      const staticLayer = layerRefStatic.current
+      const stage = stageRef2.current;
+      const layer = layerRef2.current;
+      const staticLayer = layerRefStatic.current;
 
       seatData.forEach((seatRow) => {
-        const { seats, row } = seatRow
+        const { seats, row } = seatRow;
 
-        const currX = seats[0].coordinates.x //
-        const currY = seats[0].coordinates.y //
+        const currX = seats[0].coordinates.x; //
+        const currY = seats[0].coordinates.y; //
 
         const rowText = new Konva.Text({
           x: currX - 30,
@@ -280,12 +280,12 @@ const MainStage = memo(
           fontSize: 15,
           listening: false,
           perfectDrawEnabled: false,
-        })
+        });
 
-        staticLayer.add(rowText)
+        staticLayer.add(rowText);
 
         seats.forEach((seat, seatIndex) => {
-          const { coordinates, number, name } = seat
+          const { coordinates, number, name } = seat;
           const seatRect = new Konva.Circle({
             x: coordinates.x,
             y: coordinates.y,
@@ -299,25 +299,28 @@ const MainStage = memo(
             // transformsEnabled: "position",
             name: `seat-rect-${coordinates.x}-${coordinates.y}`,
             seatProps: seat,
-          })
+          });
 
-          seatRect.on("click tap", (e) => {
-            const isAlreadySelected =
-              selectedSeatsRef.current[e.target.attrs.seatProps.name]
+          // seatRect.on("click tap", (e) => {
+          //   const isAlreadySelected =
+          //     selectedSeatsRef.current[e.target.attrs.seatProps.name];
 
-            if (!isAlreadySelected) {
-              selectedSeatsRef.current[e.target.attrs.seatProps.name] = true
-            } else {
-              delete selectedSeatsRef.current[e.target.attrs.seatProps.name]
-            }
+          //   if (!isAlreadySelected) {
+          //     selectedSeatsRef.current[e.target.attrs.seatProps.name] = true;
+          //   } else {
+          //     delete selectedSeatsRef.current[e.target.attrs.seatProps.name];
+          //   }
 
-            clearCacheExtensively()
-            e.target.fill(isAlreadySelected ? "transparent" : "red")
-            e.target.draw()
-            cacheChildren()
-          })
+          //   clearCacheExtensively();
+          //   console.log(layer._cache)
+          //   e.target.fill(isAlreadySelected ? "transparent" : "red");
+          //   e.target.draw();
+          //   cacheChildren();
 
-          layer.add(seatRect)
+          //   console.log(e);
+          // });
+
+          layer.add(seatRect);
 
           const seatText = new Konva.Text({
             x: coordinates.x - 4,
@@ -326,115 +329,115 @@ const MainStage = memo(
             fontSize: 10,
             listening: false,
             perfectDrawEnabled: false,
-          })
+          });
 
-          staticLayer.add(seatText)
-        })
-      })
+          staticLayer.add(seatText);
+        });
+      });
 
-      stage.add(staticLayer)
-      stage.add(layer)
+      stage.add(staticLayer);
+      stage.add(layer);
 
-      staticLayer.draw()
-      layer.draw()
+      staticLayer.draw();
+      layer.draw();
 
       //   event listeners //
       stage.on("touchmove", function (e) {
-        e.evt.preventDefault()
-        var touch1 = e.evt.touches[0]
-        var touch2 = e.evt.touches[1]
+        e.evt.preventDefault();
+        var touch1 = e.evt.touches[0];
+        var touch2 = e.evt.touches[1];
 
         if (touch1 && touch2) {
           // if the stage was under Konva's drag&drop
           // we need to stop it, and implement our own pan logic with two pointers
           if (stage.isDragging()) {
-            stage.stopDrag()
+            stage.stopDrag();
           }
 
           var p1 = {
             x: touch1.clientX,
             y: touch1.clientY,
-          }
+          };
           var p2 = {
             x: touch2.clientX,
             y: touch2.clientY,
-          }
+          };
 
           if (!lastCenter) {
-            lastCenter = getCenter(p1, p2)
-            return
+            lastCenter = getCenter(p1, p2);
+            return;
           }
-          var newCenter = getCenter(p1, p2)
+          var newCenter = getCenter(p1, p2);
 
-          var dist = getDistance(p1, p2)
+          var dist = getDistance(p1, p2);
 
           if (!lastDist) {
-            lastDist = dist
+            lastDist = dist;
           }
 
           // local coordinates of center point
           var pointTo = {
             x: (newCenter.x - stage.x()) / stage.scaleX(),
             y: (newCenter.y - stage.y()) / stage.scaleX(),
-          }
+          };
 
-          var scale = stage.scaleX() * (dist / lastDist)
+          var scale = stage.scaleX() * (dist / lastDist);
 
-          stage.scaleX(scale)
-          stage.scaleY(scale)
+          stage.scaleX(scale);
+          stage.scaleY(scale);
 
           // calculate new position of the stage
-          var dx = newCenter.x - lastCenter.x
-          var dy = newCenter.y - lastCenter.y
+          var dx = newCenter.x - lastCenter.x;
+          var dy = newCenter.y - lastCenter.y;
 
           var newPos = {
             x: newCenter.x - pointTo.x * scale + dx,
             y: newCenter.y - pointTo.y * scale + dy,
-          }
+          };
 
-          stage.position(newPos)
-          stage.batchDraw()
+          stage.position(newPos);
+          stage.batchDraw();
 
-          lastDist = dist
-          lastCenter = newCenter
+          lastDist = dist;
+          lastCenter = newCenter;
         }
-      })
+      });
 
       stage.on("touchend", function () {
-        lastDist = 0
-        lastCenter = null
-      })
+        lastDist = 0;
+        lastCenter = null;
+      });
 
-      cacheChildren()
-    }
+      cacheChildren();
+    };
 
-    const clearCacheExtensively = () => {
-      const canvasLayerElements = stageRef2.current.getLayers()
+    const clearCacheExtensively = async () => {
+      const canvasLayerElements = stageRef2.current.getLayers();
       for (let i = 0; i < canvasLayerElements.length; i += 1) {
-        const cachedCanvases = canvasLayerElements[i]._cache.get("canvas")
+        const cachedCanvases = canvasLayerElements[i]._cache.get("canvas");
         if (cachedCanvases) {
-          cachedCanvases.scene._canvas.width = 0
-          cachedCanvases.scene._canvas.height = 0
-          cachedCanvases.hit._canvas.width = 0
-          cachedCanvases.hit._canvas.height = 0
-          cachedCanvases.filter._canvas.width = 0
-          cachedCanvases.filter._canvas.height = 0
-          canvasLayerElements[i].clearCache()
+          cachedCanvases.scene._canvas.width = 0;
+          cachedCanvases.scene._canvas.height = 0;
+          cachedCanvases.hit._canvas.width = 0;
+          cachedCanvases.hit._canvas.height = 0;
+          cachedCanvases.filter._canvas.width = 0;
+          cachedCanvases.filter._canvas.height = 0;
+          canvasLayerElements[i].clearCache();
         }
       }
-    }
+    };
 
     const cacheChildren = () => {
       // clearTimeout(this.cacheTimer);
-      stageRef2.current.children.cache()
+      stageRef2.current.children.cache();
       // this.cacheExists = true;
-    }
+    };
 
     React.useEffect(() => {
       if (props.data.length > 0) {
-        handleCanvasDraw()
+        handleCanvasDraw();
       }
-    }, [props.data])
+    }, [props.data]);
 
     return (
       <div
@@ -450,11 +453,11 @@ const MainStage = memo(
       >
         <div id="container" />
       </div>
-    )
+    );
   },
   (a, b) => {
-    return a.data === b.data
+    return a.data === b.data;
   }
-)
+);
 
-export default MainStage
+export default MainStage;
