@@ -13,6 +13,10 @@ const TEXT_OFFSET = -5
 let lastDist = 0
 let lastCenter = 0
 
+let hasDrawed = false
+let xOff = 0
+let yOff = 0
+
 function getDistance(p1, p2) {
   return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 }
@@ -267,77 +271,33 @@ const MainStage = memo(
       const layer = layerRef2.current
       const staticLayer = layerRefStatic.current
 
-      seatData.forEach((seatRow) => {
-        const { seats, row } = seatRow
-
-        const currX = seats[0].coordinates.x //
-        const currY = seats[0].coordinates.y //
-
-        const rowText = new Konva.Text({
-          x: currX - 30,
-          y: currY - 10,
-          text: row,
-          fontSize: 15,
-          listening: false,
-          perfectDrawEnabled: false,
-        })
-
-        staticLayer.add(rowText)
-
-        seats.forEach((seat, seatIndex) => {
-          const { coordinates, number, name } = seat
-          const seatRect = new Konva.Circle({
-            x: coordinates.x,
-            y: coordinates.y,
-            width: 20,
-            height: 20,
-            stroke: "green",
-            fill: "transparent",
-            strokeWidth: 0.5,
-            cornerRadius: 3,
-            perfectDrawEnabled: false,
-            // transformsEnabled: "position",
-            name: `seat-rect-${coordinates.x}-${coordinates.y}`,
-            seatProps: seat,
-          })
-
-          seatRect.on("click tap", (e) => {
-            const isAlreadySelected =
-              selectedSeatsRef.current[e.target.attrs.seatProps.name]
-
-            console.log(1111)
-            if (!isAlreadySelected) {
-              selectedSeatsRef.current[e.target.attrs.seatProps.name] = true
-            } else {
-              delete selectedSeatsRef.current[e.target.attrs.seatProps.name]
-            }
-
-            clearCacheExtensively()
-            e.target.fill(isAlreadySelected ? "transparent" : "red")
-            e.target.draw()
-            cacheChildren()
-          })
-
-          layer.add(seatRect)
-
-          const seatText = new Konva.Text({
-            x: coordinates.x - 4,
-            y: coordinates.y - 4,
-            text: number,
-            fontSize: 10,
-            listening: false,
-            perfectDrawEnabled: false,
-          })
-
-          staticLayer.add(seatText)
-        })
-      })
-
       stage.add(staticLayer)
       stage.add(layer)
 
+      drawChildren()
       staticLayer.draw()
       layer.draw()
+
+      layer.on("click tap", (e) => {
+        const { name, seatProps = {}, x, y, fill } = e.target.attrs
+        const seat = e.target
+
+        clearCacheExtensively()
+
+        const isAlreadySelected = selectedSeatsRef.current[seatProps.name]
+
+        if (!isAlreadySelected) {
+          selectedSeatsRef.current[seatProps.name] = true
+        } else {
+          delete selectedSeatsRef.current[seatProps.name]
+        }
+
+        seat.fill && seat.fill(isAlreadySelected ? "transparent" : "red")
+        seat.draw && seat.draw()
+
+        // cacheChildren()
+        // drawChildren()
+      })
 
       //   event listeners //
       stage.on("touchmove", function (e) {
@@ -406,6 +366,119 @@ const MainStage = memo(
         lastCenter = null
       })
 
+      stage.on("dragend", function (e) {
+        setView({
+          x: -e.target.x(),
+          y: -e.target.y(),
+        })
+        xOff = -e.target.x()
+        yOff = -e.target.y()
+        redrawStuff()
+      })
+
+      hasDrawed = true
+      cacheChildren()
+    }
+
+    const drawChildren = () => {
+      const stage = stageRef2.current
+      const layer = layerRef2.current
+      const staticLayer = layerRefStatic.current
+
+      console.log("drawing")
+      seatData.forEach((seatRow, i) => {
+        const isOut = i > (window.innerHeight + yOff) / 20
+
+        if (isOut) {
+          return
+        }
+
+        const { seats, row } = seatRow
+
+        const currX = seats[0].coordinates.x //
+        const currY = seats[0].coordinates.y //
+
+        // const rowText = new Konva.Text({
+        //   x: currX - 30,
+        //   y: currY - 10,
+        //   text: row,
+        //   fontSize: 15,
+        //   listening: false,
+        //   perfectDrawEnabled: false,
+        // })
+
+        // staticLayer.add(rowText)
+
+        seats.forEach((seat, seatIndex) => {
+          const isOut = seatIndex > (window.innerWidth + xOff) / 25
+
+          //   if (isOut) return
+
+          if (isOut) {
+            return
+          }
+
+          const { coordinates, number, name } = seat
+          const seatRect = new Konva.Circle({
+            x: Math.floor(coordinates.x),
+            y: Math.floor(coordinates.y),
+            width: 20,
+            height: 20,
+            stroke: "green",
+            fill: "transparent",
+            strokeWidth: 0.5,
+            cornerRadius: 3,
+            perfectDrawEnabled: false,
+            // transformsEnabled: "position",
+            name: `seat-rect-${coordinates.x}-${coordinates.y}`,
+            seatProps: seat,
+          })
+
+          //   if (seatIndex < 500) {
+          //     seatRect.cache()
+          //   }
+
+          //   seatRect.on("click tap", (e) => {
+          //     const isAlreadySelected =
+          //       selectedSeatsRef.current[e.target.attrs.seatProps.name]
+
+          //     console.log(1111)
+          //     if (!isAlreadySelected) {
+          //       selectedSeatsRef.current[e.target.attrs.seatProps.name] = true
+          //     } else {
+          //       delete selectedSeatsRef.current[e.target.attrs.seatProps.name]
+          //     }
+
+          //     clearCacheExtensively()
+          //     e.target.fill(isAlreadySelected ? "transparent" : "red")
+          //     e.target.draw()
+          //     cacheChildren()
+          //   })
+          const seatText = new Konva.Text({
+            x: coordinates.x - 4,
+            y: coordinates.y - 4,
+            text: number,
+            fontSize: 10,
+            listening: false,
+            perfectDrawEnabled: false,
+          })
+
+          staticLayer.add(seatText)
+
+          layer.add(seatRect)
+        })
+      })
+    }
+
+    const redrawStuff = () => {
+      //   clearCacheExtensively()
+      //   layerRef2.current.destroyChildren()
+      //   drawChildren()
+      //   cacheChildren()
+      //   console.log(layerRef2.current.children)
+      layerRef2.current.destroyChildren()
+      layerRefStatic.current.destroyChildren()
+      drawChildren()
       cacheChildren()
     }
 
@@ -426,16 +499,33 @@ const MainStage = memo(
     }
 
     const cacheChildren = () => {
-      // clearTimeout(this.cacheTimer);
+      //   layerRef2.current.cache()
+      //   layerRef2.current.destroyChildren()
       stageRef2.current.children.cache()
+      console.log(stageRef2.current.children)
+      //   layerRef2.current.destroyChildren()
+      //   layerRef2.current.children.cache()
+      //   console.log(layerRef2.current.children)
+      //   layerRef2.current.children.forEach((xa, ya) => {
+      //     const { attrs } = xa
+      //     const { x, y } = xa
+      //     const isOut = ya > (window.innerWidth + useView.x) / 25 + 50
+      //     if (isOut) {
+      //     } else {
+      //       //   xa.cache()
+      //     }
+      //     xa.cache()
+      //   })
       // this.cacheExists = true;
     }
 
     React.useEffect(() => {
-      if (props.data.length > 0) {
+      if (props.data.length > 0 && !hasDrawed) {
         handleCanvasDraw()
       }
     }, [props.data])
+
+    console.log(useView)
 
     return (
       <div
