@@ -44,12 +44,13 @@ function App() {
 
   const handleSeatSelect = (seat) => {
     if (seat) {
+      const seatKey = `${seat.name}-${seat.coordinates.x}-${seat.coordinates.y}`
       setSelectedSeats((p) => {
         const pClone = { ...p }
-        if (pClone[seat.name]) {
-          delete pClone[seat.name]
+        if (pClone[seatKey]) {
+          delete pClone[seatKey]
         } else {
-          pClone[seat.name] = seat
+          pClone[seatKey] = seat
         }
         return pClone
       })

@@ -202,13 +202,13 @@ const MainStage = (props) => {
             categoryGroup.clearCache()
             // selectedSeats
             const [obj1, obj2] = e.target.parent.children
-            const { seatProps } = obj1.attrs
+            const { seatProps, isSelectedSeat } = obj1.attrs
 
-            const isSelectedSeat = props.selectedSeats[seatProps.name]
+            obj1.setAttr("isSelectedSeat", !isSelectedSeat)
 
             //   add logic for isFilled
-            obj1.fill("blue").draw()
-            obj2.fill("white").draw()
+            obj1.fill(!isSelectedSeat ? "blue" : "transparent").draw()
+            obj2.fill(!isSelectedSeat ? "white" : "black").draw()
 
             //
 
@@ -244,7 +244,7 @@ const MainStage = (props) => {
               cornerRadius: 3,
               perfectDrawEnabled: false,
               name: `seat-rect-${coordinates.x}-${coordinates.y}`,
-              seatProps: seat,
+              seatProps: { ...seat, isSelectedSeat: false },
             })
 
             const seatText = new Konva.Text({
