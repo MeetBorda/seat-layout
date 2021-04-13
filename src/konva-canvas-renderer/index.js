@@ -34,26 +34,13 @@ const MainStage = memo(
   (props) => {
     const seatData = props.data || { seats: [], svgs: [] };
     let selectedSeats = [];
-    console.log(seatData);
-    const stageRef = React.useRef(null);
-    const [useView, setView] = useState({ x: 0, y: 0 });
-
     const seatBgLayerRef = React.useRef(null);
     const staticLayerRef = React.useRef(null);
-    const seatTextLayerRef = React.useRef(null);
     const stageRef2 = React.useRef(null);
-
-    const selectedSeatsRef = React.useRef({});
-
-    const calculateWidth = () => {
-      if (!SRMC) {
-        const lastR = seatData[seatData.length - 1];
-        const l = lastR.seats.length;
-        const coor = lastR.seats[l - 1].coordinates.x;
-        return coor;
-      } else return 0;
-    };
-
+    let drawStart,
+      drawEnd,
+      clickStart,
+      clickEnd = 0;
     const handleSelect = (name, pos) => {
       selectedSeats.push(name);
       props.setSeats(selectedSeats);
@@ -75,20 +62,38 @@ const MainStage = memo(
 
       seatBgLayerRef.current = new Konva.Layer();
       staticLayerRef.current = new Konva.Layer();
-      seatTextLayerRef.current = new Konva.Layer();
-      staticLayerRef.current.listening(false);
+      // staticLayerRef.current.listening(false);
 
       const stage = stageRef2.current;
       const seatBgLayer = seatBgLayerRef.current;
-      const seatTextLayer = seatTextLayerRef.current;
       const staticLayer = staticLayerRef.current;
 
       stage.add(staticLayer);
       stage.add(seatBgLayer);
-      stage.add(seatTextLayer);
       drawChildren();
+
       staticLayer.draw();
+      staticLayer.cache();
       seatBgLayer.draw();
+      drawEnd = performance.now();
+      console.log("Drawing Took" + (drawEnd - drawStart) + "ms");
+
+      // seatBgLayer.on("draw", (e) => {
+      //   clickEnd = performance.now();
+      //   console.log("Draw finished", clickEnd - clickStart);
+      // });
+      staticLayer.on("click tap", (e) => {
+        clickStart = performance.now();
+
+        console.log(e.target.parent);
+        const [obj1, obj2] = e.target.parent.children;
+        obj1.fill("green");
+        obj2.fill("white");
+        seatBgLayer.add(obj1, obj2);
+
+        // const t1 = performance.now();
+        // console.log("selection Layer took", t1 - t0);
+      });
 
       stage.on("touchmove", function (e) {
         e.evt.preventDefault();
@@ -165,9 +170,8 @@ const MainStage = memo(
       const stage = stageRef2.current;
       const seatBgLayer = seatBgLayerRef.current;
       const staticLayer = staticLayerRef.current;
-      //  const seatTextLayer = seatTextLayerRef.current;
-
-      console.log("drawing", seatData);
+      drawStart = performance.now();
+      console.log("drawing");
       if (seatData.categories.length > 0) {
         seatData.svgs.forEach((svg, i) => {
           const pathNew = new Konva.Path({
@@ -188,31 +192,7 @@ const MainStage = memo(
             fontSize: 10,
             perfectDrawEnabled: false,
           });
-          categoryGroup.add(catText);
-          categoryGroup.on("click tap", (e) => {
-            var t0 = performance.now();
-
-            // clearCacheExtensively();
-            categoryGroup.clearCache();
-            console.log(e.target.parent);
-            console.log(e.target.parent.children.isCached());
-            if (e.target.getType() !== "Stage") {
-              categoryGroup.clearCache();
-              // selectedSeats
-              const [obj1, obj2] = e.target.parent.children;
-              console.log(obj1, obj2);
-              //   add logic for isFilled
-              obj1.fill("blue").draw();
-              obj2.fill("white").draw();
-            
-
-              categoryGroup.cache();
-              var t1 = performance.now();
-              console.log(
-                "Call to doSomething took " + (t1 - t0) + " milliseconds."
-              );
-            }
-          });
+          staticLayer.add(catText);
           cat.seats.forEach((seatRow, i) => {
             const { seats, row } = seatRow;
 
@@ -249,10 +229,10 @@ const MainStage = memo(
               categoryGroup.add(seatGroup);
               //  seatTextLayer.add(seatText);
 
-              seatBgLayer.add(categoryGroup);
+              staticLayer.add(categoryGroup);
             });
           });
-          categoryGroup.cache();
+          //categoryGroup.cache();
         });
       }
     };
@@ -279,6 +259,7 @@ const MainStage = memo(
       // }
       if (props.data.categories.length > 0 && !hasDrawed) {
         handleCanvasDraw();
+        console.log("DRAW ONCE");
       }
     }, [props.data]);
 

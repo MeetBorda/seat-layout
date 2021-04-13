@@ -18,8 +18,8 @@ function App() {
   const setSeats = useCallback((e) => {
     setSelectedSeats([...e]);
   }, []);
-  const makeData = transform();
-  console.log(makeData)
+  //const makeData = transform();
+  //console.log(makeData)
   React.useEffect(() => {
     if (window.location.pathname === "/curved") {
       setData(curved);
