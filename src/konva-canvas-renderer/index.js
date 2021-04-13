@@ -1,19 +1,26 @@
-import React, { Fragment, memo, useState } from "react";
-import { Stage, Layer, FastLayer, Text, Circle } from "react-konva";
-import Konva from "konva";
+import React, { Fragment, memo, useState } from "react"
+import { Stage, Layer, FastLayer, Text, Circle } from "react-konva"
+import Konva from "konva"
 
-import Seat from "./Seat";
-import logo from "./loader.gif";
-const MAX_SEATS = 21;
-const SEAT_LENGTH = 22;
-const SRMC = true;
-const xL = true;
+import Seat from "./Seat"
+import logo from "./loader.gif"
+const MAX_SEATS = 21
+const SEAT_LENGTH = 22
+const SRMC = true
+const xL = true
 
-const TEXT_OFFSET = -5;
-let lastDist = 0;
-let lastCenter = 0;
+const TEXT_OFFSET = -5
+let lastDist = 0
+let lastCenter = 0
+
+let hasFormatted = false
+
+let hasCached = false
+
+let cachingTimer = true
+
 function getDistance(p1, p2) {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 }
 
 function isTouchEnabled() {
@@ -21,13 +28,13 @@ function isTouchEnabled() {
     "ontouchstart" in window ||
     navigator.maxTouchPoints > 0 ||
     navigator.msMaxTouchPoints > 0
-  );
+  )
 }
 function getCenter(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
     y: (p1.y + p2.y) / 2,
-  };
+  }
 }
 
 const MainStage = memo(
@@ -224,153 +231,200 @@ const MainStage = memo(
         },
         row: "A",
       },
-    ];
-    let selectedSeats = [];
-    const stageRef = React.useRef(null);
-    const layerRef = React.useRef(null);
-    const staticLayerRef = React.useRef(null);
-    const [useView, setView] = useState({ x: 0, y: 0 });
+    ]
+    let selectedSeats = []
+    const stageRef = React.useRef(null)
+    const layerRef = React.useRef(null)
+    const staticLayerRef = React.useRef(null)
+    const [useView, setView] = useState({ x: 0, y: 0 })
     const [layerData, setLayerData] = useState({
       renderStatic: [],
       renderDynamic: [],
-    });
+    })
     const calculateWidth = () => {
       if (!SRMC) {
-        const lastR = seatData[seatData.length - 1];
-        const l = lastR.seats.length;
-        const coor = lastR.seats[l - 1].coordinates.x;
-        return coor;
-      } else return 0;
-    };
+        const lastR = seatData[seatData.length - 1]
+        const l = lastR.seats.length
+        const coor = lastR.seats[l - 1].coordinates.x
+        return coor
+      } else return 0
+    }
 
     const handleSelect = (name, pos) => {
-      selectedSeats.push(name);
-      props.setSeats(selectedSeats);
-    };
+      selectedSeats.push(name)
+
+      props.setSeats(selectedSeats)
+    }
     const handleDeselect = (name, pos) => {
-      selectedSeats.splice(selectedSeats.indexOf(name), 1);
-      props.setSeats(selectedSeats);
-    };
+      selectedSeats.splice(selectedSeats.indexOf(name), 1)
+
+      props.setSeats(selectedSeats)
+    }
 
     const handleDragEnd = (e) => {
       setView({
         x: -e.target.x(),
         y: -e.target.y(),
-      });
-    };
+      })
+    }
 
     function handleTouch(e) {
-      e.evt.preventDefault();
-      Konva.hitOnDragEnabled = true;
-      var touch1 = e.evt.touches[0];
-      var touch2 = e.evt.touches[1];
-      const stage = stageRef.current;
+      e.evt.preventDefault()
+      Konva.hitOnDragEnabled = true
+      var touch1 = e.evt.touches[0]
+      var touch2 = e.evt.touches[1]
+      const stage = stageRef.current
       if (stage !== null) {
         if (touch1 && touch2) {
           if (stage.isDragging()) {
-            stage.stopDrag();
+            stage.stopDrag()
           }
 
           var p1 = {
             x: touch1.clientX,
             y: touch1.clientY,
-          };
+          }
           var p2 = {
             x: touch2.clientX,
             y: touch2.clientY,
-          };
+          }
 
           if (!lastCenter) {
-            lastCenter = getCenter(p1, p2);
-            return;
+            lastCenter = getCenter(p1, p2)
+            return
           }
-          var newCenter = getCenter(p1, p2);
+          var newCenter = getCenter(p1, p2)
 
-          var dist = getDistance(p1, p2);
+          var dist = getDistance(p1, p2)
 
           if (!lastDist) {
-            lastDist = dist;
+            lastDist = dist
           }
 
           // local coordinates of center point
           var pointTo = {
             x: (newCenter.x - stage.x()) / stage.scaleX(),
             y: (newCenter.y - stage.y()) / stage.scaleX(),
-          };
+          }
 
-          var scale = stage.scaleX() * (dist / lastDist);
+          var scale = stage.scaleX() * (dist / lastDist)
 
-          stage.scaleX(scale);
-          stage.scaleY(scale);
+          stage.scaleX(scale)
+          stage.scaleY(scale)
 
           // calculate new position of the stage
-          var dx = newCenter.x - lastCenter.x;
-          var dy = newCenter.y - lastCenter.y;
+          var dx = newCenter.x - lastCenter.x
+          var dy = newCenter.y - lastCenter.y
 
           var newPos = {
             x: newCenter.x - pointTo.x * scale + dx,
             y: newCenter.y - pointTo.y * scale + dy,
-          };
+          }
 
-          stage.position(newPos);
-          stage.batchDraw();
+          stage.position(newPos)
+          stage.batchDraw()
 
-          lastDist = dist;
-          lastCenter = newCenter;
+          lastDist = dist
+          lastCenter = newCenter
         }
       }
     }
 
     function handleTouchEnd() {
-      lastCenter = null;
-      lastDist = 0;
+      lastCenter = null
+      lastDist = 0
+    }
+
+    const toggleSelect = (isSelected, name) => {
+      //   clearCacheExtensively()
+      isSelected ? handleDeselect(name) : handleSelect(name)
     }
 
     // if (layerRef.current) {
     //   console.log(layerRef.current.getChildren())
     // }
     const formatLayer = () => {
-      const staticFill = [];
-      const dynamicFill = [];
+      const staticFill = []
+      const dynamicFill = []
 
-      seatData.forEach((seatRow) => {
-        const { seats, row } = seatRow;
+      seatData.forEach((seatRow, rowIndex) => {
+        const { seats, row } = seatRow
 
-        const currX = seats[0].coordinates.x; //
-        const currY = seats[0].coordinates.y; //
+        const currX = seats[0].coordinates.x //
+        const currY = seats[0].coordinates.y //
 
-        staticFill.push(<Text x={currX - 30} y={currY - 10} text={row} />);
+        staticFill.push(
+          <Text
+            x={currX - 30}
+            y={currY - 10}
+            text={row}
+            key={`${row}-${rowIndex}-${currX}_${currY}`}
+          />
+        )
 
         seats.forEach((seat, seatIndex) => {
-          const { coordinates, number, name, centerPoint } = seat;
+          const { coordinates, number, name, centerPoint } = seat
           dynamicFill.push(
             <Seat
-              key={`${seat.coordinates.x}_${seatIndex}`}
+              key={`${seat.coordinates.x}_${seatIndex}-${name}-${coordinates.y}`}
               {...seat}
               startPoint={currX}
               centerPoint={centerPoint}
               select={handleSelect}
               deselect={handleDeselect}
+              toggleSelect={toggleSelect}
             />
-          );
-        });
-      });
-
+          )
+        })
+      })
       setLayerData({
         renderStatic: staticFill,
         renderDynamic: dynamicFill,
-      });
-      stageRef.current.children.cache();
-    };
+      })
+      hasFormatted = true
+    }
+
+    const handleDragStart = () => {
+      if (!hasCached) {
+        cacheChildren()
+      } else {
+        cachingTimer && clearTimeout(cachingTimer)
+        cachingTimer = setTimeout(() => {
+          cacheChildren()
+        }, 500)
+      }
+    }
+
+    const cacheChildren = () => {
+      if (!hasCached) {
+        console.log("cached", stageRef.current.children)
+        stageRef.current.children.cache()
+        hasCached = true
+      }
+    }
+
+    const clearCacheExtensively = () => {
+      const canvasLayerElements = stageRef.current.getLayers()
+      for (let i = 0; i < canvasLayerElements.length; i += 1) {
+        const cachedCanvases = canvasLayerElements[i]._cache.get("canvas")
+        if (cachedCanvases) {
+          cachedCanvases.scene._canvas.width = 0
+          cachedCanvases.scene._canvas.height = 0
+          cachedCanvases.hit._canvas.width = 0
+          cachedCanvases.hit._canvas.height = 0
+          cachedCanvases.filter._canvas.width = 0
+          cachedCanvases.filter._canvas.height = 0
+          canvasLayerElements[i].clearCache()
+        }
+      }
+      hasCached = false
+    }
 
     React.useEffect(() => {
       if (props.data) {
-        formatLayer();
+        formatLayer()
       }
-      // if (useView.x > 0 || useView.y > 0) {
-      //   stageRef.current.children.cache();
-      // }
-    }, [props.data]);
+    }, [props.data])
 
     return (
       <div
@@ -396,36 +450,23 @@ const MainStage = memo(
           scaleY={1}
           draggable={true}
           //onDragEnd={handleDragEnd}
+          onDragStart={handleDragStart}
           onTouchMove={handleTouch}
           onTouchEnd={handleTouchEnd}
         >
           <Layer ref={layerRef} offsetY={0} offsetX={0}>
             {layerData.renderDynamic}
           </Layer>
-          <Layer ref={staticLayerRef} listening={false}>
+          {/* <Layer ref={staticLayerRef} listening={false}>
             {layerData.renderStatic}
-          </Layer>
-          {/*   <Fragment>
-             {seatData.map((e, i) => {
-                return (
-                  <Row
-                    {...e}
-                    key={`${e.row}-${e.centerPoint.x}-${e.centerPoint.y}-${i}`}
-                    i={i}
-                    useView={useView}
-                    select={handleSelect}
-                    deselect={handleDeselect}
-                  />
-                );
-              })}
-            </Fragment> */}
+          </Layer> */}
         </Stage>
       </div>
-    );
+    )
   },
   (a, b) => {
-    return a.data === b.data;
+    return a.data === b.data
   }
-);
+)
 
-export default MainStage;
+export default MainStage
