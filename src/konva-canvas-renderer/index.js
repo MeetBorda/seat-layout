@@ -319,8 +319,8 @@ const MainStage = memo(
       layer.on("click tap", (e) => {
         const { seatProps = {} } = e.target.attrs
         const seat = e.target
-
-        // clearCacheExtensively()
+        seat.clearCache()
+        clearCacheExtensively()
 
         const isAlreadySelected = selectedSeatsRef.current[seatProps.name]
 
@@ -414,14 +414,14 @@ const MainStage = memo(
         lastCenter = null
       })
 
-      stage.on("dragend", function (e) {
-        // return
-        debouncedCacheClear()
-        xOff = -e.target.x()
-        yOff = -e.target.y()
-        debouncedRedraw()
-        debouncedCache()
-      })
+      //   stage.on("dragend", function (e) {
+      //     // return
+      //     // debouncedCacheClear()
+      //     // xOff = -e.target.x()
+      //     // yOff = -e.target.y()
+      //     // debouncedRedraw()
+      //     // debouncedCache()
+      //   })
 
       stage.on("dragstart", function () {
         if (!cacheExists) {
@@ -430,7 +430,7 @@ const MainStage = memo(
       })
 
       hasDrawed = true
-      //   cacheChildren()
+      cacheChildren()
     }
 
     const drawChildren = () => {
@@ -465,17 +465,17 @@ const MainStage = memo(
         seats.forEach((seat, seatIndex) => {
           const isOut = seatIndex > (window.innerWidth + xOff) / 25 + 20
           const { coordinates, number, name } = seat
-          const startX = Math.floor((-stage.x() - stage.width()) / 25) * 25
-          // const endX = Math.floor((-stage.x() + stage.width()) / 25) * 25
-          const endX = Math.floor((-stage.x() + stage.width() * 2) / 25) * 25
+          //   const startX = Math.floor((-stage.x() - stage.width()) / 25) * 25
+          //   // const endX = Math.floor((-stage.x() + stage.width()) / 25) * 25
+          //   const endX = Math.floor((-stage.x() + stage.width() * 2) / 25) * 25
 
-          const isOut2 = coordinates.x + 25 * 25 >= -stage.x()
+          //   const isOut2 = coordinates.x + 25 * 25 >= -stage.x()
 
-          const isIn = coordinates.x > startX && coordinates.x < endX
+          //   const isIn = coordinates.x > startX && coordinates.x < endX
 
-          if (isOut || !isOut2) {
-            return
-          }
+          //   if (isOut || !isOut2) {
+          //     return
+          //   }
 
           const seatRect = new Konva.Circle({
             x: Math.floor(coordinates.x),
@@ -492,16 +492,16 @@ const MainStage = memo(
             seatProps: seat,
           })
 
-          const seatText = new Konva.Text({
-            x: coordinates.x - 4,
-            y: coordinates.y - 4,
-            text: number,
-            fontSize: 10,
-            listening: false,
-            perfectDrawEnabled: false,
-          })
+          //   const seatText = new Konva.Text({
+          //     x: coordinates.x - 4,
+          //     y: coordinates.y - 4,
+          //     text: number,
+          //     fontSize: 10,
+          //     listening: false,
+          //     perfectDrawEnabled: false,
+          //   })
 
-          staticLayer.add(seatText)
+          //   staticLayer.add(seatText)
 
           // if (isOut || !isOut2) {
           //   staticLayer.add(seatRect)
@@ -510,10 +510,10 @@ const MainStage = memo(
           // }
 
           layer.add(seatRect)
+
+          //   seatRect.cache()
         })
       })
-
-      console.log(44, layerRef2.current.children)
     }
 
     const redrawStuff = () => {
@@ -544,10 +544,13 @@ const MainStage = memo(
       //   layerRef2.current.cache()
       //   layerRef2.current.destroyChildren()
       //   stageRef2.current.children.cache()
-      layerRef2.current.cache()
-      layerRefStatic.current.cache()
-      layerRef2.current.children.cache()
-      layerRefStatic.current.children.cache()
+
+      //   layerRef2.current.cache()
+      //   layerRefStatic.current.cache()
+      //   layerRef2.current.children.cache()
+      //   layerRefStatic.current.children.cache()
+
+      stageRef2.current.children.cache()
       cacheExists = true
       //   layerRef2.current.destroyChildren()
       //   layerRef2.current.children.cache()
@@ -566,7 +569,7 @@ const MainStage = memo(
     }
 
     React.useEffect(() => {
-      if (props.data.length > 0 && !hasDrawed) {
+      if (props.data.length > 0) {
         handleCanvasDraw()
       }
     }, [props.data])
