@@ -1,5 +1,4 @@
 import React, { Fragment, memo, useState } from "react"
-import { Stage, Layer, FastLayer, Text, Circle } from "react-konva"
 import Konva from "konva"
 
 import Row from "./Row"
@@ -17,6 +16,10 @@ let hasDrawed = false
 let xOff = 0
 let yOff = 0
 
+let debouncedCacheClear
+let debouncedCache
+let debouncedRedraw
+
 function getDistance(p1, p2) {
   return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 }
@@ -25,6 +28,58 @@ function getCenter(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
     y: (p1.y + p2.y) / 2,
+  }
+}
+
+let cacheExists = false
+
+// Returns a function, that, when invoked, will only be triggered at most once
+// during a given window of time. Normally, the throttled function will run
+// as much as it can, without ever going more than once per `wait` duration;
+// but if you'd like to disable the execution on the leading edge, pass
+// `{leading: false}`. To disable execution on the trailing edge, ditto.
+function throttle(func, wait, options) {
+  var context, args, result
+  var timeout = null
+  var previous = 0
+  if (!options) options = {}
+  var later = function () {
+    previous = options.leading === false ? 0 : Date.now()
+    timeout = null
+    result = func.apply(context, args)
+    if (!timeout) context = args = null
+  }
+  return function () {
+    var now = Date.now()
+    if (!previous && options.leading === false) previous = now
+    var remaining = wait - (now - previous)
+    context = this
+    args = arguments
+    if (remaining <= 0 || remaining > wait) {
+      if (timeout) {
+        clearTimeout(timeout)
+        timeout = null
+      }
+      previous = now
+      result = func.apply(context, args)
+      if (!timeout) context = args = null
+    } else if (!timeout && options.trailing !== false) {
+      timeout = setTimeout(later, remaining)
+    }
+    return result
+  }
+}
+
+function debounce(func, timeout = 300) {
+  let timer
+  return (...args) => {
+    if (!timer) {
+      func.apply(this, args)
+    }
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      timer = undefined
+    }, timeout)
   }
 }
 
@@ -223,10 +278,6 @@ const MainStage = memo(
         row: "A",
       },
     ]
-    let selectedSeats = []
-    const stageRef = React.useRef(null)
-    const layerRef = React.useRef(null)
-    const [useView, setView] = useState({ x: 0, y: 0 })
 
     const layerRef2 = React.useRef(null)
     const layerRefStatic = React.useRef(null)
@@ -234,26 +285,13 @@ const MainStage = memo(
 
     const selectedSeatsRef = React.useRef({})
 
-    const calculateWidth = () => {
-      if (!SRMC) {
-        const lastR = seatData[seatData.length - 1]
-        const l = lastR.seats.length
-        const coor = lastR.seats[l - 1].coordinates.x
-        return coor
-      } else return 0
-    }
-
-    const handleSelect = (name, pos) => {
-      selectedSeats.push(name)
-      props.setSeats(selectedSeats)
-    }
-    const handleDeselect = (name, pos) => {
-      selectedSeats.splice(selectedSeats.indexOf(name), 1)
-      props.setSeats(selectedSeats)
-    }
-
     const handleCanvasDraw = () => {
       Konva.hitOnDragEnabled = true
+
+      const throttledRedraw = throttle(redrawStuff, 1000)
+      debouncedCacheClear = debounce(clearCacheExtensively, 5000)
+      debouncedCache = debounce(cacheChildren, 1000)
+      debouncedRedraw = debounce(redrawStuff, 1000)
 
       stageRef2.current = new Konva.Stage({
         container: "container",
@@ -279,10 +317,10 @@ const MainStage = memo(
       layer.draw()
 
       layer.on("click tap", (e) => {
-        const { name, seatProps = {}, x, y, fill } = e.target.attrs
+        const { seatProps = {} } = e.target.attrs
         const seat = e.target
 
-        clearCacheExtensively()
+        // clearCacheExtensively()
 
         const isAlreadySelected = selectedSeatsRef.current[seatProps.name]
 
@@ -310,6 +348,10 @@ const MainStage = memo(
           // we need to stop it, and implement our own pan logic with two pointers
           if (stage.isDragging()) {
             stage.stopDrag()
+          }
+
+          if (!cacheExists) {
+            debouncedCache()
           }
 
           var p1 = {
@@ -358,6 +400,12 @@ const MainStage = memo(
 
           lastDist = dist
           lastCenter = newCenter
+        } else {
+          //   if (stage._lastPos) {
+          //     xOff = -stage._lastPos.x
+          //     yOff = -stage._lastPos.y
+          //     throttledRedraw()
+          //   }
         }
       })
 
@@ -367,17 +415,22 @@ const MainStage = memo(
       })
 
       stage.on("dragend", function (e) {
-        setView({
-          x: -e.target.x(),
-          y: -e.target.y(),
-        })
+        // return
+        debouncedCacheClear()
         xOff = -e.target.x()
         yOff = -e.target.y()
-        redrawStuff()
+        debouncedRedraw()
+        debouncedCache()
+      })
+
+      stage.on("dragstart", function () {
+        if (!cacheExists) {
+          cacheChildren()
+        }
       })
 
       hasDrawed = true
-      cacheChildren()
+      //   cacheChildren()
     }
 
     const drawChildren = () => {
@@ -387,38 +440,43 @@ const MainStage = memo(
 
       console.log("drawing")
       seatData.forEach((seatRow, i) => {
-        const isOut = i > (window.innerHeight + yOff) / 20
+        // const isOut = i > (window.innerHeight + yOff) / 20
 
-        if (isOut) {
-          return
-        }
+        // if (isOut) {
+        //   return
+        // }
 
         const { seats, row } = seatRow
 
         const currX = seats[0].coordinates.x //
         const currY = seats[0].coordinates.y //
 
-        // const rowText = new Konva.Text({
-        //   x: currX - 30,
-        //   y: currY - 10,
-        //   text: row,
-        //   fontSize: 15,
-        //   listening: false,
-        //   perfectDrawEnabled: false,
-        // })
+        const rowText = new Konva.Text({
+          x: currX - 30,
+          y: currY - 10,
+          text: row,
+          fontSize: 15,
+          listening: false,
+          perfectDrawEnabled: false,
+        })
 
-        // staticLayer.add(rowText)
+        staticLayer.add(rowText)
 
         seats.forEach((seat, seatIndex) => {
-          const isOut = seatIndex > (window.innerWidth + xOff) / 25
+          const isOut = seatIndex > (window.innerWidth + xOff) / 25 + 20
+          const { coordinates, number, name } = seat
+          const startX = Math.floor((-stage.x() - stage.width()) / 25) * 25
+          // const endX = Math.floor((-stage.x() + stage.width()) / 25) * 25
+          const endX = Math.floor((-stage.x() + stage.width() * 2) / 25) * 25
 
-          //   if (isOut) return
+          const isOut2 = coordinates.x + 25 * 25 >= -stage.x()
 
-          if (isOut) {
+          const isIn = coordinates.x > startX && coordinates.x < endX
+
+          if (isOut || !isOut2) {
             return
           }
 
-          const { coordinates, number, name } = seat
           const seatRect = new Konva.Circle({
             x: Math.floor(coordinates.x),
             y: Math.floor(coordinates.y),
@@ -434,26 +492,6 @@ const MainStage = memo(
             seatProps: seat,
           })
 
-          //   if (seatIndex < 500) {
-          //     seatRect.cache()
-          //   }
-
-          //   seatRect.on("click tap", (e) => {
-          //     const isAlreadySelected =
-          //       selectedSeatsRef.current[e.target.attrs.seatProps.name]
-
-          //     console.log(1111)
-          //     if (!isAlreadySelected) {
-          //       selectedSeatsRef.current[e.target.attrs.seatProps.name] = true
-          //     } else {
-          //       delete selectedSeatsRef.current[e.target.attrs.seatProps.name]
-          //     }
-
-          //     clearCacheExtensively()
-          //     e.target.fill(isAlreadySelected ? "transparent" : "red")
-          //     e.target.draw()
-          //     cacheChildren()
-          //   })
           const seatText = new Konva.Text({
             x: coordinates.x - 4,
             y: coordinates.y - 4,
@@ -465,21 +503,24 @@ const MainStage = memo(
 
           staticLayer.add(seatText)
 
+          // if (isOut || !isOut2) {
+          //   staticLayer.add(seatRect)
+          // } else {
+          //   layer.add(seatRect)
+          // }
+
           layer.add(seatRect)
         })
       })
+
+      console.log(44, layerRef2.current.children)
     }
 
     const redrawStuff = () => {
-      //   clearCacheExtensively()
-      //   layerRef2.current.destroyChildren()
-      //   drawChildren()
-      //   cacheChildren()
-      //   console.log(layerRef2.current.children)
+      console.log("redrawing")
       layerRef2.current.destroyChildren()
       layerRefStatic.current.destroyChildren()
       drawChildren()
-      cacheChildren()
     }
 
     const clearCacheExtensively = () => {
@@ -496,13 +537,18 @@ const MainStage = memo(
           canvasLayerElements[i].clearCache()
         }
       }
+      cacheExists = false
     }
 
     const cacheChildren = () => {
       //   layerRef2.current.cache()
       //   layerRef2.current.destroyChildren()
-      stageRef2.current.children.cache()
-      console.log(stageRef2.current.children)
+      //   stageRef2.current.children.cache()
+      layerRef2.current.cache()
+      layerRefStatic.current.cache()
+      layerRef2.current.children.cache()
+      layerRefStatic.current.children.cache()
+      cacheExists = true
       //   layerRef2.current.destroyChildren()
       //   layerRef2.current.children.cache()
       //   console.log(layerRef2.current.children)
@@ -524,8 +570,6 @@ const MainStage = memo(
         handleCanvasDraw()
       }
     }, [props.data])
-
-    console.log(useView)
 
     return (
       <div
