@@ -1,0 +1,814 @@
+{
+  "projectName": "",
+  "VERSION": "3.1.0",
+  "stageCenter": "",
+  "previousTouchLocation": { "x": 728, "y": 602, "lock": false },
+  "previousRotation": 0,
+  "mouseDown": false,
+  "mouseSelectedBounds": {
+    "handleSize": 8,
+    "resizeHandlePosRB": false,
+    "resizeHandlePosRM": false,
+    "resizeHandlePosBM": false,
+    "boundsSpacing": 0,
+    "left": 10000,
+    "top": 10000,
+    "right": -10000,
+    "bottom": -10000,
+    "width": -20000,
+    "height": -20000
+  },
+  "shapes": [
+    {
+      "TAG": "seat/1618142407836/0",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 263,
+        "top": 127,
+        "right": 490,
+        "bottom": 152,
+        "width": 227,
+        "height": 25
+      },
+      "centerPoint": { "x": 376.5, "y": 139.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 273, "y": 139.5, "prefix": "A", "number": 1 },
+            { "x": 296, "y": 139.5, "prefix": "A", "number": 2 },
+            { "x": 319, "y": 139.5, "prefix": "A", "number": 3 },
+            { "x": 342, "y": 139.5, "prefix": "A", "number": 4 },
+            { "x": 365, "y": 139.5, "prefix": "A", "number": 5 },
+            { "x": 388, "y": 139.5, "prefix": "A", "number": 6 },
+            { "x": 411, "y": 139.5, "prefix": "A", "number": 7 },
+            { "x": 434, "y": 139.5, "prefix": "A", "number": 8 },
+            { "x": 457, "y": 139.5, "prefix": "A", "number": 9 },
+            { "x": 480, "y": 139.5, "prefix": "A", "number": 10 }
+          ]
+        ],
+        "seatsCount": 10
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1618142410326/1",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 263,
+        "top": 152,
+        "right": 490,
+        "bottom": 177,
+        "width": 227,
+        "height": 25
+      },
+      "centerPoint": { "x": 376.5, "y": 164.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 273, "y": 164.5, "prefix": "A", "number": 1 },
+            { "x": 296, "y": 164.5, "prefix": "A", "number": 2 },
+            { "x": 319, "y": 164.5, "prefix": "A", "number": 3 },
+            { "x": 342, "y": 164.5, "prefix": "A", "number": 4 },
+            { "x": 365, "y": 164.5, "prefix": "A", "number": 5 },
+            { "x": 388, "y": 164.5, "prefix": "A", "number": 6 },
+            { "x": 411, "y": 164.5, "prefix": "A", "number": 7 },
+            { "x": 434, "y": 164.5, "prefix": "A", "number": 8 },
+            { "x": 457, "y": 164.5, "prefix": "A", "number": 9 },
+            { "x": 480, "y": 164.5, "prefix": "A", "number": 10 }
+          ]
+        ],
+        "seatsCount": 10
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {}
+    },
+    {
+      "TAG": "seat/1618142412774/0",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 569,
+        "top": 132,
+        "right": 796,
+        "bottom": 157,
+        "width": 227,
+        "height": 25
+      },
+      "centerPoint": { "x": 682.5, "y": 144.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 579, "y": 144.5, "prefix": "A", "number": 1 },
+            { "x": 602, "y": 144.5, "prefix": "A", "number": 2 },
+            { "x": 625, "y": 144.5, "prefix": "A", "number": 3 },
+            { "x": 648, "y": 144.5, "prefix": "A", "number": 4 },
+            { "x": 671, "y": 144.5, "prefix": "A", "number": 5 },
+            { "x": 694, "y": 144.5, "prefix": "A", "number": 6 },
+            { "x": 717, "y": 144.5, "prefix": "A", "number": 7 },
+            { "x": 740, "y": 144.5, "prefix": "A", "number": 8 },
+            { "x": 763, "y": 144.5, "prefix": "A", "number": 9 },
+            { "x": 786, "y": 144.5, "prefix": "A", "number": 10 }
+          ]
+        ],
+        "seatsCount": 10
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1618142415676/1",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 569,
+        "top": 157,
+        "right": 796,
+        "bottom": 182,
+        "width": 227,
+        "height": 25
+      },
+      "centerPoint": { "x": 682.5, "y": 169.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 579, "y": 169.5, "prefix": "A", "number": 1 },
+            { "x": 602, "y": 169.5, "prefix": "A", "number": 2 },
+            { "x": 625, "y": 169.5, "prefix": "A", "number": 3 },
+            { "x": 648, "y": 169.5, "prefix": "A", "number": 4 },
+            { "x": 671, "y": 169.5, "prefix": "A", "number": 5 },
+            { "x": 694, "y": 169.5, "prefix": "A", "number": 6 },
+            { "x": 717, "y": 169.5, "prefix": "A", "number": 7 },
+            { "x": 740, "y": 169.5, "prefix": "A", "number": 8 },
+            { "x": 763, "y": 169.5, "prefix": "A", "number": 9 },
+            { "x": 786, "y": 169.5, "prefix": "A", "number": 10 }
+          ]
+        ],
+        "seatsCount": 10
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {}
+    },
+    {
+      "TAG": "seat/1618142416777/0",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 325,
+        "top": 249,
+        "right": 713,
+        "bottom": 274,
+        "width": 388,
+        "height": 25
+      },
+      "centerPoint": { "x": 519, "y": 261.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 335, "y": 261.5, "prefix": "A", "number": 1 },
+            { "x": 358, "y": 261.5, "prefix": "A", "number": 2 },
+            { "x": 381, "y": 261.5, "prefix": "A", "number": 3 },
+            { "x": 404, "y": 261.5, "prefix": "A", "number": 4 },
+            { "x": 427, "y": 261.5, "prefix": "A", "number": 5 },
+            { "x": 450, "y": 261.5, "prefix": "A", "number": 6 },
+            { "x": 473, "y": 261.5, "prefix": "A", "number": 7 },
+            { "x": 496, "y": 261.5, "prefix": "A", "number": 8 },
+            { "x": 519, "y": 261.5, "prefix": "A", "number": 9 },
+            { "x": 542, "y": 261.5, "prefix": "A", "number": 10 },
+            { "x": 565, "y": 261.5, "prefix": "A", "number": 11 },
+            { "x": 588, "y": 261.5, "prefix": "A", "number": 12 },
+            { "x": 611, "y": 261.5, "prefix": "A", "number": 13 },
+            { "x": 634, "y": 261.5, "prefix": "A", "number": 14 },
+            { "x": 657, "y": 261.5, "prefix": "A", "number": 15 },
+            { "x": 680, "y": 261.5, "prefix": "A", "number": 16 },
+            { "x": 703, "y": 261.5, "prefix": "A", "number": 17 }
+          ]
+        ],
+        "seatsCount": 17
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 }
+    },
+    {
+      "TAG": "seat/1618142419698/1",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 325,
+        "top": 274,
+        "right": 713,
+        "bottom": 299,
+        "width": 388,
+        "height": 25
+      },
+      "centerPoint": { "x": 519, "y": 286.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 335, "y": 286.5, "prefix": "A", "number": 1 },
+            { "x": 358, "y": 286.5, "prefix": "A", "number": 2 },
+            { "x": 381, "y": 286.5, "prefix": "A", "number": 3 },
+            { "x": 404, "y": 286.5, "prefix": "A", "number": 4 },
+            { "x": 427, "y": 286.5, "prefix": "A", "number": 5 },
+            { "x": 450, "y": 286.5, "prefix": "A", "number": 6 },
+            { "x": 473, "y": 286.5, "prefix": "A", "number": 7 },
+            { "x": 496, "y": 286.5, "prefix": "A", "number": 8 },
+            { "x": 519, "y": 286.5, "prefix": "A", "number": 9 },
+            { "x": 542, "y": 286.5, "prefix": "A", "number": 10 },
+            { "x": 565, "y": 286.5, "prefix": "A", "number": 11 },
+            { "x": 588, "y": 286.5, "prefix": "A", "number": 12 },
+            { "x": 611, "y": 286.5, "prefix": "A", "number": 13 },
+            { "x": 634, "y": 286.5, "prefix": "A", "number": 14 },
+            { "x": 657, "y": 286.5, "prefix": "A", "number": 15 },
+            { "x": 680, "y": 286.5, "prefix": "A", "number": 16 },
+            { "x": 703, "y": 286.5, "prefix": "A", "number": 17 }
+          ]
+        ],
+        "seatsCount": 17
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {}
+    },
+    {
+      "TAG": "seat/1618142419700/2",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 325,
+        "top": 299,
+        "right": 713,
+        "bottom": 324,
+        "width": 388,
+        "height": 25
+      },
+      "centerPoint": { "x": 519, "y": 311.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 335, "y": 311.5, "prefix": "A", "number": 1 },
+            { "x": 358, "y": 311.5, "prefix": "A", "number": 2 },
+            { "x": 381, "y": 311.5, "prefix": "A", "number": 3 },
+            { "x": 404, "y": 311.5, "prefix": "A", "number": 4 },
+            { "x": 427, "y": 311.5, "prefix": "A", "number": 5 },
+            { "x": 450, "y": 311.5, "prefix": "A", "number": 6 },
+            { "x": 473, "y": 311.5, "prefix": "A", "number": 7 },
+            { "x": 496, "y": 311.5, "prefix": "A", "number": 8 },
+            { "x": 519, "y": 311.5, "prefix": "A", "number": 9 },
+            { "x": 542, "y": 311.5, "prefix": "A", "number": 10 },
+            { "x": 565, "y": 311.5, "prefix": "A", "number": 11 },
+            { "x": 588, "y": 311.5, "prefix": "A", "number": 12 },
+            { "x": 611, "y": 311.5, "prefix": "A", "number": 13 },
+            { "x": 634, "y": 311.5, "prefix": "A", "number": 14 },
+            { "x": 657, "y": 311.5, "prefix": "A", "number": 15 },
+            { "x": 680, "y": 311.5, "prefix": "A", "number": 16 },
+            { "x": 703, "y": 311.5, "prefix": "A", "number": 17 }
+          ]
+        ],
+        "seatsCount": 17
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {}
+    },
+    {
+      "TAG": "seat/1618142419702/3",
+      "isLocked": false,
+      "selectedSeatList": [],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 325,
+        "top": 324,
+        "right": 713,
+        "bottom": 349,
+        "width": 388,
+        "height": 25
+      },
+      "centerPoint": { "x": 519, "y": 336.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 335, "y": 336.5, "prefix": "A", "number": 1 },
+            { "x": 358, "y": 336.5, "prefix": "A", "number": 2 },
+            { "x": 381, "y": 336.5, "prefix": "A", "number": 3 },
+            { "x": 404, "y": 336.5, "prefix": "A", "number": 4 },
+            { "x": 427, "y": 336.5, "prefix": "A", "number": 5 },
+            { "x": 450, "y": 336.5, "prefix": "A", "number": 6 },
+            { "x": 473, "y": 336.5, "prefix": "A", "number": 7 },
+            { "x": 496, "y": 336.5, "prefix": "A", "number": 8 },
+            { "x": 519, "y": 336.5, "prefix": "A", "number": 9 },
+            { "x": 542, "y": 336.5, "prefix": "A", "number": 10 },
+            { "x": 565, "y": 336.5, "prefix": "A", "number": 11 },
+            { "x": 588, "y": 336.5, "prefix": "A", "number": 12 },
+            { "x": 611, "y": 336.5, "prefix": "A", "number": 13 },
+            { "x": 634, "y": 336.5, "prefix": "A", "number": 14 },
+            { "x": 657, "y": 336.5, "prefix": "A", "number": 15 },
+            { "x": 680, "y": 336.5, "prefix": "A", "number": 16 },
+            { "x": 703, "y": 336.5, "prefix": "A", "number": 17 }
+          ]
+        ],
+        "seatsCount": 17
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {}
+    },
+    {
+      "TAG": "seat/1618142419704/4",
+      "isLocked": false,
+      "selectedSeatList": [
+        16,
+        15,
+        14,
+        13,
+        12,
+        11,
+        10,
+        9,
+        8,
+        7,
+        6,
+        5,
+        4,
+        3,
+        2,
+        1,
+        0
+      ],
+      "isSelected": false,
+      "seatNumTextSize": 8,
+      "seatNumTextTopSpacing": 3,
+      "seatRadius": 10,
+      "seatSpacing": 3,
+      "rowSpacing": 5,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": false,
+        "resizeHandlePosRM": true,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 325,
+        "top": 349,
+        "right": 713,
+        "bottom": 374,
+        "width": 388,
+        "height": 25
+      },
+      "centerPoint": { "x": 519, "y": 361.5, "lock": false },
+      "makeData": {
+        "rows": [
+          [
+            { "x": 335, "y": 361.5, "prefix": "A", "number": 1 },
+            { "x": 358, "y": 361.5, "prefix": "A", "number": 2 },
+            { "x": 381, "y": 361.5, "prefix": "A", "number": 3 },
+            { "x": 404, "y": 361.5, "prefix": "A", "number": 4 },
+            { "x": 427, "y": 361.5, "prefix": "A", "number": 5 },
+            { "x": 450, "y": 361.5, "prefix": "A", "number": 6 },
+            { "x": 473, "y": 361.5, "prefix": "A", "number": 7 },
+            { "x": 496, "y": 361.5, "prefix": "A", "number": 8 },
+            { "x": 519, "y": 361.5, "prefix": "A", "number": 9 },
+            { "x": 542, "y": 361.5, "prefix": "A", "number": 10 },
+            { "x": 565, "y": 361.5, "prefix": "A", "number": 11 },
+            { "x": 588, "y": 361.5, "prefix": "A", "number": 12 },
+            { "x": 611, "y": 361.5, "prefix": "A", "number": 13 },
+            { "x": 634, "y": 361.5, "prefix": "A", "number": 14 },
+            { "x": 657, "y": 361.5, "prefix": "A", "number": 15 },
+            { "x": 680, "y": 361.5, "prefix": "A", "number": 16 },
+            { "x": 703, "y": 361.5, "prefix": "A", "number": 17 }
+          ]
+        ],
+        "seatsCount": 17
+      },
+      "rowsCount": 1,
+      "rotationRadians": 0,
+      "dumbSeatsList": [],
+      "reverseNumbering": false,
+      "startSeatNumber": 1,
+      "resizeWidth": 0,
+      "categoryTag": "",
+      "curveConfig": {
+        "enabled": false,
+        "narrowness": 0,
+        "longness": 0,
+        "startXY": { "x": 0, "y": 0, "lock": false },
+        "p1": { "x": 0, "y": 0, "lock": false },
+        "p2": { "x": 0, "y": 0, "lock": false },
+        "endXY": { "x": 0, "y": 0, "lock": false }
+      },
+      "cacheCanvas": {},
+      "cacheCtx": {},
+      "selectionRelativePos": {
+        "left": 0,
+        "top": 0,
+        "right": -29,
+        "bottom": -6
+      }
+    },
+    {
+      "TAG": "svgpath/1",
+      "isLocked": false,
+      "isSelected": false,
+      "selectionBounds": {
+        "handleSize": 8,
+        "resizeHandlePosRB": true,
+        "resizeHandlePosRM": false,
+        "resizeHandlePosBM": false,
+        "boundsSpacing": 0,
+        "left": 201,
+        "top": 330,
+        "right": 237.35738702218168,
+        "bottom": 364.62608287826833,
+        "width": 36.35738702218168,
+        "height": 34.626082878268335
+      },
+      "originalShape": {
+        "matrix": null,
+        "fill": "#666",
+        "stroke": null,
+        "z": 1,
+        "d": "M22,2 L22,22 L10,22 L10,2 L22,2 Z M20,4 L12,4 L12,20 L20,20 L20,4 Z M5.24464619,9 L5.24464619,11 L9.24464619,11 L9.24464619,13 L5.24464619,13 L5.24464619,15.1315049 L1,12 L5.24464619,9 Z M14,11 L14,14 L13,14 L13,11 L14,11 Z"
+      },
+      "categoryIdentity": "",
+      "centerPoint": {
+        "x": 219.17869351109084,
+        "y": 347.31304143913417,
+        "lock": false
+      },
+      "categoryTag": "",
+      "svgPath": {
+        "matrix": null,
+        "fill": "#666",
+        "stroke": null,
+        "z": 1,
+        "d": "M22,2 L22,22 L10,22 L10,2 L22,2 Z M20,4 L12,4 L12,20 L20,20 L20,4 Z M5.24464619,9 L5.24464619,11 L9.24464619,11 L9.24464619,13 L5.24464619,13 L5.24464619,15.1315049 L1,12 L5.24464619,9 Z M14,11 L14,14 L13,14 L13,11 L14,11 Z"
+      },
+      "scale": 1,
+      "fill": "#666",
+      "commandsList": [
+        { "command": "beginPath", "arguments": [] },
+        { "command": "moveTo", "arguments": [237.35738702218168, 330] },
+        {
+          "command": "lineTo",
+          "arguments": [237.35738702218168, 364.62608287826833]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [216.5817372952207, 364.62608287826833]
+        },
+        { "command": "lineTo", "arguments": [216.5817372952207, 330] },
+        { "command": "lineTo", "arguments": [237.35738702218168, 330] },
+        { "command": "closePath", "arguments": [] },
+        {
+          "command": "moveTo",
+          "arguments": [233.89477873435476, 333.4626082878269]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [220.04434558304763, 333.4626082878269]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [220.04434558304763, 361.1634745904416]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [233.89477873435476, 361.1634745904416]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [233.89477873435476, 333.4626082878269]
+        },
+        { "command": "closePath", "arguments": [] },
+        {
+          "command": "moveTo",
+          "arguments": [208.34877353819354, 342.1191290073939]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [208.34877353819354, 345.58173729522076]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [215.27399011384705, 345.58173729522076]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [215.27399011384705, 349.0443455830475]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [208.34877353819354, 349.0443455830475]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [208.34877353819354, 352.73462884918933]
+        },
+        { "command": "lineTo", "arguments": [201, 347.31304143913405] },
+        {
+          "command": "lineTo",
+          "arguments": [208.34877353819354, 342.1191290073939]
+        },
+        { "command": "closePath", "arguments": [] },
+        {
+          "command": "moveTo",
+          "arguments": [223.50695387087433, 345.58173729522076]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [223.50695387087433, 350.7756497269609]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [221.77564972696098, 350.7756497269609]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [221.77564972696098, 345.58173729522076]
+        },
+        {
+          "command": "lineTo",
+          "arguments": [223.50695387087433, 345.58173729522076]
+        },
+        { "command": "closePath", "arguments": [] },
+        { "command": "fill", "arguments": [] }
+      ],
+      "isPathClicked": false,
+      "selectionRelativePos": { "left": 0, "top": 0, "right": 0, "bottom": 0 },
+      "modificationType": "MODIFY_NONE"
+    }
+  ],
+  "selectedTool": {
+    "bounds": {
+      "handleSize": 8,
+      "resizeHandlePosRB": false,
+      "resizeHandlePosRM": false,
+      "resizeHandlePosBM": false,
+      "boundsSpacing": 0,
+      "left": 728,
+      "top": 602,
+      "right": 230,
+      "bottom": 64,
+      "width": 0,
+      "height": 0
+    },
+    "type": "SELECTION",
+    "subType": "SELECTION_MULTIPLE"
+  },
+  "selectedShapesList": [],
+  "selectionSet": {},
+  "catTagSet": {},
+  "log": {},
+  "canvas": {
+    "__zoom": { "k": 1, "x": 0, "y": 0 },
+    "__on": [
+      { "type": "wheel", "name": "zoom", "capture": false },
+      { "type": "mousedown", "name": "zoom", "capture": false },
+      { "type": "dblclick", "name": "zoom", "capture": false }
+    ]
+  },
+  "width": 2880,
+  "height": 1432,
+  "canvasWidth": 2880,
+  "canvasHeight": 1432,
+  "canvasContext": {},
+  "d3Canvas": {
+    "_groups": [
+      [
+        {
+          "__zoom": { "k": 1, "x": 0, "y": 0 },
+          "__on": [
+            { "type": "wheel", "name": "zoom", "capture": false },
+            { "type": "mousedown", "name": "zoom", "capture": false },
+            { "type": "dblclick", "name": "zoom", "capture": false }
+          ]
+        }
+      ]
+    ],
+    "_parents": [null]
+  },
+  "stylePaddingLeft": 0,
+  "stylePaddingTop": 0,
+  "styleBorderLeft": 0,
+  "styleBorderTop": 0,
+  "htmlTop": 0,
+  "htmlLeft": 0,
+  "layoutType": "auditorium",
+  "shapesMovedUnits": { "x": 0, "y": 0 }
+}
