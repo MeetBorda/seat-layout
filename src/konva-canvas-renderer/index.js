@@ -189,60 +189,7 @@ const MainStage = memo(
       //  const seatTextLayer = seatTextLayerRef.current;
 
       console.log("drawing", seatData);
-      if (seatData.seats.length > 0) {
-        seatData.seats.forEach((seatRow, i) => {
-          const categoryGroup = new Konva.Group();
-
-          const { seats, row } = seatRow;
-
-          const currX = seats[0].coordinates.x; //
-          const currY = seats[0].coordinates.y; //
-
-          seats.forEach((seat, seatIndex) => {
-            const seatGroup = new Konva.Group();
-
-            const { coordinates, number, name } = seat;
-            const seatRect = new Konva.Circle({
-              x: Math.floor(coordinates.x),
-              y: Math.floor(coordinates.y),
-              width: 20,
-              height: 20,
-              stroke: "green",
-              fill: "transparent",
-              strokeWidth: 0.5,
-              cornerRadius: 3,
-              perfectDrawEnabled: false,
-              name: `seat-rect-${coordinates.x}-${coordinates.y}`,
-              seatProps: seat,
-            });
-
-            const seatText = new Konva.Text({
-              x: coordinates.x - 4,
-              y: coordinates.y - 4,
-              text: number,
-              fontSize: 10,
-              perfectDrawEnabled: false,
-            });
-
-            seatGroup.add(seatRect).add(seatText);
-            categoryGroup.add(seatGroup);
-            //  seatTextLayer.add(seatText);
-
-            seatBgLayer.add(categoryGroup);
-          });
-          categoryGroup.on("click tap", (e) => {
-            clearCacheExtensively();
-            console.log(e.target.parent.children.isCached());
-            if (e.target.getType() !== "Stage") {
-              const [obj1, obj2] = e.target.parent.children;
-
-              obj1.fill("blue").draw();
-              obj2.fill("white").draw();
-            }
-          });
-          categoryGroup.cache();
-        });
-
+      if (seatData.categories.length > 0) {
         seatData.svgs.forEach((svg, i) => {
           const pathNew = new Konva.Path({
             x: svg.centerPoint.x,
@@ -251,6 +198,69 @@ const MainStage = memo(
             fill: svg.fill,
           });
           staticLayer.add(pathNew);
+        });
+        seatData.categories.forEach((cat, index) => {
+          const categoryGroup = new Konva.Group({ name: cat.category });
+
+          const catText = new Konva.Text({
+            x: cat.seats[0].seats[0].coordinates.x + 40,
+            y: cat.seats[0].seats[0].coordinates.y - 40,
+            text: cat.category,
+            fontSize: 10,
+            perfectDrawEnabled: false,
+          });
+          categoryGroup.add(catText);
+          categoryGroup.on("click tap", (e) => {
+            // clearCacheExtensively();
+            console.log(e.target.parent);
+            console.log(e.target.parent.children.isCached());
+            if (e.target.getType() !== "Stage") {
+              const [obj1, obj2] = e.target.parent.children;
+
+              obj1.fill("blue").draw();
+              obj2.fill("white").draw();
+            }
+          });
+          cat.seats.forEach((seatRow, i) => {
+            const { seats, row } = seatRow;
+
+            const currX = seats[0].coordinates.x; //
+            const currY = seats[0].coordinates.y; //
+
+            seats.forEach((seat, seatIndex) => {
+              const seatGroup = new Konva.Group();
+
+              const { coordinates, number, name } = seat;
+              const seatRect = new Konva.Circle({
+                x: Math.floor(coordinates.x),
+                y: Math.floor(coordinates.y),
+                width: 20,
+                height: 20,
+                stroke: "green",
+                fill: "transparent",
+                strokeWidth: 0.5,
+                cornerRadius: 3,
+                perfectDrawEnabled: false,
+                name: `seat-rect-${coordinates.x}-${coordinates.y}`,
+                seatProps: seat,
+              });
+
+              const seatText = new Konva.Text({
+                x: coordinates.x - 4,
+                y: coordinates.y - 4,
+                text: number,
+                fontSize: 10,
+                perfectDrawEnabled: false,
+              });
+
+              seatGroup.add(seatRect).add(seatText);
+              categoryGroup.add(seatGroup);
+              //  seatTextLayer.add(seatText);
+
+              seatBgLayer.add(categoryGroup);
+            });
+          });
+          categoryGroup.cache();
         });
       }
     };
@@ -308,7 +318,7 @@ const MainStage = memo(
       // if (props.data.length > 0 && !hasDrawed) {
       //   handleCanvasDraw();
       // }
-      if (props.data.seats.length > 0 && !hasDrawed) {
+      if (props.data.categories.length > 0 && !hasDrawed) {
         handleCanvasDraw();
       }
     }, [props.data]);

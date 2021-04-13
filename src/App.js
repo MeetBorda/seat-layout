@@ -11,13 +11,15 @@ import xxl from "./konva-canvas-renderer/constants/xxl.js";
 import xxxl from "./konva-canvas-renderer/constants/xxxl.js";
 import icon from "./konva-canvas-renderer/constants/icon.js";
 import manyIcons from "./konva-canvas-renderer/constants/manyIcons";
+import newJson from "./konva-canvas-renderer/constants/newJson";
 function App() {
   const [selectedSeats, setSelectedSeats] = useState([]);
-  const [data, setData] = React.useState(manyIcons);
+  const [data, setData] = React.useState(newJson);
   const setSeats = useCallback((e) => {
     setSelectedSeats([...e]);
   }, []);
-  //const makeData = transform();
+  const makeData = transform();
+  console.log(makeData)
   React.useEffect(() => {
     if (window.location.pathname === "/curved") {
       setData(curved);
@@ -36,7 +38,7 @@ function App() {
     } else if (window.location.pathname === "/k") {
       setData(icon);
     } else if (window.location.pathname === "/new") {
-      setData(manyIcons);
+      setData(newJson);
     } else {
       setData(curved);
     }

@@ -13,24 +13,71 @@ export const transform = (file) => {
   const { shapes } = manyIcons;
   let seats = [];
   let svgs = [];
-  shapes.forEach((e, i) => {
-    const { centerPoint, makeData, dumbSeatsList, svgPath = undefined } = e;
-    if (svgPath) {
-      svgPath.centerPoint = centerPoint;
-      svgs.push(svgPath);
-    }
+  let categories = [];
+  let group = shapes.reduce((r, a) => {
+    r[a.TAG] = [...(r[a.TAG] || []), a];
+    return r;
+  }, {});
 
-    if (makeData) {
-      const transformedSeats = makeSeats(makeData, dumbSeatsList, true);
+  Object.keys(group).map((element, index) => {
+    const groupRows = group[element];
+    groupRows.forEach((e, i) => {
+      const {
+        centerPoint,
+        makeData,
+        dumbSeatsList,
+        svgPath = undefined,
+        TAG,
+      } = e;
+      if (svgPath) {
+        svgPath.centerPoint = centerPoint;
+        svgs.push(svgPath);
+      }
 
-      seats.push({
-        isCurved: i === 1 || i === 0 || i === 2 ? true : false,
-        seats: transformedSeats,
-        centerPoint: centerPoint,
-        row: transformedSeats[0].prefix,
-      });
-    }
+      if (makeData) {
+        const transformedSeats = makeSeats(makeData, dumbSeatsList, true);
+
+        seats.push({
+          isCurved: i === 1 || i === 0 || i === 2 ? true : false,
+          seats: transformedSeats,
+          centerPoint: centerPoint,
+          row: transformedSeats[0].prefix,
+        });
+      }
+    });
+    const newOb = {};
+    newOb[element] = { seats: seats };
+
+    categories.push(newOb);
+    console.log(categories);
+    console.log(seats);
+    seats = [];
   });
+
+  // shapes.forEach((e, i) => {
+  //   const {
+  //     centerPoint,
+  //     makeData,
+  //     dumbSeatsList,
+  //     svgPath = undefined,
+  //     TAG,
+  //   } = e;
+  //   if (svgPath) {
+  //     svgPath.centerPoint = centerPoint;
+  //     svgs.push(svgPath);
+  //   }
+
+  //   if (makeData) {
+  //     const transformedSeats = makeSeats(makeData, dumbSeatsList, true);
+
+  //     seats.push({
+  //       isCurved: i === 1 || i === 0 || i === 2 ? true : false,
+  //       seats: transformedSeats,
+  //       centerPoint: centerPoint,
+  //       row: transformedSeats[0].prefix,
+  //     });
+  //   }
+  // });
 
   return { seats, svgs };
 };
