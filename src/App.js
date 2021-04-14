@@ -16,8 +16,8 @@ function App() {
   const [selectedSeats, setSelectedSeats] = useState({})
   const [data, setData] = useState(newJson)
 
-  const makeData = transform()
-  console.log(makeData)
+  //const makeData = transform()
+  //console.log(makeData)
   React.useEffect(() => {
     if (window.location.pathname === "/curved") {
       setData(curved)

@@ -1,174 +1,176 @@
-import React, { Fragment, memo, useState } from "react"
-import { Stage, Layer, FastLayer, Text, Circle } from "react-konva"
-import Konva from "konva"
+import React, { Fragment, memo, useState } from "react";
+import { Stage, Layer, FastLayer, Text, Circle } from "react-konva";
+import Konva from "konva";
 
-import Row from "./Row"
-import logo from "./loader.gif"
-const MAX_SEATS = 21
-const SEAT_LENGTH = 22
-const SRMC = true
-const xL = true
+import Row from "./Row";
+import logo from "./loader.gif";
+const MAX_SEATS = 21;
+const SEAT_LENGTH = 22;
+const SRMC = true;
+const xL = true;
 
-const TEXT_OFFSET = -5
-let lastDist = 0
-let lastCenter = 0
+const TEXT_OFFSET = -5;
+let lastDist = 0;
+let lastCenter = 0;
 
-let hasDrawed = false
-let xOff = 0
-let yOff = 0
+let hasDrawed = false;
+let xOff = 0;
+let yOff = 0;
 
-let selectedSeats = {}
+let selectedSeats = {};
 
 function getDistance(p1, p2) {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
 }
 
 function getCenter(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
     y: (p1.y + p2.y) / 2,
-  }
+  };
 }
 
 const MainStage = (props) => {
-  const seatData = props.data || { seats: [], svgs: [] }
-  let selectedSeats = []
+  const seatData = props.data || { seats: [], svgs: [] };
+  let selectedSeats = [];
 
-  const stageRef = React.useRef(null)
-  const [useView, setView] = useState({ x: 0, y: 0 })
+  const stageRef = React.useRef(null);
+  const [useView, setView] = useState({ x: 0, y: 0 });
 
-  const [x, xx] = useState({})
+  const [x, xx] = useState({});
 
-  const seatBgLayerRef = React.useRef(null)
-  const staticLayerRef = React.useRef(null)
-  const seatTextLayerRef = React.useRef(null)
-  const stageRef2 = React.useRef(null)
+  const seatBgLayerRef = React.useRef(null);
+  const staticLayerRef = React.useRef(null);
+  const seatTextLayerRef = React.useRef(null);
+  const stageRef2 = React.useRef(null);
 
-  const selectedSeatsRef = React.useRef({})
+  const selectedSeatsRef = React.useRef({});
 
   const calculateWidth = () => {
     if (!SRMC) {
-      const lastR = seatData[seatData.length - 1]
-      const l = lastR.seats.length
-      const coor = lastR.seats[l - 1].coordinates.x
-      return coor
-    } else return 0
-  }
+      const lastR = seatData[seatData.length - 1];
+      const l = lastR.seats.length;
+      const coor = lastR.seats[l - 1].coordinates.x;
+      return coor;
+    } else return 0;
+  };
 
   const handleSelect = (name, pos) => {
-    selectedSeats.push(name)
-    props.setSeats(selectedSeats)
-  }
+    selectedSeats.push(name);
+    props.setSeats(selectedSeats);
+  };
   const handleDeselect = (name, pos) => {
-    selectedSeats.splice(selectedSeats.indexOf(name), 1)
-    props.setSeats(selectedSeats)
-  }
+    selectedSeats.splice(selectedSeats.indexOf(name), 1);
+    props.setSeats(selectedSeats);
+  };
 
   const handleCanvasDraw = () => {
-    Konva.hitOnDragEnabled = true
+    Konva.hitOnDragEnabled = true;
 
     stageRef2.current = new Konva.Stage({
       container: "container",
       width: window.innerWidth,
       height: window.innerHeight,
       draggable: true,
-    })
+    });
 
-    seatBgLayerRef.current = new Konva.Layer()
-    staticLayerRef.current = new Konva.Layer()
-    seatTextLayerRef.current = new Konva.Layer()
-    staticLayerRef.current.listening(false)
+    seatBgLayerRef.current = new Konva.Layer();
+    staticLayerRef.current = new Konva.Layer();
+    seatTextLayerRef.current = new Konva.Layer();
+    staticLayerRef.current.listening(false);
 
-    const stage = stageRef2.current
-    const seatBgLayer = seatBgLayerRef.current
-    const seatTextLayer = seatTextLayerRef.current
-    const staticLayer = staticLayerRef.current
+    const stage = stageRef2.current;
+    const seatBgLayer = seatBgLayerRef.current;
+    const seatTextLayer = seatTextLayerRef.current;
+    const staticLayer = staticLayerRef.current;
 
-    stage.add(staticLayer)
-    stage.add(seatBgLayer)
-    stage.add(seatTextLayer)
-    drawChildren()
-    staticLayer.draw()
-    seatBgLayer.draw()
+    stage.add(staticLayer);
+    stage.add(seatBgLayer);
+    stage.add(seatTextLayer);
+    drawChildren();
+    staticLayer.draw();
+    seatBgLayer.draw();
 
     stage.on("touchmove", function (e) {
-      e.evt.preventDefault()
-      var touch1 = e.evt.touches[0]
-      var touch2 = e.evt.touches[1]
+      e.evt.preventDefault();
+
+      var touch1 = e.evt.touches[0];
+      var touch2 = e.evt.touches[1];
 
       if (touch1 && touch2) {
         // if the stage was under Konva's drag&drop
         // we need to stop it, and implement our own pan logic with two pointers
         if (stage.isDragging()) {
-          stage.stopDrag()
+          stage.stopDrag();
         }
 
         var p1 = {
           x: touch1.clientX,
           y: touch1.clientY,
-        }
+        };
         var p2 = {
           x: touch2.clientX,
           y: touch2.clientY,
-        }
+        };
 
         if (!lastCenter) {
-          lastCenter = getCenter(p1, p2)
-          return
+          lastCenter = getCenter(p1, p2);
+          return;
         }
-        var newCenter = getCenter(p1, p2)
+        var newCenter = getCenter(p1, p2);
 
-        var dist = getDistance(p1, p2)
+        var dist = getDistance(p1, p2);
 
         if (!lastDist) {
-          lastDist = dist
+          lastDist = dist;
         }
 
         // local coordinates of center point
         var pointTo = {
           x: (newCenter.x - stage.x()) / stage.scaleX(),
           y: (newCenter.y - stage.y()) / stage.scaleX(),
-        }
+        };
 
-        var scale = stage.scaleX() * (dist / lastDist)
+        var scale = stage.scaleX() * (dist / lastDist);
 
-        stage.scaleX(scale)
-        stage.scaleY(scale)
+        stage.scaleX(scale);
+        stage.scaleY(scale);
 
         // calculate new position of the stage
-        var dx = newCenter.x - lastCenter.x
-        var dy = newCenter.y - lastCenter.y
+        var dx = newCenter.x - lastCenter.x;
+        var dy = newCenter.y - lastCenter.y;
 
         var newPos = {
           x: newCenter.x - pointTo.x * scale + dx,
           y: newCenter.y - pointTo.y * scale + dy,
-        }
+        };
 
-        stage.position(newPos)
-        stage.batchDraw()
+        stage.position(newPos);
+        console.log("here");
+        stage.batchDraw();
 
-        lastDist = dist
-        lastCenter = newCenter
+        lastDist = dist;
+        lastCenter = newCenter;
       }
-    })
+    });
 
     stage.on("touchend", function () {
-      lastDist = 0
-      lastCenter = null
-    })
+      lastDist = 0;
+      lastCenter = null;
+    });
 
-    stage.on("dragend", function (e) {})
+    stage.on("dragend", function (e) {});
 
-    hasDrawed = true
-  }
+    hasDrawed = true;
+  };
 
   const drawChildren = () => {
-    const stage = stageRef2.current
-    const seatBgLayer = seatBgLayerRef.current
-    const staticLayer = staticLayerRef.current
+    const stage = stageRef2.current;
+    const seatBgLayer = seatBgLayerRef.current;
+    const staticLayer = staticLayerRef.current;
     //  const seatTextLayer = seatTextLayerRef.current;
 
-    console.log("drawing", seatData)
+    console.log("drawing", seatData);
     if (seatData.categories.length > 0) {
       seatData.svgs.forEach((svg, i) => {
         const pathNew = new Konva.Path({
@@ -176,12 +178,12 @@ const MainStage = (props) => {
           y: svg.centerPoint.y,
           data: svg.d,
           fill: svg.fill,
-        })
-        staticLayer.add(pathNew)
-      })
+        });
+        staticLayer.add(pathNew);
+      });
 
       seatData.categories.forEach((cat, index) => {
-        const categoryGroup = new Konva.Group({ name: cat.category })
+        const categoryGroup = new Konva.Group({ name: cat.category });
 
         const catText = new Konva.Text({
           x: cat.seats[0].seats[0].coordinates.x + 40,
@@ -189,63 +191,60 @@ const MainStage = (props) => {
           text: cat.category,
           fontSize: 10,
           perfectDrawEnabled: false,
-        })
+        });
 
-        staticLayer.add(catText)
+        staticLayer.add(catText);
 
         categoryGroup.on("click tap", (e) => {
-          var t0 = performance.now()
+          var t0 = performance.now();
 
-          categoryGroup.clearCache()
+          categoryGroup.clearCache();
 
           if (e.target.getType() !== "Stage") {
-            categoryGroup.clearCache()
+            categoryGroup.clearCache();
             // selectedSeats
-            const [obj1, obj2] = e.target.parent.children
-            const { seatProps, isSelectedSeat } = obj1.attrs
+            const [obj1, obj2] = e.target.parent.children;
+            const { seatProps, isSelectedSeat } = obj1.attrs;
 
-            obj1.setAttr("isSelectedSeat", !isSelectedSeat)
+            obj1.setAttr("isSelectedSeat", !isSelectedSeat);
 
             //   add logic for isFilled
-            obj1.fill(!isSelectedSeat ? "blue" : "transparent").draw()
-            obj2.fill(!isSelectedSeat ? "white" : "black").draw()
+            obj1.fill(!isSelectedSeat ? "blue" : "transparent").draw();
+            obj2.fill(!isSelectedSeat ? "white" : "black").draw();
 
             //
 
-            props.setSeats(seatProps)
+            props.setSeats(seatProps);
 
-            categoryGroup.cache()
-            var t1 = performance.now()
+            categoryGroup.cache();
+            var t1 = performance.now();
             console.log(
               "Call to doSomething took " + (t1 - t0) + " milliseconds."
-            )
+            );
           }
-        })
+        });
 
         cat.seats.forEach((seatRow, i) => {
-          const { seats, row } = seatRow
+          const { seats, row } = seatRow;
 
-          const currX = seats[0].coordinates.x //
-          const currY = seats[0].coordinates.y //
+          const currX = seats[0].coordinates.x; //
+          const currY = seats[0].coordinates.y; //
 
           seats.forEach((seat, seatIndex) => {
-            const seatGroup = new Konva.Group()
+            const seatGroup = new Konva.Group();
 
-            const { coordinates, number, name } = seat
+            const { coordinates, number, name } = seat;
 
             const seatRect = new Konva.Circle({
               x: Math.floor(coordinates.x),
               y: Math.floor(coordinates.y),
-              width: 20,
-              height: 20,
               stroke: "green",
-              fill: "transparent",
-              strokeWidth: 0.5,
-              cornerRadius: 3,
+              radius: 10,
+              strokeWidth: 1,
               perfectDrawEnabled: false,
               name: `seat-rect-${coordinates.x}-${coordinates.y}`,
               seatProps: { ...seat, isSelectedSeat: false },
-            })
+            });
 
             const seatText = new Konva.Text({
               x: coordinates.x - 4,
@@ -253,41 +252,41 @@ const MainStage = (props) => {
               text: number,
               fontSize: 10,
               perfectDrawEnabled: false,
-            })
+            });
 
-            seatGroup.add(seatRect).add(seatText)
-            categoryGroup.add(seatGroup)
+            seatGroup.add(seatRect).add(seatText);
+            categoryGroup.add(seatGroup);
             //  seatTextLayer.add(seatText);
 
-            seatBgLayer.add(categoryGroup)
-          })
-        })
-        categoryGroup.cache()
-      })
+            seatBgLayer.add(categoryGroup);
+          });
+        });
+        categoryGroup.cache();
+      });
     }
-  }
+  };
 
   const clearCacheExtensively = () => {
-    const canvasLayerElements = stageRef2.current.getLayers()
+    const canvasLayerElements = stageRef2.current.getLayers();
     for (let i = 0; i < canvasLayerElements.length; i += 1) {
-      const cachedCanvases = canvasLayerElements[i]._cache.get("canvas")
+      const cachedCanvases = canvasLayerElements[i]._cache.get("canvas");
       if (cachedCanvases) {
-        cachedCanvases.scene._canvas.width = 0
-        cachedCanvases.scene._canvas.height = 0
-        cachedCanvases.hit._canvas.width = 0
-        cachedCanvases.hit._canvas.height = 0
-        cachedCanvases.filter._canvas.width = 0
-        cachedCanvases.filter._canvas.height = 0
-        canvasLayerElements[i].clearCache()
+        cachedCanvases.scene._canvas.width = 0;
+        cachedCanvases.scene._canvas.height = 0;
+        cachedCanvases.hit._canvas.width = 0;
+        cachedCanvases.hit._canvas.height = 0;
+        cachedCanvases.filter._canvas.width = 0;
+        cachedCanvases.filter._canvas.height = 0;
+        canvasLayerElements[i].clearCache();
       }
     }
-  }
+  };
 
   React.useEffect(() => {
     if (props.data.categories.length > 0 && !hasDrawed) {
-      handleCanvasDraw()
+      handleCanvasDraw();
     }
-  }, [props.data])
+  }, [props.data]);
 
   return (
     <div
@@ -303,7 +302,7 @@ const MainStage = (props) => {
     >
       <div id="container" />
     </div>
-  )
-}
+  );
+};
 
-export default MainStage
+export default MainStage;
