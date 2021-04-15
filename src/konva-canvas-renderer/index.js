@@ -207,12 +207,53 @@ const MainStage = (props) => {
     })
 
     stage.on("dragend", function (e) {
-      console.log(
-        11,
-        stageRef2.current.x(),
-        e.evt.touches[0],
-        staticSeatRowTextLayerRef.current.x()
-      )
+      const isOut = window.innerWidth - e.target.x()
+      const isLeftOut = isOut < 270
+      const isRightOut = Math.abs(e.target.x()) > 1077
+      const canvasWidth = 1077 + window.innerWidth
+      const canvasX = Math.abs(e.target.x())
+      console.log(canvasX, 1077)
+      //   canvasX + window.innerWidth = canvasX + offsetRight
+      //   const offsetRight = canvasX + window.innerWidth - canvasWidth
+      //   console.log(99, offsetRight, offsetRight + 270)
+      //   console.log(
+      //     11,
+      //     stageRef2.current.x(),
+      //     e.target.x(),
+      //     window.innerWidth - e.target.x(),
+      //     isOut,
+      //     e.target
+      //   )
+
+      //   console.log(222, e.target.x())
+
+      //   console.log(
+      //     444,
+      //     e.target.x(),
+      //     isLeftOut,
+      //     window.innerWidth + e.target.x(),
+      //     e.target,
+      //     e.target.width(),
+      //     e.target.offsetX()
+      //   )
+
+      if (isLeftOut) {
+        stage.position({ x: -175 })
+        staticSeatRowTextLayerRef.current.position({
+          x: 0,
+        })
+      }
+
+      if (isRightOut) {
+        stage.position({ x: -(1077 - window.innerWidth) })
+        staticSeatRowTextLayerRef.current.position({
+          x: -(1077 - window.innerWidth),
+        })
+      }
+
+      // if(isRightOut){
+      // 	stage.position({ x: 0})
+      // }
     })
 
     hasDrawed = true
