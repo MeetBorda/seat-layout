@@ -73,8 +73,9 @@ const MainStage = (props) => {
 
   const setStickyRowTextOnDrag = (xDragMove) => {
     staticSeatRowTextLayerRef.current.position({
-      x: -xDragMove,
+      x: xDragMove,
     })
+    staticSeatRowTextLayerRef.current.batchDraw()
   }
 
   const handleCanvasDraw = () => {
@@ -104,7 +105,6 @@ const MainStage = (props) => {
 
     const staticLayer = staticLayerRef.current
     const staticSeatRowTextLayer = staticSeatRowTextLayerRef.current
-    console.log(staticSeatRowTextLayer.x())
 
     stage.add(staticLayer)
     stage.add(seatBgLayer)
@@ -191,13 +191,7 @@ const MainStage = (props) => {
         lastDist = dist
         lastCenter = newCenter
       } else {
-        // console.log(
-        //   11,
-        //   stageRef2.current.x(),
-        //   e.evt.touches[0],
-        //   staticSeatRowTextLayerRef.current.x()
-        // )
-        setStickyRowTextOnDrag(stageRef2.current.x())
+        setStickyRowTextOnDrag(-stageRef2.current.x())
       }
     })
 
@@ -207,53 +201,21 @@ const MainStage = (props) => {
     })
 
     stage.on("dragend", function (e) {
-      const isOut = window.innerWidth - e.target.x()
-      const isLeftOut = isOut < 270
-      const isRightOut = Math.abs(e.target.x()) > 1077
-      const canvasWidth = 1077 + window.innerWidth
-      const canvasX = Math.abs(e.target.x())
-      console.log(canvasX, 1077)
-      //   canvasX + window.innerWidth = canvasX + offsetRight
-      //   const offsetRight = canvasX + window.innerWidth - canvasWidth
-      //   console.log(99, offsetRight, offsetRight + 270)
-      //   console.log(
-      //     11,
-      //     stageRef2.current.x(),
-      //     e.target.x(),
-      //     window.innerWidth - e.target.x(),
-      //     isOut,
-      //     e.target
-      //   )
+      const RIGHT_THRESHOLD = 1008
+      const LEFT_THRESHOLD = 270
 
-      //   console.log(222, e.target.x())
-
-      //   console.log(
-      //     444,
-      //     e.target.x(),
-      //     isLeftOut,
-      //     window.innerWidth + e.target.x(),
-      //     e.target,
-      //     e.target.width(),
-      //     e.target.offsetX()
-      //   )
+      const isLeftOut = e.target.x() + LEFT_THRESHOLD > window.innerWidth
+      const isRightOut = Math.abs(e.target.x()) > RIGHT_THRESHOLD
 
       if (isLeftOut) {
-        stage.position({ x: -175 })
-        staticSeatRowTextLayerRef.current.position({
-          x: 0,
-        })
+        stage.position({ x: -150 })
+        setStickyRowTextOnDrag(150)
       }
 
       if (isRightOut) {
-        stage.position({ x: -(1077 - window.innerWidth) })
-        staticSeatRowTextLayerRef.current.position({
-          x: -(1077 - window.innerWidth),
-        })
+        stage.position({ x: -(RIGHT_THRESHOLD - window.innerWidth) })
+        setStickyRowTextOnDrag(RIGHT_THRESHOLD - window.innerWidth)
       }
-
-      // if(isRightOut){
-      // 	stage.position({ x: 0})
-      // }
     })
 
     hasDrawed = true
