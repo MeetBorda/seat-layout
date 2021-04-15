@@ -1,4 +1,27 @@
 export default {
+  rowsNames: [
+    {
+      name: "A",
+      coordinates: {
+        x: 0,
+        y: 154.5,
+      },
+    },
+    {
+      name: "B",
+      coordinates: {
+        x: 0,
+        y: 179.5,
+      },
+    },
+    {
+      name: "C",
+      coordinates: {
+        x: 0,
+        y: 204.5,
+      },
+    },
+  ],
   categories: [
     {
       category: "gold",
@@ -5670,4 +5693,4 @@ export default {
       },
     },
   ],
-};
+}

@@ -1,5 +1,5 @@
-import React, { Fragment, memo, useState } from "react"
-import { Stage, Layer, FastLayer, Text, Circle } from "react-konva"
+import React, { useState } from "react"
+
 import Konva from "konva"
 
 import Row from "./Row"
@@ -19,6 +19,16 @@ let yOff = 0
 
 let selectedSeats = {}
 
+const throttle = (func, limit) => {
+  let inThrottle
+  return (...args) => {
+    if (!inThrottle) {
+      func(...args)
+      inThrottle = setTimeout(() => (inThrottle = false), limit)
+    }
+  }
+}
+
 function getDistance(p1, p2) {
   return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 }
@@ -34,17 +44,14 @@ const MainStage = (props) => {
   const seatData = props.data || { seats: [], svgs: [] }
   let selectedSeats = []
 
-  const stageRef = React.useRef(null)
   const [useView, setView] = useState({ x: 0, y: 0 })
-
-  const [x, xx] = useState({})
 
   const seatBgLayerRef = React.useRef(null)
   const staticLayerRef = React.useRef(null)
   const seatTextLayerRef = React.useRef(null)
   const stageRef2 = React.useRef(null)
-
-  const selectedSeatsRef = React.useRef({})
+  const staticSeatRowTextLayerRef = React.useRef(null)
+  const rectGroupRef = React.useRef(null)
 
   const calculateWidth = () => {
     if (!SRMC) {
@@ -64,8 +71,19 @@ const MainStage = (props) => {
     props.setSeats(selectedSeats)
   }
 
+  const setStickyRowTextOnDrag = (xDragMove) => {
+    staticSeatRowTextLayerRef.current.position({
+      x: -xDragMove,
+    })
+  }
+
   const handleCanvasDraw = () => {
     Konva.hitOnDragEnabled = true
+
+    const throttledSetStickyRowTextOnDrag = throttle(
+      setStickyRowTextOnDrag,
+      300
+    )
 
     stageRef2.current = new Konva.Stage({
       container: "container",
@@ -76,23 +94,30 @@ const MainStage = (props) => {
 
     seatBgLayerRef.current = new Konva.Layer()
     staticLayerRef.current = new Konva.Layer()
-    seatTextLayerRef.current = new Konva.Layer()
+    staticSeatRowTextLayerRef.current = new Konva.Layer()
+
     staticLayerRef.current.listening(false)
+    staticSeatRowTextLayerRef.current.listening(false)
 
     const stage = stageRef2.current
     const seatBgLayer = seatBgLayerRef.current
-    const seatTextLayer = seatTextLayerRef.current
+
     const staticLayer = staticLayerRef.current
+    const staticSeatRowTextLayer = staticSeatRowTextLayerRef.current
+    console.log(staticSeatRowTextLayer.x())
 
     stage.add(staticLayer)
     stage.add(seatBgLayer)
-    stage.add(seatTextLayer)
+
+    stage.add(staticSeatRowTextLayer)
     drawChildren()
     staticLayer.draw()
     seatBgLayer.draw()
+    staticSeatRowTextLayer.draw()
 
     stage.on("touchmove", function (e) {
       e.evt.preventDefault()
+
       var touch1 = e.evt.touches[0]
       var touch2 = e.evt.touches[1]
 
@@ -144,11 +169,35 @@ const MainStage = (props) => {
           y: newCenter.y - pointTo.y * scale + dy,
         }
 
+        console.log("newPos => ", newPos)
+        console.log("stage.scaleX() => ", stage.scaleX())
+        console.log("dx, dy ==>", dx, dy)
+        console.log("dx, dy ==>", dx, dy)
+        console.log("dx, dy ==>", dx, dy)
+
+        console.log(
+          newPos,
+          stage.scaleX(),
+          dx,
+          dy,
+          stage.x(),
+          lastCenter,
+          newCenter
+        )
+
         stage.position(newPos)
         stage.batchDraw()
 
         lastDist = dist
         lastCenter = newCenter
+      } else {
+        // console.log(
+        //   11,
+        //   stageRef2.current.x(),
+        //   e.evt.touches[0],
+        //   staticSeatRowTextLayerRef.current.x()
+        // )
+        setStickyRowTextOnDrag(stageRef2.current.x())
       }
     })
 
@@ -157,16 +206,23 @@ const MainStage = (props) => {
       lastCenter = null
     })
 
-    stage.on("dragend", function (e) {})
+    stage.on("dragend", function (e) {
+      console.log(
+        11,
+        stageRef2.current.x(),
+        e.evt.touches[0],
+        staticSeatRowTextLayerRef.current.x()
+      )
+    })
 
     hasDrawed = true
   }
 
   const drawChildren = () => {
-    const stage = stageRef2.current
     const seatBgLayer = seatBgLayerRef.current
     const staticLayer = staticLayerRef.current
-    //  const seatTextLayer = seatTextLayerRef.current;
+
+    const staticSeatRowTextLayer = staticSeatRowTextLayerRef.current
 
     console.log("drawing", seatData)
     if (seatData.categories.length > 0) {
@@ -179,6 +235,42 @@ const MainStage = (props) => {
         })
         staticLayer.add(pathNew)
       })
+
+      const xGroup = new Konva.Group({
+        name: "rect-seat-holder-group",
+        x: 0,
+        y: 0,
+      })
+
+      rectGroupRef.current = xGroup
+
+      const konvaTextRect = new Konva.Rect({
+        x: 0,
+        y: 0,
+        fill: "red",
+        height: window.innerHeight,
+        width: 20,
+        opacity: 0.5,
+      })
+
+      seatData.rowsNames.forEach((rowName) => {
+        if (rowName.name) {
+          const rowNameText = new Konva.Text({
+            x: rowName.coordinates.x,
+            y: rowName.coordinates.y - 2,
+            text: rowName.name,
+            fontSize: 10,
+            perfectDrawEnabled: false,
+          })
+
+          xGroup.add(rowNameText)
+          //   staticSeatRowTextLayer.add(rowNameText)
+        }
+      })
+
+      xGroup.add(konvaTextRect)
+      staticSeatRowTextLayer.add(xGroup)
+      staticSeatRowTextLayer.add(konvaTextRect)
 
       seatData.categories.forEach((cat, index) => {
         const categoryGroup = new Konva.Group({ name: cat.category })
@@ -196,11 +288,10 @@ const MainStage = (props) => {
         categoryGroup.on("click tap", (e) => {
           var t0 = performance.now()
 
-          categoryGroup.clearCache()
-
           if (e.target.getType() !== "Stage") {
             categoryGroup.clearCache()
             // selectedSeats
+            console.log(e.target.x())
             const [obj1, obj2] = e.target.parent.children
             const { seatProps, isSelectedSeat } = obj1.attrs
 
@@ -209,7 +300,6 @@ const MainStage = (props) => {
             //   add logic for isFilled
             obj1.fill(!isSelectedSeat ? "blue" : "transparent").draw()
             obj2.fill(!isSelectedSeat ? "white" : "black").draw()
-
             //
 
             props.setSeats(seatProps)
@@ -257,7 +347,6 @@ const MainStage = (props) => {
 
             seatGroup.add(seatRect).add(seatText)
             categoryGroup.add(seatGroup)
-            //  seatTextLayer.add(seatText);
 
             seatBgLayer.add(categoryGroup)
           })
@@ -288,6 +377,8 @@ const MainStage = (props) => {
       handleCanvasDraw()
     }
   }, [props.data])
+
+  console.log(props.data)
 
   return (
     <div
