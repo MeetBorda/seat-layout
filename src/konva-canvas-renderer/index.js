@@ -79,7 +79,7 @@ const MainStage = (props) => {
 
   const setStickyRowTextOnDrag = (xDragMove) => {
     staticSeatRowTextLayerRef.current.position({
-      x: xDragMove,
+      x: xDragMove / stageRef2.current.scaleX(),
     })
     staticSeatRowTextLayerRef.current.batchDraw()
   }
@@ -223,6 +223,7 @@ const MainStage = (props) => {
 
         lastDist = dist
         lastCenter = newCenter
+        setStickyRowTextOnDrag(-stageRef2.current.x())
       } else {
         setStickyRowTextOnDrag(-stageRef2.current.x())
       }
@@ -277,14 +278,14 @@ const MainStage = (props) => {
 
       rectGroupRef.current = xGroup
 
-      const konvaTextRect = new Konva.Rect({
-        x: 0,
-        y: 0,
-        fill: "red",
-        height: window.innerHeight,
-        width: 20,
-        opacity: 0.5,
-      })
+      //   const konvaTextRect = new Konva.Rect({
+      //     x: 0,
+      //     y: 0,
+      //     fill: "red",
+      //     height: window.innerHeight,
+      //     width: 20,
+      //     opacity: 0.5,
+      //   })
 
       seatData.rowsNames.forEach((rowName) => {
         if (rowName.name) {
@@ -301,7 +302,7 @@ const MainStage = (props) => {
         }
       })
 
-      xGroup.add(konvaTextRect)
+      //   xGroup.add(konvaTextRect)
       staticSeatRowTextLayer.add(xGroup)
 
       seatData.categories.forEach((cat, index) => {
@@ -388,22 +389,6 @@ const MainStage = (props) => {
     }
   }
 
-  const clearCacheExtensively = () => {
-    const canvasLayerElements = stageRef2.current.getLayers()
-    for (let i = 0; i < canvasLayerElements.length; i += 1) {
-      const cachedCanvases = canvasLayerElements[i]._cache.get("canvas")
-      if (cachedCanvases) {
-        cachedCanvases.scene._canvas.width = 0
-        cachedCanvases.scene._canvas.height = 0
-        cachedCanvases.hit._canvas.width = 0
-        cachedCanvases.hit._canvas.height = 0
-        cachedCanvases.filter._canvas.width = 0
-        cachedCanvases.filter._canvas.height = 0
-        canvasLayerElements[i].clearCache()
-      }
-    }
-  }
-
   React.useEffect(() => {
     if (props.data.categories.length > 0 && !hasDrawed) {
       handleCanvasDraw()
@@ -422,21 +407,21 @@ const MainStage = (props) => {
         width: "max-content",
         margin: "auto",
         border: "1px solid",
-        // minWidth: "100vw",
+        minWidth: "100vw",
       }}
     >
       <div id="container" />
-      {/* <div
+      <div
         style={{
           position: "absolute",
           top: 0,
           left: 0,
           height: "100vh",
-          background: "hsla(0,0%,96.1%,.7)",
+          background: "#c3bebeb3",
           width: 20,
           opacity: 0.6,
         }}
-      /> */}
+      />
     </div>
   )
 }
