@@ -19,6 +19,12 @@ let yOff = 0
 
 let selectedSeats = {}
 
+const RIGHT_THRESHOLD = 1008
+const LEFT_THRESHOLD = 270
+
+let firstLeftOut = 0
+let firstRightOut = 0
+
 const throttle = (func, limit) => {
   let inThrottle
   return (...args) => {
@@ -91,6 +97,29 @@ const MainStage = (props) => {
       width: window.innerWidth,
       height: window.innerHeight,
       draggable: true,
+      dragBoundFunc: (pos) => {
+        let newX = pos.x
+
+        const isLeftOut = window.innerWidth - pos.x < 200
+        const isRightOut = Math.abs(pos.x) > 1077
+
+        // better logic to be implemented //
+
+        if (isLeftOut) {
+          firstLeftOut = firstLeftOut || pos.x
+          newX = firstLeftOut
+        }
+
+        if (isRightOut) {
+          firstRightOut = firstRightOut || pos.x
+          newX = firstRightOut
+        }
+
+        return {
+          x: newX,
+          y: pos.y,
+        }
+      },
     })
 
     seatBgLayerRef.current = new Konva.Layer()
@@ -114,6 +143,10 @@ const MainStage = (props) => {
     staticLayer.draw()
     seatBgLayer.draw()
     staticSeatRowTextLayer.draw()
+
+    stageRef2.current.on("wheel", (e) => {
+      e.evt.preventDefault()
+    })
 
     stage.on("touchmove", function (e) {
       e.evt.preventDefault()
@@ -201,9 +234,6 @@ const MainStage = (props) => {
     })
 
     stage.on("dragend", function (e) {
-      const RIGHT_THRESHOLD = 1008
-      const LEFT_THRESHOLD = 270
-
       const isLeftOut = e.target.x() + LEFT_THRESHOLD > window.innerWidth
       const isRightOut = Math.abs(e.target.x()) > RIGHT_THRESHOLD
 
@@ -264,16 +294,15 @@ const MainStage = (props) => {
             text: rowName.name,
             fontSize: 10,
             perfectDrawEnabled: false,
+            zIndex: 10,
           })
 
           xGroup.add(rowNameText)
-          //   staticSeatRowTextLayer.add(rowNameText)
         }
       })
 
       xGroup.add(konvaTextRect)
       staticSeatRowTextLayer.add(xGroup)
-      staticSeatRowTextLayer.add(konvaTextRect)
 
       seatData.categories.forEach((cat, index) => {
         const categoryGroup = new Konva.Group({ name: cat.category })
@@ -393,9 +422,21 @@ const MainStage = (props) => {
         width: "max-content",
         margin: "auto",
         border: "1px solid",
+        // minWidth: "100vw",
       }}
     >
       <div id="container" />
+      {/* <div
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          height: "100vh",
+          background: "hsla(0,0%,96.1%,.7)",
+          width: 20,
+          opacity: 0.6,
+        }}
+      /> */}
     </div>
   )
 }
