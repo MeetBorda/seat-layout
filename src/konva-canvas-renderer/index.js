@@ -47,13 +47,10 @@ function getCenter(p1, p2) {
 
 const MainStage = (props) => {
   const seatData = props.data || { seats: [], svgs: [] }
-  let selectedSeats = []
-
-  const [useView, setView] = useState({ x: 0, y: 0 })
 
   const seatBgLayerRef = React.useRef(null)
   const staticLayerRef = React.useRef(null)
-  const seatTextLayerRef = React.useRef(null)
+
   const stageRef2 = React.useRef(null)
   const staticSeatRowTextLayerRef = React.useRef(null)
   const rectGroupRef = React.useRef(null)
@@ -67,15 +64,6 @@ const MainStage = (props) => {
     } else return 0
   }
 
-  const handleSelect = (name, pos) => {
-    selectedSeats.push(name)
-    props.setSeats(selectedSeats)
-  }
-  const handleDeselect = (name, pos) => {
-    selectedSeats.splice(selectedSeats.indexOf(name), 1)
-    props.setSeats(selectedSeats)
-  }
-
   const setStickyRowTextOnDrag = (xDragMove) => {
     staticSeatRowTextLayerRef.current.position({
       x: xDragMove / stageRef2.current.scaleX(),
@@ -85,11 +73,6 @@ const MainStage = (props) => {
 
   const handleCanvasDraw = () => {
     Konva.hitOnDragEnabled = true
-
-    const throttledSetStickyRowTextOnDrag = throttle(
-      setStickyRowTextOnDrag,
-      300
-    )
 
     stageRef2.current = new Konva.Stage({
       container: "container",
@@ -104,15 +87,15 @@ const MainStage = (props) => {
 
         // better logic to be implemented //
 
-        if (isLeftOut) {
-          firstLeftOut = firstLeftOut || pos.x
-          newX = firstLeftOut
-        }
+        // if (isLeftOut) {
+        //   firstLeftOut = firstLeftOut || pos.x
+        //   newX = firstLeftOut
+        // }
 
-        if (isRightOut) {
-          firstRightOut = firstRightOut || pos.x
-          newX = firstRightOut
-        }
+        // if (isRightOut) {
+        //   firstRightOut = firstRightOut || pos.x
+        //   newX = firstRightOut
+        // }
 
         return {
           x: newX,
@@ -143,8 +126,29 @@ const MainStage = (props) => {
     seatBgLayer.draw()
     staticSeatRowTextLayer.draw()
 
-    stageRef2.current.on("wheel", (e) => {
+    stage.on("wheel", (e) => {
       e.evt.preventDefault()
+      const scaleBy = 1.02
+      const oldScale = stage.scaleX()
+      const { x: pointerX, y: pointerY } = stage.getPointerPosition()
+      const mousePointTo = {
+        x: (pointerX - stage.x()) / oldScale,
+        y: (pointerY - stage.y()) / oldScale,
+      }
+      const newScale =
+        e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy
+
+      if (newScale >= 1.5 || newScale <= 0.5) {
+        return
+      }
+
+      stage.scale({ x: newScale, y: newScale })
+      const newPos = {
+        x: pointerX - mousePointTo.x * newScale,
+        y: pointerY - mousePointTo.y * newScale,
+      }
+      stage.position(newPos)
+      stage.batchDraw()
     })
 
     stage.on("touchmove", function (e) {
@@ -189,6 +193,10 @@ const MainStage = (props) => {
         }
 
         const scale = stage.scaleX() * (dist / lastDist)
+
+        if (scale >= 1.5 || scale <= 0.5) {
+          return
+        }
 
         stage.scaleX(scale)
         stage.scaleY(scale)
