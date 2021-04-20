@@ -15,6 +15,8 @@ export const transform = (file) => {
   let seats = [];
   let svgs = [];
   let categories = [];
+  let rects = [];
+  let texts = [];
   let group = shapes.reduce((r, a) => {
     r[a.TAG] = [...(r[a.TAG] || []), a];
     return r;
@@ -33,22 +35,30 @@ export const transform = (file) => {
         svgPath = undefined,
         TAG,
       } = el;
-
-      if (e === "SVG") {
+      if (e === "rect") {
+        const { startX, startY, selectionBounds } = el;
+        rects.push({ startX, startY, selectionBounds, centerPoint });
+      } else if (e === "EXT") {
+        const { textStr, selectionBounds } = el;
+        console.log(textStr, selectionBounds,texts);
+        texts.push({ textStr, selectionBounds, centerPoint });
+        console.log(texts)
+      } else if (e === "SVG") {
         if (svgPath) {
           svgPath.centerPoint = centerPoint;
           svgs.push(svgPath);
         }
-      }
-
-      if (makeData) {
+      } else if (makeData) {
         const transformedSeats = makeSeats(makeData, dumbSeatsList, false);
-        console.log(transformedSeats);
+        // console.log(transformedSeats);
         seats.push({
           seats: transformedSeats,
           centerPoint: centerPoint,
           row: transformedSeats[0].prefix,
         });
+      }
+      else{
+        console.log('unsupported',e)
       }
     });
 
@@ -121,7 +131,7 @@ export const transform = (file) => {
   //   }
   // });
 
-  return { categories, svgs };
+  return { categories, svgs, rects, texts };
 };
 
 export const makeSeats = (makeData, dumbSeatsList, socialDistancing) => {

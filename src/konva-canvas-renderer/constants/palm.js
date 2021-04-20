@@ -2884,16 +2884,6 @@ export default {
               prefix: "C",
               status: 0,
             },
-            {
-              name: "A-59",
-              coordinates: {
-                x: 1500.6666666666665,
-                y: 392.49999999999994,
-              },
-              number: 59,
-              prefix: "A",
-              status: 0,
-            },
           ],
           centerPoint: {
             x: 447.4607004977069,
@@ -3412,6 +3402,266 @@ export default {
               },
               number: 25,
               prefix: "E",
+              status: 0,
+            },
+          ],
+          centerPoint: {
+            x: 447.4607004977069,
+            y: 444.17731621108095,
+            lock: false,
+          },
+          row: "E",
+        },
+        {
+          seats: [
+            {
+              name: "F-1",
+              coordinates: {
+                x: 171.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 1,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-2",
+              coordinates: {
+                x: 194.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 2,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-3",
+              coordinates: {
+                x: 217.4607004977068,
+                y: 469.17731621108095,
+              },
+              number: 3,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-4",
+              coordinates: {
+                x: 240.4607004977068,
+                y: 469.17731621108095,
+              },
+              number: 4,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-5",
+              coordinates: {
+                x: 263.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 5,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-6",
+              coordinates: {
+                x: 286.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 6,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-7",
+              coordinates: {
+                x: 309.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 7,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-8",
+              coordinates: {
+                x: 332.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 8,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-9",
+              coordinates: {
+                x: 355.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 9,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-10",
+              coordinates: {
+                x: 378.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 10,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-11",
+              coordinates: {
+                x: 401.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 11,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-12",
+              coordinates: {
+                x: 424.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 12,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-13",
+              coordinates: {
+                x: 447.4607004977071,
+                y: 469.17731621108095,
+              },
+              number: 13,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-14",
+              coordinates: {
+                x: 470.46070049770685,
+                y: 469.17731621108095,
+              },
+              number: 14,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-15",
+              coordinates: {
+                x: 493.46070049770697,
+                y: 469.17731621108095,
+              },
+              number: 15,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-16",
+              coordinates: {
+                x: 516.4607004977069,
+                y: 469.17731621108095,
+              },
+              number: 16,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-17",
+              coordinates: {
+                x: 539.4607004977072,
+                y: 469.17731621108095,
+              },
+              number: 17,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-18",
+              coordinates: {
+                x: 562.460700497707,
+                y: 469.17731621108095,
+              },
+              number: 18,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-19",
+              coordinates: {
+                x: 585.4607004977067,
+                y: 469.17731621108095,
+              },
+              number: 19,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-20",
+              coordinates: {
+                x: 608.4607004977067,
+                y: 469.17731621108095,
+              },
+              number: 20,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-21",
+              coordinates: {
+                x: 631.4607004977067,
+                y: 469.17731621108095,
+              },
+              number: 21,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-22",
+              coordinates: {
+                x: 654.4607004977067,
+                y: 469.17731621108095,
+              },
+              number: 22,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-23",
+              coordinates: {
+                x: 677.460700497707,
+                y: 469.17731621108095,
+              },
+              number: 23,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-24",
+              coordinates: {
+                x: 700.460700497707,
+                y: 469.17731621108095,
+              },
+              number: 24,
+              prefix: "F",
+              status: 0,
+            },
+            {
+              name: "F-25",
+              coordinates: {
+                x: 723.460700497707,
+                y: 469.17731621108095,
+              },
+              number: 25,
+              prefix: "F",
               status: 0,
             },
           ],
@@ -7066,6 +7316,10 @@ export default {
       category: "PLATINUM",
     },
     {
+      seats: [],
+      category: "EXT",
+    },
+    {
       seats: [
         {
           seats: [
@@ -9098,6 +9352,7 @@ export default {
           row: "CD",
         },
         {
+          isVerticalTop: true,
           seats: [
             {
               name: "CB-1",
@@ -13053,6 +13308,16 @@ export default {
               prefix: "B",
               status: 0,
             },
+            {
+              name: "B-9",
+              coordinates: {
+                x: 1509.9573041180847,
+                y: 1173.7815304082108,
+              },
+              number: 9,
+              prefix: "B",
+              status: 0,
+            },
           ],
           centerPoint: {
             x: 1509.9573041180847,
@@ -13254,6 +13519,98 @@ export default {
       centerPoint: {
         x: 864.28887188817,
         y: 720.6235907944842,
+        lock: false,
+      },
+    },
+  ],
+  rects: [
+    {
+      sepText: "Gold-2",
+      startX: 1435.135199850005,
+      startY: 945.2582447249692,
+      selectionBounds: {
+        handleSize: 26.666019438197377,
+        resizeHandlePosRB: true,
+        resizeHandlePosRM: true,
+        resizeHandlePosBM: true,
+        boundsSpacing: 0,
+        left: 1405.1996207036211,
+        top: 951.2453605542461,
+        right: 1698.5682963381842,
+        bottom: 951.2453605542461,
+        width: 293.36867563456303,
+        height: 0,
+      },
+      centerPoint: {
+        x: 1551.8839585209025,
+        y: 951.2453605542461,
+        lock: false,
+      },
+    },
+    {
+      sepText: "Gold-1",
+      startX: 94.0212540920017,
+      startY: 945.2582447249692,
+      selectionBounds: {
+        handleSize: 26.666019438197377,
+        resizeHandlePosRB: true,
+        resizeHandlePosRM: true,
+        resizeHandlePosBM: true,
+        boundsSpacing: 0,
+        left: 94.0212540920017,
+        top: 945.2582447249692,
+        right: 201.7893390189841,
+        bottom: 945.2582447249692,
+        width: 107.7680849269824,
+        height: 0,
+      },
+      centerPoint: {
+        x: 147.9052965554929,
+        y: 945.2582447249692,
+        lock: false,
+      },
+    },
+  ],
+  texts: [
+    {
+      textStr: "GOLD",
+      selectionBounds: {
+        handleSize: 26.666019438197377,
+        resizeHandlePosRB: false,
+        resizeHandlePosRM: false,
+        resizeHandlePosBM: false,
+        boundsSpacing: 0,
+        left: 423.24316406249994,
+        top: 41.499999999999986,
+        right: 482.75683593749994,
+        bottom: 62.499999999999986,
+        width: 59.513671875,
+        height: 21,
+      },
+      centerPoint: {
+        x: 452.99999999999994,
+        y: 51.999999999999986,
+        lock: false,
+      },
+    },
+    {
+      textStr: "SILVER",
+      selectionBounds: {
+        handleSize: 26.666019438197377,
+        resizeHandlePosRB: false,
+        resizeHandlePosRM: false,
+        resizeHandlePosBM: false,
+        boundsSpacing: 0,
+        left: 1243.1870866385193,
+        top: 41.20375450417255,
+        right: 1316.3281999197693,
+        bottom: 62.20375450417254,
+        width: 73.14111328125,
+        height: 20.999999999999986,
+      },
+      centerPoint: {
+        x: 1279.7576432791443,
+        y: 51.703754504172544,
         lock: false,
       },
     },

@@ -13,12 +13,13 @@ import icon from "./konva-canvas-renderer/constants/icon.js";
 import manyIcons from "./konva-canvas-renderer/constants/manyIcons";
 import newJson from "./konva-canvas-renderer/constants/newJson";
 import master from "./konva-canvas-renderer/constants/master";
+import palm from "./konva-canvas-renderer/constants/palm";
 function App() {
   const [selectedSeats, setSelectedSeats] = useState({});
-  const [data, setData] = useState(master);
+  const [data, setData] = useState(palm);
 
-  // const makeData = transform();
-  // console.log(makeData);
+  const makeData = transform();
+  console.log(makeData);
   React.useEffect(() => {
     if (window.location.pathname === "/curved") {
       setData(curved);
@@ -41,7 +42,7 @@ function App() {
     } else if (window.location.pathname === "/master") {
       setData(master);
     } else {
-      setData(curved);
+      setData(palm);
     }
   }, []);
 
