@@ -51,6 +51,8 @@ const MainStage = (props) => {
   const staticSeatRowTextLayerRef = React.useRef(null)
   const rectGroupRef = React.useRef(null)
 
+  const [loading, setLoading] = useState(true)
+
   const calculateWidth = () => {
     if (!SRMC) {
       const lastR = seatData[seatData.length - 1]
@@ -244,6 +246,7 @@ const MainStage = (props) => {
     // })
 
     hasDrawed = true
+    setLoading(false)
   }
 
   const resetLRTBLimits = () => {
@@ -421,20 +424,39 @@ const MainStage = (props) => {
   console.log(props.data)
 
   return (
-    <div
-      style={{
-        display: "flex",
-        position: "relative",
-        backgroundColor: "white",
-        position: "relative",
-        width: "max-content",
-        margin: "auto",
-        border: "1px solid",
-        minWidth: "100vw",
-      }}
-    >
-      <div id="container" />
-    </div>
+    <React.Fragment>
+      {loading && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            zIndex: 2,
+            width: "100vw",
+            height: "100vh",
+            background: "#fff",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          Loading...
+        </div>
+      )}
+      <div
+        style={{
+          display: "flex",
+          position: "relative",
+          backgroundColor: "white",
+          position: "relative",
+          width: "max-content",
+          margin: "auto",
+          border: "1px solid",
+          minWidth: "100vw",
+        }}
+      >
+        <div id="container" />
+      </div>
+    </React.Fragment>
   )
 }
 
