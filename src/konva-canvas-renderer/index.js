@@ -78,20 +78,20 @@ const MainStage = (props) => {
       dragBoundFunc: (pos) => {
         let newX = pos.x
 
-        const isLeftOut = window.innerWidth - pos.x < LEFT_THRESHOLD
-        const isRightOut = Math.abs(pos.x) > RIGHT_THRESHOLD
+        // const isLeftOut = window.innerWidth - pos.x < LEFT_THRESHOLD
+        // const isRightOut = Math.abs(pos.x) > RIGHT_THRESHOLD
 
-        // better logic to be implemented //
+        // // better logic to be implemented //
 
-        if (isLeftOut) {
-          firstLeftOut = firstLeftOut || pos.x
-          newX = firstLeftOut
-        }
+        // if (isLeftOut) {
+        //   firstLeftOut = firstLeftOut || pos.x
+        //   newX = firstLeftOut
+        // }
 
-        if (isRightOut) {
-          firstRightOut = firstRightOut || pos.x
-          newX = firstRightOut
-        }
+        // if (isRightOut) {
+        //   firstRightOut = firstRightOut || pos.x
+        //   newX = firstRightOut
+        // }
 
         return {
           x: newX,
