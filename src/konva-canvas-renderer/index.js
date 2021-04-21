@@ -70,6 +70,8 @@ const MainStage = (props) => {
   const handleCanvasDraw = () => {
     Konva.hitOnDragEnabled = true
 
+    const throttledResetLRTBLimits = throttle(resetLRTBLimits, 600)
+
     stageRef2.current = new Konva.Stage({
       container: "container",
       width: window.innerWidth,
@@ -141,6 +143,7 @@ const MainStage = (props) => {
       }
 
       stage.scale({ x: newScale, y: newScale })
+      throttledResetLRTBLimits()
       const newPos = {
         x: pointerX - mousePointTo.x * newScale,
         y: pointerY - mousePointTo.y * newScale,
@@ -198,6 +201,7 @@ const MainStage = (props) => {
 
         stage.scaleX(scale)
         stage.scaleY(scale)
+        throttledResetLRTBLimits()
 
         // calculate new position of the stage
         const dx = newCenter.x - lastCenter.x
@@ -224,21 +228,20 @@ const MainStage = (props) => {
       lastCenter = null
     })
 
-    stage.on("dragend", function (e) {
-      resetLRTBLimits()
-      //   const isLeftOut = e.target.x() + LEFT_THRESHOLD > window.innerWidth
-      //   const isRightOut = Math.abs(e.target.x()) > RIGHT_THRESHOLD
+    // stage.on("dragend", function (e) {
+    //   const isLeftOut = e.target.x() + LEFT_THRESHOLD > window.innerWidth
+    //   const isRightOut = Math.abs(e.target.x()) > RIGHT_THRESHOLD
 
-      //   if (isLeftOut) {
-      //     stage.position({ x: -150 })
-      //     setStickyRowTextOnDrag(150)
-      //   }
+    //   if (isLeftOut) {
+    //     stage.position({ x: -150 })
+    //     setStickyRowTextOnDrag(150)
+    //   }
 
-      //   if (isRightOut) {
-      //     stage.position({ x: -(RIGHT_THRESHOLD - window.innerWidth) })
-      //     setStickyRowTextOnDrag(RIGHT_THRESHOLD - window.innerWidth)
-      //   }
-    })
+    //   if (isRightOut) {
+    //     stage.position({ x: -(RIGHT_THRESHOLD - window.innerWidth) })
+    //     setStickyRowTextOnDrag(RIGHT_THRESHOLD - window.innerWidth)
+    //   }
+    // })
 
     hasDrawed = true
   }
@@ -401,7 +404,6 @@ const MainStage = (props) => {
             seatGroup.add(seatRect).add(seatText)
             categoryGroup.add(seatGroup)
 
-            // categoryGroup.add(seatRect).add(seatText)
             seatBgLayer.add(categoryGroup)
           })
         })
