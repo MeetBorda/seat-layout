@@ -78,20 +78,22 @@ const MainStage = (props) => {
       dragBoundFunc: (pos) => {
         let newX = pos.x
 
-        // const isLeftOut = window.innerWidth - pos.x < LEFT_THRESHOLD
-        // const isRightOut = Math.abs(pos.x) > RIGHT_THRESHOLD
+        const xScale = stageRef2.current.scaleX()
 
-        // // better logic to be implemented //
+        const isLeftOut = (window.innerWidth - pos.x) / xScale < LEFT_THRESHOLD
+        const isRightOut = Math.abs(pos.x) / xScale > RIGHT_THRESHOLD
 
-        // if (isLeftOut) {
-        //   firstLeftOut = firstLeftOut || pos.x
-        //   newX = firstLeftOut
-        // }
+        // better logic to be implemented //
 
-        // if (isRightOut) {
-        //   firstRightOut = firstRightOut || pos.x
-        //   newX = firstRightOut
-        // }
+        if (isLeftOut) {
+          firstLeftOut = firstLeftOut || pos.x
+          newX = firstLeftOut
+        }
+
+        if (isRightOut) {
+          firstRightOut = firstRightOut || pos.x
+          newX = firstRightOut
+        }
 
         return {
           x: newX,
@@ -222,22 +224,28 @@ const MainStage = (props) => {
       lastCenter = null
     })
 
-    // stage.on("dragend", function (e) {
-    //   const isLeftOut = e.target.x() + LEFT_THRESHOLD > window.innerWidth
-    //   const isRightOut = Math.abs(e.target.x()) > RIGHT_THRESHOLD
+    stage.on("dragend", function (e) {
+      resetLRTBLimits()
+      //   const isLeftOut = e.target.x() + LEFT_THRESHOLD > window.innerWidth
+      //   const isRightOut = Math.abs(e.target.x()) > RIGHT_THRESHOLD
 
-    //   if (isLeftOut) {
-    //     stage.position({ x: -150 })
-    //     setStickyRowTextOnDrag(150)
-    //   }
+      //   if (isLeftOut) {
+      //     stage.position({ x: -150 })
+      //     setStickyRowTextOnDrag(150)
+      //   }
 
-    //   if (isRightOut) {
-    //     stage.position({ x: -(RIGHT_THRESHOLD - window.innerWidth) })
-    //     setStickyRowTextOnDrag(RIGHT_THRESHOLD - window.innerWidth)
-    //   }
-    // })
+      //   if (isRightOut) {
+      //     stage.position({ x: -(RIGHT_THRESHOLD - window.innerWidth) })
+      //     setStickyRowTextOnDrag(RIGHT_THRESHOLD - window.innerWidth)
+      //   }
+    })
 
     hasDrawed = true
+  }
+
+  const resetLRTBLimits = () => {
+    firstLeftOut = 0
+    firstRightOut = 0
   }
 
   const drawChildren = () => {
