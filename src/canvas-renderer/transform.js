@@ -10,9 +10,11 @@ import icon from "../constants/icon.json";
 import manyIcons from "../constants/manyIcons.json";
 import master from "../constants/master.json";
 import palm from "../constants/palm.json";
+import exotic from "../constants/exotic.json";
+const ROW_THRESHOLD = 5;
 export const transform = (file) => {
-  const { shapes } = palm;
-  let seats = [];
+  const { shapes } = exotic;
+  let rows = [];
   let svgs = [];
   let categories = [];
   let rects = [];
@@ -38,11 +40,9 @@ export const transform = (file) => {
       if (e === "rect") {
         const { startX, startY, selectionBounds } = el;
         rects.push({ startX, startY, selectionBounds, centerPoint });
-      } else if (e === "EXT") {
-        const { textStr, selectionBounds } = el;
-        console.log(textStr, selectionBounds,texts);
-        texts.push({ textStr, selectionBounds, centerPoint });
-        console.log(texts)
+      } else if (e === "TXT") {
+        const { textStr, selectionBounds, rotationRadians = 0 } = el;
+        texts.push({ textStr, selectionBounds, centerPoint, rotationRadians });
       } else if (e === "SVG") {
         if (svgPath) {
           svgPath.centerPoint = centerPoint;
@@ -50,25 +50,38 @@ export const transform = (file) => {
         }
       } else if (makeData) {
         const transformedSeats = makeSeats(makeData, dumbSeatsList, false);
-        // console.log(transformedSeats);
-        seats.push({
+        //    console.log(el, id);
+        rows.push({
           seats: transformedSeats,
           centerPoint: centerPoint,
           row: transformedSeats[0].prefix,
         });
-      }
-      else{
-        console.log('unsupported',e)
+      } else {
+      //  console.log("unsupported", e);
       }
     });
-
-    let newOb = {};
-    newOb = { seats: seats, category: e };
-
-    categories.push(newOb);
+    // let counter = 0;
+     let newOb = { rows: rows, category: e };
+    // //console.log(rows);
+    // rows.map((_, i) => {
+    //   if (counter % ROW_THRESHOLD === 0) {
+    //     // console.log(
+    //     //   counter,
+    //     //   i + ROW_THRESHOLD,
+    //     //   rows.slice(counter, i + ROW_THRESHOLD)
+    //     // );
+    //     categories.push({
+    //       category: e + "-" + i / ROW_THRESHOLD,
+    //       rows: rows.slice(counter, i + ROW_THRESHOLD),
+    //     });
+    //   }
+    //   counter++;
+    // });
+    // counter = 0;
+      categories.push(newOb);
     // console.log(categories);
     // console.log(seats);
-    seats = [];
+    rows = [];
   });
   // arr.forEach((element, index) => {
   //   console.log(arr,group, element, index);

@@ -254,11 +254,11 @@ const MainStage = (props) => {
     if (seatData.categories.length > 0) {
       seatData.svgs.forEach((svg, i) => {
         const pathNew = new Konva.Path({
-          x: svg.centerPoint.x,
+          x: svg.centerPoint.x - 25,
           y: svg.centerPoint.y,
           data: svg.d,
           fill: svg.fill,
-          scale: 0.5,
+          scale: { x: 1.5, y: 1.5 },
         });
         staticLayer.add(pathNew);
       });
@@ -303,30 +303,41 @@ const MainStage = (props) => {
             const separator = new Konva.Rect({
               x: rect.startX,
               y: rect.startY,
-              height: 2,
+              height: 1,
               width: rect.selectionBounds.width,
               stroke: "red",
             });
-            const sepText = new Konva.Text({
-              x: rect.startX,
-              y: rect.centerPoint.y - 30,
-              text: rect.sepText,
-              fontSize: 16,
-              width: rect.selectionBounds.width,
-              align: "center",
-              perfectDrawEnabled: false,
-            });
-            staticLayer.add(separator, sepText);
+            if (rect.category === "PLATINUM") {
+              const sepText = new Konva.Text({
+                x: rect.startX,
+                y: rect.centerPoint.y - 30,
+                text: rect.category,
+                fontSize: 16,
+                width: rect.selectionBounds.width,
+                align: "center",
+                perfectDrawEnabled: false,
+              });
+              staticLayer.add(sepText);
+            }
+
+            staticLayer.add(separator);
           })
         : null;
       const staticText = seatData.texts
         ? seatData.texts.forEach((text, index) => {
             const txt = new Konva.Text({
-              x: text.centerPoint.x,
-              y: text.centerPoint.y,
+              x: text.centerPoint.x - text.selectionBounds.width / 2,
+              y:
+                text.rotationRadians > 0
+                  ? text.centerPoint.y + 25
+                  : text.centerPoint.y,
               text: text.textStr,
               fontSize: 21,
               perfectDrawEnabled: false,
+              rotation:
+                text.rotationRadians > 0
+                  ? (-text.rotationRadians * 180) / Math.PI
+                  : 0,
             });
             staticLayer.add(txt);
           })
@@ -351,7 +362,7 @@ const MainStage = (props) => {
 
         categoryGroup.on("click tap", (e) => {
           var t0 = performance.now();
-
+          console.log(seatBgLayer.children);
           if (e.target.getType() !== "Stage") {
             categoryGroup.clearCache();
             // selectedSeats
@@ -376,7 +387,7 @@ const MainStage = (props) => {
           }
         });
 
-        cat.seats.forEach((seatRow, i) => {
+        cat.rows.forEach((seatRow, i) => {
           const { seats, row, isVerticalTop } = seatRow;
           let offX, offY;
           const currX = seats[0].coordinates.x; //
