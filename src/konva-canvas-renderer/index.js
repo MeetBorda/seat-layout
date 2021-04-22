@@ -1,76 +1,79 @@
-import React, { useState } from "react";
-import Konva from "konva";
+import React, { useState } from "react"
+import Konva from "konva"
 
-import Row from "./Row";
-import logo from "./loader.gif";
+import Row from "./Row"
+import logo from "./loader.gif"
+import { update } from "timm"
 
-const SRMC = true;
+const SRMC = true
 
-let lastDist = 0;
-let lastCenter = 0;
+let lastDist = 0
+let lastCenter = 0
 
-let hasDrawed = false;
-let xOff = 0;
-let yOff = 0;
+let hasDrawed = false
+let xOff = 0
+let yOff = 0
 
-const RIGHT_THRESHOLD = 1511;
-const LEFT_THRESHOLD = 217;
+const RIGHT_THRESHOLD = 1511
+const LEFT_THRESHOLD = 217
 
-let firstLeftOut = 0;
-let firstRightOut = 0;
+let firstLeftOut = 0
+let firstRightOut = 0
 
 const throttle = (func, limit) => {
-  let inThrottle;
+  let inThrottle
   return (...args) => {
     if (!inThrottle) {
-      func(...args);
-      inThrottle = setTimeout(() => (inThrottle = false), limit);
+      func(...args)
+      inThrottle = setTimeout(() => (inThrottle = false), limit)
     }
-  };
-};
+  }
+}
 
 function getDistance(p1, p2) {
-  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2));
+  return Math.sqrt(Math.pow(p2.x - p1.x, 2) + Math.pow(p2.y - p1.y, 2))
 }
 
 function getCenter(p1, p2) {
   return {
     x: (p1.x + p2.x) / 2,
     y: (p1.y + p2.y) / 2,
-  };
+  }
 }
 
+const CONSECUTIVE_NUMBER_OF_SEATS = 4
+
 const MainStage = (props) => {
-  const seatData = props.data || { seats: [], svgs: [] };
+  const seatData = props.data || { seats: [], svgs: [] }
 
-  const stageRef2 = React.useRef(null);
+  const stageRef2 = React.useRef(null)
 
-  const seatBgLayerRef = React.useRef(null);
-  const staticLayerRef = React.useRef(null);
+  const seatBgLayerRef = React.useRef(null)
+  const staticLayerRef = React.useRef(null)
 
-  const staticSeatRowTextLayerRef = React.useRef(null);
-  const rectGroupRef = React.useRef(null);
+  const staticSeatRowTextLayerRef = React.useRef(null)
+  const rectGroupRef = React.useRef(null)
 
   const [loading, setLoading] = useState(true)
 
   const calculateWidth = () => {
     if (!SRMC) {
-      const lastR = seatData[seatData.length - 1];
-      const l = lastR.seats.length;
-      const coor = lastR.seats[l - 1].coordinates.x;
-      return coor;
-    } else return 0;
-  };
+      const lastR = seatData[seatData.length - 1]
+      const l = lastR.seats.length
+      const coor = lastR.seats[l - 1].coordinates.x
+      return coor
+    } else return 0
+  }
 
   const setStickyRowTextOnDrag = (xDragMove) => {
     // staticSeatRowTextLayerRef.current.position({
     //   x: xDragMove / stageRef2.current.scaleX(),
     // })
     // staticSeatRowTextLayerRef.current.batchDraw()
-  };
+  }
 
   const handleCanvasDraw = () => {
-    Konva.hitOnDragEnabled = true;
+    Konva.hitOnDragEnabled = true
 
     const throttledResetLRTBLimits = throttle(resetLRTBLimits, 600)
 
@@ -80,7 +83,7 @@ const MainStage = (props) => {
       height: window.innerHeight,
       draggable: true,
       dragBoundFunc: (pos) => {
-        let newX = pos.x;
+        let newX = pos.x
 
         const xScale = stageRef2.current.scaleX()
 
@@ -90,58 +93,58 @@ const MainStage = (props) => {
         // better logic to be implemented //
 
         if (isLeftOut) {
-          firstLeftOut = firstLeftOut || pos.x;
-          newX = firstLeftOut;
+          firstLeftOut = firstLeftOut || pos.x
+          newX = firstLeftOut
         }
 
         if (isRightOut) {
-          firstRightOut = firstRightOut || pos.x;
-          newX = firstRightOut;
+          firstRightOut = firstRightOut || pos.x
+          newX = firstRightOut
         }
 
         return {
           x: newX,
           y: pos.y,
-        };
+        }
       },
-    });
+    })
 
-    seatBgLayerRef.current = new Konva.Layer();
-    staticLayerRef.current = new Konva.Layer();
+    seatBgLayerRef.current = new Konva.Layer()
+    staticLayerRef.current = new Konva.Layer()
     // staticSeatRowTextLayerRef.current = new Konva.Layer()
 
-    staticLayerRef.current.listening(false);
+    staticLayerRef.current.listening(false)
     // staticSeatRowTextLayerRef.current.listening(false)
 
-    const stage = stageRef2.current;
-    const seatBgLayer = seatBgLayerRef.current;
+    const stage = stageRef2.current
+    const seatBgLayer = seatBgLayerRef.current
 
-    const staticLayer = staticLayerRef.current;
+    const staticLayer = staticLayerRef.current
     // const staticSeatRowTextLayer = staticSeatRowTextLayerRef.current
 
-    stage.add(staticLayer);
-    stage.add(seatBgLayer);
+    stage.add(staticLayer)
+    stage.add(seatBgLayer)
 
     // stage.add(staticSeatRowTextLayer)
-    drawChildren();
-    staticLayer.draw();
-    seatBgLayer.draw();
+    drawChildren()
+    staticLayer.draw()
+    seatBgLayer.draw()
     // staticSeatRowTextLayer.draw()
 
     stage.on("wheel", (e) => {
-      e.evt.preventDefault();
-      const scaleBy = 1.02;
-      const oldScale = stage.scaleX();
-      const { x: pointerX, y: pointerY } = stage.getPointerPosition();
+      e.evt.preventDefault()
+      const scaleBy = 1.02
+      const oldScale = stage.scaleX()
+      const { x: pointerX, y: pointerY } = stage.getPointerPosition()
       const mousePointTo = {
         x: (pointerX - stage.x()) / oldScale,
         y: (pointerY - stage.y()) / oldScale,
-      };
+      }
       const newScale =
-        e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+        e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy
 
       if (newScale >= 1.5 || newScale <= 0.5) {
-        return;
+        return
       }
 
       stage.scale({ x: newScale, y: newScale })
@@ -149,56 +152,56 @@ const MainStage = (props) => {
       const newPos = {
         x: pointerX - mousePointTo.x * newScale,
         y: pointerY - mousePointTo.y * newScale,
-      };
-      stage.position(newPos);
-      stage.batchDraw();
-    });
+      }
+      stage.position(newPos)
+      stage.batchDraw()
+    })
 
     stage.on("touchmove", function (e) {
-      e.evt.preventDefault();
+      e.evt.preventDefault()
 
-      const touch1 = e.evt.touches[0];
-      const touch2 = e.evt.touches[1];
+      const touch1 = e.evt.touches[0]
+      const touch2 = e.evt.touches[1]
 
       if (touch1 && touch2) {
-        e.evt.cancelBubble = true;
+        e.evt.cancelBubble = true
         // if the stage was under Konva's drag&drop
         // we need to stop it, and implement our own pan logic with two pointers
         if (stage.isDragging()) {
-          stage.stopDrag();
+          stage.stopDrag()
         }
 
         const p1 = {
           x: touch1.clientX,
           y: touch1.clientY,
-        };
+        }
         const p2 = {
           x: touch2.clientX,
           y: touch2.clientY,
-        };
+        }
 
         if (!lastCenter) {
-          lastCenter = getCenter(p1, p2);
-          return;
+          lastCenter = getCenter(p1, p2)
+          return
         }
-        const newCenter = getCenter(p1, p2);
+        const newCenter = getCenter(p1, p2)
 
-        const dist = getDistance(p1, p2);
+        const dist = getDistance(p1, p2)
 
         if (!lastDist) {
-          lastDist = dist;
+          lastDist = dist
         }
 
         // local coordinates of center point
         const pointTo = {
           x: (newCenter.x - stage.x()) / stage.scaleX(),
           y: (newCenter.y - stage.y()) / stage.scaleX(),
-        };
+        }
 
-        const scale = stage.scaleX() * (dist / lastDist);
+        const scale = stage.scaleX() * (dist / lastDist)
 
         if (scale >= 1.5 || scale <= 0.5) {
-          return;
+          return
         }
 
         stage.scaleX(scale)
@@ -206,29 +209,29 @@ const MainStage = (props) => {
         throttledResetLRTBLimits()
 
         // calculate new position of the stage
-        const dx = newCenter.x - lastCenter.x;
-        const dy = newCenter.y - lastCenter.y;
+        const dx = newCenter.x - lastCenter.x
+        const dy = newCenter.y - lastCenter.y
 
         const newPos = {
           x: newCenter.x - pointTo.x * scale + dx,
           y: newCenter.y - pointTo.y * scale + dy,
-        };
+        }
 
-        stage.position(newPos);
-        stage.batchDraw();
+        stage.position(newPos)
+        stage.batchDraw()
 
-        lastDist = dist;
-        lastCenter = newCenter;
-        setStickyRowTextOnDrag(-stageRef2.current.x());
+        lastDist = dist
+        lastCenter = newCenter
+        setStickyRowTextOnDrag(-stageRef2.current.x())
       } else {
-        setStickyRowTextOnDrag(-stageRef2.current.x());
+        setStickyRowTextOnDrag(-stageRef2.current.x())
       }
-    });
+    })
 
     stage.on("touchend", function () {
-      lastDist = 0;
-      lastCenter = null;
-    });
+      lastDist = 0
+      lastCenter = null
+    })
 
     // stage.on("dragend", function (e) {
     //   const isLeftOut = e.target.x() + LEFT_THRESHOLD > window.innerWidth
@@ -254,13 +257,35 @@ const MainStage = (props) => {
     firstRightOut = 0
   }
 
+  const updateSeats = (seatGroupChildren) => {
+    const [obj1, obj2] = seatGroupChildren
+    const { seatProps, isSelectedSeat } = obj1.attrs
+    obj1.setAttr("isSelectedSeat", !isSelectedSeat)
+    obj1.fill(!isSelectedSeat ? obj1.attrs.stroke : "transparent").draw()
+    obj2.fill(!isSelectedSeat ? "white" : "black").draw()
+    props.setSeats(seatProps)
+  }
+
+  const checkSeatStatus = (seatGroupArray, checkIsSelected) => {
+    return seatGroupArray.every((s) => {
+      const sChildren = s.children
+      const [obj1] = sChildren
+      const { isSelectedSeat } = obj1.attrs
+      if (checkIsSelected) {
+        return isSelectedSeat === true
+      } else {
+        return !isSelectedSeat
+      }
+    })
+  }
+
   const drawChildren = () => {
-    const seatBgLayer = seatBgLayerRef.current;
-    const staticLayer = staticLayerRef.current;
+    const seatBgLayer = seatBgLayerRef.current
+    const staticLayer = staticLayerRef.current
 
     // const staticSeatRowTextLayer = staticSeatRowTextLayerRef.current
 
-   // console.log("drawing", seatData);
+    // console.log("drawing", seatData);
     if (seatData.categories.length > 0) {
       seatData.svgs.forEach((svg, i) => {
         const pathNew = new Konva.Path({
@@ -269,9 +294,9 @@ const MainStage = (props) => {
           data: svg.d,
           fill: svg.fill,
           scale: { x: 1.5, y: 1.5 },
-        });
-        staticLayer.add(pathNew);
-      });
+        })
+        staticLayer.add(pathNew)
+      })
 
       const rectangles = seatData.rects
         ? seatData.rects.forEach((rect, index) => {
@@ -281,7 +306,7 @@ const MainStage = (props) => {
               height: 1,
               width: rect.selectionBounds.width,
               stroke: "#666",
-            });
+            })
             if (rect.category === "PLATINUM") {
               const sepText = new Konva.Text({
                 x: rect.startX,
@@ -291,13 +316,13 @@ const MainStage = (props) => {
                 width: rect.selectionBounds.width,
                 align: "center",
                 perfectDrawEnabled: false,
-              });
-              staticLayer.add(sepText);
+              })
+              staticLayer.add(sepText)
             }
 
-            staticLayer.add(separator);
+            staticLayer.add(separator)
           })
-        : null;
+        : null
       const staticText = seatData.texts
         ? seatData.texts.forEach((text, index) => {
             const txt = new Konva.Text({
@@ -313,72 +338,83 @@ const MainStage = (props) => {
                 text.rotationRadians > 0
                   ? (-text.rotationRadians * 180) / Math.PI
                   : 0,
-            });
-            staticLayer.add(txt);
+            })
+            staticLayer.add(txt)
           })
-        : null;
-      let currentCat;
+        : null
+      let currentCat
       seatData.categories.forEach((cat, index) => {
-        currentCat = cat.category;
+        currentCat = cat.category
         if (currentCat === "SVG") {
-          return;
+          return
         }
-        const categoryGroup = new Konva.Group({ name: cat.category });
+        const categoryGroup = new Konva.Group({ name: cat.category })
 
         categoryGroup.on("click tap", (e) => {
-          var t0 = performance.now();
-       //   console.log(e.target.parent);
+          const t0 = performance.now()
+
           if (e.target.getType() !== "Stage") {
-            categoryGroup.clearCache();
-            // selectedSeats
-            // console.log(e.target.x());
-            const [obj1, obj2] = e.target.parent.children;
-            const { seatProps, isSelectedSeat } = obj1.attrs;
+            categoryGroup.clearCache()
 
-            obj1.setAttr("isSelectedSeat", !isSelectedSeat);
+            const firstSeatX = Math.floor(e.target.x())
+            const firstSeatY = Math.floor(e.target.y())
+            let prevSeatX = firstSeatX
+            const cSeatsX = []
+            cSeatsX.push(prevSeatX)
 
-            // let fillColor = "transparent";
-            // if (obj1.attrs.stroke === "#D61920") {
-            //   fillColor = "#D61920";
-            // } else if (obj1.attrs.stroke === "green") {
-            //   fillColor = "green";
-            // }
-            //   add logic for isFilled
-            obj1
-              .fill(!isSelectedSeat ? obj1.attrs.stroke : "transparent")
-              .draw();
-            obj2.fill(!isSelectedSeat ? "white" : "black").draw();
-            //
+            for (let i = 1; i < CONSECUTIVE_NUMBER_OF_SEATS; i++) {
+              prevSeatX = prevSeatX + 23
+              cSeatsX.push(Math.floor(prevSeatX))
+            }
 
-            props.setSeats(seatProps);
+            const seatGroups = []
 
-            categoryGroup.cache();
-            var t1 = performance.now();
+            cSeatsX.forEach((x, i) => {
+              const mx = stageRef2.current.findOne(`.seat-${x}-${firstSeatY}`)
+              if (mx) {
+                seatGroups.push(mx)
+              }
+            })
+
+            let cSeatsAvailable = false
+
+            if (seatGroups.length === cSeatsX.length) {
+              const areCAllSeatsSelected = checkSeatStatus(seatGroups, true)
+              const areCAllSeatsDeSelected = checkSeatStatus(seatGroups, false)
+
+              cSeatsAvailable = areCAllSeatsSelected || areCAllSeatsDeSelected
+            }
+
+            if (cSeatsAvailable) {
+              seatGroups.forEach((s, i) => {
+                updateSeats(s.children)
+              })
+            } else {
+              updateSeats(e.target.parent.children)
+            }
+
+            categoryGroup.cache()
+            const t1 = performance.now()
             console.log(
               "Call to doSomething took " + (t1 - t0) + " milliseconds."
-            );
+            )
           }
-        });
+        })
 
         cat.rows.forEach((seatRow, i) => {
-          const {
-            seats,
-            row,
-            isVerticalTop,
-            useExternalText = false,
-          } = seatRow;
-          let offX, offY;
-          const currX = seats[0].coordinates.x; //
-          const currY = seats[0].coordinates.y; //
+          const { seats, row, isVerticalTop, useExternalText = false } = seatRow
+          let offX, offY
+          const currX = seats[0].coordinates.x //
+          const currY = seats[0].coordinates.y //
           if (currentCat.includes("CURVED")) {
-            offX = isVerticalTop ? currX - 5 : currX - 15;
-            offY = isVerticalTop ? currY - 25 : currY + 15;
+            offX = isVerticalTop ? currX - 5 : currX - 15
+            offY = isVerticalTop ? currY - 25 : currY + 15
           } else if (currentCat.includes("SEPARATOR")) {
-            offX = currX - 5;
-            offY = currY - 25;
+            offX = currX - 5
+            offY = currY - 25
           } else {
-            offX = currX - 25;
-            offY = currY - 5;
+            offX = currX - 25
+            offY = currY - 5
           }
           if (!useExternalText) {
             const rowText = new Konva.Text({
@@ -387,18 +423,18 @@ const MainStage = (props) => {
               text: row,
               fontSize: 10,
               perfectDrawEnabled: false,
-            });
-            staticLayer.add(rowText);
+            })
+            staticLayer.add(rowText)
           }
-          let sofaSeats = [];
+          let sofaSeats = []
           if (currentCat.includes("SOFA")) {
             for (let i = 0; i < seats.length; i += 2) {
-              let sofaSeat = seats.slice(i, i + 2);
-              sofaSeats.push(sofaSeat);
+              let sofaSeat = seats.slice(i, i + 2)
+              sofaSeats.push(sofaSeat)
             }
             sofaSeats.map((seats, index) => {
-              const [seat1, seat2] = seats;
-              const seatGroup = new Konva.Group();
+              const [seat1, seat2] = seats
+              const seatGroup = new Konva.Group()
               const newRect = new Konva.Rect({
                 x: (seat2.coordinates.x + seat1.coordinates.x) / 2 - 20,
                 y: seat1.coordinates.y - 10,
@@ -408,16 +444,16 @@ const MainStage = (props) => {
                 strokeWidth: 1,
                 cornerRadius: 3,
                 seatProps: { ...seats },
-              });
-              const newstr = seat1.number + " " + seat2.number;
+              })
+              const newstr = seat1.number + " " + seat2.number
 
-              let offX;
+              let offX
               if (newstr.length === 3) {
-                offX = -5;
+                offX = -5
               } else if (newstr.length == 4) {
-                offX = -7;
+                offX = -7
               } else {
-                offX = -9;
+                offX = -9
               }
               const newText = new Konva.Text({
                 x: (seat2.coordinates.x + seat1.coordinates.x) / 2 + offX,
@@ -426,21 +462,21 @@ const MainStage = (props) => {
                 fontSize: 10,
 
                 perfectDrawEnabled: false,
-              });
+              })
 
               //let elements = [];
 
-              seatGroup.add(newRect, newText);
-              categoryGroup.add(seatGroup);
+              seatGroup.add(newRect, newText)
+              categoryGroup.add(seatGroup)
               // categoryGroup.add(seatRect).add(seatText)
-              seatBgLayer.add(categoryGroup);
-            });
+              seatBgLayer.add(categoryGroup)
+            })
           } else if (currentCat.includes("CUSTOM")) {
             seats.forEach((seat, seatIndex) => {
-              const seatGroup = new Konva.Group();
+              const seatGroup = new Konva.Group()
 
-              const { coordinates, number, name } = seat;
-              let seatName = `${seat.name}-${coordinates.x}-${coordinates.y}`;
+              const { coordinates, number, name } = seat
+              let seatName = `${seat.name}-${coordinates.x}-${coordinates.y}`
               const path1 = new Konva.Path({
                 x: Math.floor(coordinates.x),
                 y: Math.floor(coordinates.y) - 10,
@@ -453,31 +489,35 @@ const MainStage = (props) => {
                   seatName: seatName,
                   isSelectedSeat: false,
                 },
-              });
-              const numText = `${number}`;
+              })
+              const numText = `${number}`
               const text1 = new Konva.Text({
                 x: Math.floor(coordinates.x) + (numText.length === 2 ? 6 : 8),
                 y: Math.floor(coordinates.y) - 4,
                 text: number,
                 fontSize: 8,
                 perfectDrawEnabled: false,
-              });
-              seatGroup.add(path1).add(text1);
-              categoryGroup.add(seatGroup);
+              })
+              seatGroup.add(path1).add(text1)
+              categoryGroup.add(seatGroup)
 
               // categoryGroup.add(seatRect).add(seatText)
-              seatBgLayer.add(categoryGroup);
-            });
+              seatBgLayer.add(categoryGroup)
+            })
           } else {
             seats.forEach((seat, seatIndex) => {
-              const seatGroup = new Konva.Group();
+              const { coordinates, number, name } = seat
+              let seatName = `${seat.name}-${coordinates.x}-${coordinates.y}`
+              const seatX = Math.floor(coordinates.x)
+              const seatY = Math.floor(coordinates.y)
 
-              const { coordinates, number, name } = seat;
-              let seatName = `${seat.name}-${coordinates.x}-${coordinates.y}`;
+              const seatGroup = new Konva.Group({
+                name: `seat-${seatX}-${seatY}`,
+              })
 
               const seatRect = new Konva.Circle({
-                x: Math.floor(coordinates.x),
-                y: Math.floor(coordinates.y),
+                x: seatX,
+                y: seatY,
                 width: 20,
                 height: 20,
                 stroke: "green",
@@ -490,7 +530,7 @@ const MainStage = (props) => {
                   seatName: seatName,
                   isSelectedSeat: false,
                 },
-              });
+              })
 
               const seatText = new Konva.Text({
                 x: coordinates.x - (number.toString().length === 2 ? 6 : 4),
@@ -498,26 +538,27 @@ const MainStage = (props) => {
                 text: number,
                 fontSize: 10,
                 perfectDrawEnabled: false,
-              });
+                listening: false,
+              })
 
-              seatGroup.add(seatRect).add(seatText);
-              categoryGroup.add(seatGroup);
+              seatGroup.add(seatRect).add(seatText)
+              categoryGroup.add(seatGroup)
 
               // categoryGroup.add(seatRect).add(seatText)
-              seatBgLayer.add(categoryGroup);
-            });
+              seatBgLayer.add(categoryGroup)
+            })
           }
-        });
-        categoryGroup.cache();
-      });
+        })
+        categoryGroup.cache()
+      })
     }
-  };
+  }
 
   React.useEffect(() => {
     if (props.data.categories.length > 0 && !hasDrawed) {
-      handleCanvasDraw();
+      handleCanvasDraw()
     }
-  }, [props.data]);
+  }, [props.data])
 
   //console.log(props.data);
 
@@ -558,4 +599,4 @@ const MainStage = (props) => {
   )
 }
 
-export default MainStage;
+export default MainStage
