@@ -44,7 +44,6 @@ function App() {
 
   const [selectedSeats, setSelectedSeats] = useState({});
   const [data, setData] = useState(exotic);
-  console.log(selectedSeats);
   //  const makeData = transform();
   //  console.log(makeData);
   const handleSeatSelect = (seat) => {

@@ -260,7 +260,7 @@ const MainStage = (props) => {
 
     // const staticSeatRowTextLayer = staticSeatRowTextLayerRef.current
 
-    console.log("drawing", seatData);
+   // console.log("drawing", seatData);
     if (seatData.categories.length > 0) {
       seatData.svgs.forEach((svg, i) => {
         const pathNew = new Konva.Path({
@@ -327,7 +327,7 @@ const MainStage = (props) => {
 
         categoryGroup.on("click tap", (e) => {
           var t0 = performance.now();
-          console.log(e.target.parent);
+       //   console.log(e.target.parent);
           if (e.target.getType() !== "Stage") {
             categoryGroup.clearCache();
             // selectedSeats
@@ -519,7 +519,7 @@ const MainStage = (props) => {
     }
   }, [props.data]);
 
-  console.log(props.data);
+  //console.log(props.data);
 
   return (
     <React.Fragment>
