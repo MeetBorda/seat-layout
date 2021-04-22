@@ -370,7 +370,9 @@ const MainStage = (props) => {
             const seatGroups = []
 
             cSeatsX.forEach((x, i) => {
-              const mx = stageRef2.current.findOne(`.seat-${x}-${firstSeatY}`)
+              const mx = e.target.parent.parent.findOne(
+                `.seat-${x}-${firstSeatY}`
+              )
               if (mx) {
                 seatGroups.push(mx)
               }
