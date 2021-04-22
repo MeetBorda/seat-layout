@@ -20,6 +20,8 @@ const LEFT_THRESHOLD = 217
 let firstLeftOut = 0
 let firstRightOut = 0
 
+let hasCanvasDrawn = false
+
 const throttle = (func, limit) => {
   let inThrottle
   return (...args) => {
@@ -249,6 +251,7 @@ const MainStage = (props) => {
     // })
 
     hasDrawed = true
+    hasCanvasDrawn = true
     setLoading(false)
   }
 
@@ -562,7 +565,40 @@ const MainStage = (props) => {
     }
   }, [props.data])
 
-  //console.log(props.data);
+  const resetStageHandlers = () => {
+    ;["touchend", "touchmove", "wheel", "click", "tap"].forEach((k) =>
+      stageRef2.current.off(k)
+    )
+    stageRef2.current = null
+    seatBgLayerRef.current = null
+    staticLayerRef.current = null
+  }
+
+  const clearCacheExtensively = () => {
+    const canvasLayerElements = stageRef2.current.getLayers()
+    for (let i = 0; i < canvasLayerElements.length; i += 1) {
+      const cachedCanvases = canvasLayerElements[i]._cache.get("canvas")
+      if (cachedCanvases) {
+        cachedCanvases.scene._canvas.width = 0
+        cachedCanvases.scene._canvas.height = 0
+        cachedCanvases.hit._canvas.width = 0
+        cachedCanvases.hit._canvas.height = 0
+        cachedCanvases.filter._canvas.width = 0
+        cachedCanvases.filter._canvas.height = 0
+        canvasLayerElements[i].clearCache()
+      }
+    }
+  }
+
+  const handleSeatRedraw = () => {
+    if (hasCanvasDrawn) {
+      hasCanvasDrawn = false
+      clearCacheExtensively()
+      stageRef2.current.destroy()
+      resetStageHandlers()
+      handleCanvasDraw()
+    }
+  }
 
   return (
     <React.Fragment>
@@ -583,6 +619,17 @@ const MainStage = (props) => {
           Loading...
         </div>
       )}
+      <button
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          zIndex: 2,
+        }}
+        onClick={handleSeatRedraw}
+      >
+        Re-draw
+      </button>
       <div
         style={{
           display: "flex",
